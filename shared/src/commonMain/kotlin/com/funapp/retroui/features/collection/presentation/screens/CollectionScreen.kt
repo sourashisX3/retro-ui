@@ -33,10 +33,14 @@ import androidx.compose.ui.unit.dp
 import com.funapp.retroui.core.design.components.controls.RetroButton
 import com.funapp.retroui.core.design.components.controls.RetroButtonVariant
 import com.funapp.retroui.core.design.components.controls.RetroChip
+import com.funapp.retroui.core.design.components.feedback.RetroStatusLabel
 import com.funapp.retroui.core.design.components.foundation.RetroText
 import com.funapp.retroui.core.design.components.game.RetroCardRarity
 import com.funapp.retroui.core.design.components.game.RetroGameCard
+import com.funapp.retroui.core.design.components.game.rarityColor
+import com.funapp.retroui.core.design.components.surfaces.RetroBottomSheet
 import com.funapp.retroui.core.design.theme.RetroTheme
+import com.funapp.retroui.core.mock.MockChampion
 import com.funapp.retroui.core.mock.mockChampionRoster
 import org.jetbrains.compose.resources.stringResource
 import retroui.shared.generated.resources.Res
@@ -50,6 +54,10 @@ import retroui.shared.generated.resources.rarity_legendary
 import retroui.shared.generated.resources.rarity_rare
 import retroui.shared.generated.resources.screen_collection_subtitle
 import retroui.shared.generated.resources.screen_collection_title
+import retroui.shared.generated.resources.sheet_card_cost
+import retroui.shared.generated.resources.sheet_card_owned_no
+import retroui.shared.generated.resources.sheet_card_owned_yes
+import retroui.shared.generated.resources.sheet_card_type
 
 private val rarityFilters: List<Pair<RetroCardRarity?, RarityLabel>> = listOf(
     null to RarityLabel.All,
@@ -84,6 +92,7 @@ fun CollectionScreen(
 ) {
     val cards = mockChampionRoster()
     var filter by remember { mutableStateOf<RetroCardRarity?>(null) }
+    var selectedCard by remember { mutableStateOf<MockChampion?>(null) }
     val filtered = if (filter == null) cards else cards.filter { it.rarity == filter }
 
     Box(
@@ -133,10 +142,77 @@ fun CollectionScreen(
                         artworkIcon = card.icon,
                         rarity = card.rarity,
                         footer = stringResource(Res.string.card_owned, card.owned),
+                        onClick = { selectedCard = card },
                     )
                 }
             }
         }
+    }
+
+    selectedCard?.let { card ->
+        RetroBottomSheet(
+            visible = true,
+            onDismiss = { selectedCard = null },
+            title = card.name,
+        ) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                RetroChip(
+                    text = rarityLabel(card.rarity),
+                    onClick = {},
+                    selected = false,
+                )
+                Spacer(modifier = Modifier.weight(1f))
+                RetroStatusLabel(
+                    text = stringResource(
+                        if (card.owned > 0) {
+                            Res.string.sheet_card_owned_yes
+                        } else {
+                            Res.string.sheet_card_owned_no
+                        },
+                    ),
+                    dotColor = if (card.owned > 0) RetroTheme.colors.success else RetroTheme.colors.textMuted,
+                    container = RetroTheme.colors.surfaceVariant,
+                )
+            }
+            Spacer(modifier = Modifier.height(RetroTheme.spacing.md))
+            CardDetailRow(
+                label = stringResource(Res.string.sheet_card_type),
+                value = card.type,
+            )
+            Spacer(modifier = Modifier.height(RetroTheme.spacing.xs))
+            CardDetailRow(
+                label = stringResource(Res.string.sheet_card_cost),
+                value = card.cost,
+            )
+        }
+    }
+}
+
+@Composable
+private fun rarityLabel(rarity: RetroCardRarity): String = when (rarity) {
+    RetroCardRarity.Common -> stringResource(Res.string.rarity_common)
+    RetroCardRarity.Rare -> stringResource(Res.string.rarity_rare)
+    RetroCardRarity.Epic -> stringResource(Res.string.rarity_epic)
+    RetroCardRarity.Legendary -> stringResource(Res.string.rarity_legendary)
+}
+
+@Composable
+private fun CardDetailRow(label: String, value: String) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        RetroText(
+            text = label,
+            style = RetroTheme.typography.caption,
+            color = RetroTheme.colors.textSecondary,
+        )
+        Spacer(modifier = Modifier.weight(1f))
+        RetroText(
+            text = value,
+            style = RetroTheme.typography.label,
+            color = RetroTheme.colors.textPrimary,
+        )
     }
 }
 

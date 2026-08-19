@@ -108,6 +108,10 @@
     <string name="rarity_epic">EPIC</string>
     <string name="rarity_legendary">LEGENDARY</string>
     <string name="card_owned">x%1$d</string>
+    <string name="sheet_card_type">TYPE</string>
+    <string name="sheet_card_cost">COST</string>
+    <string name="sheet_card_owned_yes">OWNED</string>
+    <string name="sheet_card_owned_no">LOCKED</string>
     <string name="card_blaze">BLAZE</string>
     <string name="card_frost">FROST</string>
     <string name="card_volt">VOLT</string>
