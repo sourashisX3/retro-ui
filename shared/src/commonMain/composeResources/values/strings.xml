@@ -175,6 +175,11 @@
     <string name="screen_settings_title">SETTINGS</string>
     <string name="screen_settings_subtitle">Tweak your retro experience.</string>
     <string name="settings_audio_title">AUDIO</string>
+    <string name="settings_theme_title">THEME</string>
+    <string name="settings_theme_subtitle">How the app looks</string>
+    <string name="theme_option_system">SYSTEM</string>
+    <string name="theme_option_light">LIGHT</string>
+    <string name="theme_option_dark">DARK</string>
     <string name="settings_gameplay_title">GAMEPLAY</string>
     <string name="settings_account_title">ACCOUNT</string>
     <string name="setting_sound_title">SOUND EFFECTS</string>

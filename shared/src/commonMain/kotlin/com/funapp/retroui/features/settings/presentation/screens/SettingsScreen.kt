@@ -1,28 +1,42 @@
 package com.funapp.retroui.features.settings.presentation.screens
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import com.funapp.retroui.core.config.theme.ThemeMode
 import com.funapp.retroui.core.design.components.controls.RetroButton
 import com.funapp.retroui.core.design.components.controls.RetroButtonVariant
+import com.funapp.retroui.core.design.components.controls.RetroChip
 import com.funapp.retroui.core.design.components.controls.RetroSwitch
 import com.funapp.retroui.core.design.components.feedback.RetroStatusLabel
 import com.funapp.retroui.core.design.components.foundation.RetroText
 import com.funapp.retroui.core.design.components.surfaces.RetroScreen
 import com.funapp.retroui.core.design.components.surfaces.RetroSection
 import com.funapp.retroui.core.design.theme.RetroTheme
+import com.funapp.retroui.core.di.LocalAppContainer
 import com.funapp.retroui.features.settings.presentation.components.SettingRow
 import org.jetbrains.compose.resources.stringResource
 import retroui.shared.generated.resources.Res
 import retroui.shared.generated.resources.btn_log_out
 import retroui.shared.generated.resources.screen_settings_subtitle
 import retroui.shared.generated.resources.screen_settings_title
+import retroui.shared.generated.resources.settings_account_title
+import retroui.shared.generated.resources.settings_audio_title
+import retroui.shared.generated.resources.settings_gameplay_title
+import retroui.shared.generated.resources.settings_theme_subtitle
+import retroui.shared.generated.resources.settings_theme_title
+import retroui.shared.generated.resources.theme_option_dark
+import retroui.shared.generated.resources.theme_option_light
+import retroui.shared.generated.resources.theme_option_system
 import retroui.shared.generated.resources.setting_enemy_hp_subtitle
 import retroui.shared.generated.resources.setting_enemy_hp_title
 import retroui.shared.generated.resources.setting_haptics_subtitle
@@ -37,9 +51,8 @@ import retroui.shared.generated.resources.setting_sound_subtitle
 import retroui.shared.generated.resources.setting_sound_title
 import retroui.shared.generated.resources.setting_version_title
 import retroui.shared.generated.resources.setting_version_value
-import retroui.shared.generated.resources.settings_account_title
-import retroui.shared.generated.resources.settings_audio_title
-import retroui.shared.generated.resources.settings_gameplay_title
+
+private val themeOptions: List<ThemeMode> = ThemeMode.entries
 
 /**
  * Settings. Audio, gameplay and account sections with live toggles.
@@ -54,6 +67,8 @@ fun SettingsScreen(
     var music by remember { mutableStateOf(true) }
     var showEnemyHp by remember { mutableStateOf(true) }
     var quickBattle by remember { mutableStateOf(false) }
+    val settingsRepository = LocalAppContainer.current.settingsRepository
+    val themeMode by settingsRepository.themeMode.collectAsState()
 
     RetroScreen(modifier = modifier) {
         item {
@@ -67,6 +82,36 @@ fun SettingsScreen(
                 style = RetroTheme.typography.caption,
                 color = RetroTheme.colors.textMuted,
             )
+        }
+        item {
+            Spacer(modifier = Modifier.height(RetroTheme.spacing.lg))
+        }
+        item {
+            RetroSection(title = stringResource(Res.string.settings_theme_title)) {
+                RetroText(
+                    text = stringResource(Res.string.settings_theme_subtitle),
+                    style = RetroTheme.typography.caption,
+                    color = RetroTheme.colors.textMuted,
+                )
+                Spacer(modifier = Modifier.height(RetroTheme.spacing.sm))
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(RetroTheme.spacing.xs),
+                ) {
+                    themeOptions.forEach { option ->
+                        RetroChip(
+                            text = when (option) {
+                                ThemeMode.System -> stringResource(Res.string.theme_option_system)
+                                ThemeMode.Light -> stringResource(Res.string.theme_option_light)
+                                ThemeMode.Dark -> stringResource(Res.string.theme_option_dark)
+                            },
+                            onClick = { settingsRepository.setThemeMode(option) },
+                            selected = themeMode == option,
+                            modifier = Modifier.weight(1f),
+                        )
+                    }
+                }
+            }
         }
         item {
             Spacer(modifier = Modifier.height(RetroTheme.spacing.lg))
