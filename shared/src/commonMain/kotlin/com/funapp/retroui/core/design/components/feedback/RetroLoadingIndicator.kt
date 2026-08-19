@@ -26,7 +26,7 @@ import retroui.shared.generated.resources.Res
 import retroui.shared.generated.resources.common_loading
 
 /**
- * Playful doodle-style loading indicator: a pixel block that bounces with the
+ * Playful pixel-style loading indicator: a pixel block that bounces with the
  * shared [RetroAnimation.bounce] spec. Never a generic Material spinner.
  */
 @Composable

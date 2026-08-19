@@ -48,6 +48,12 @@ import com.funapp.retroui.core.design.components.controls.RetroIconButton
 import com.funapp.retroui.core.design.components.controls.RetroRadio
 import com.funapp.retroui.core.design.components.controls.RetroSwitch
 import com.funapp.retroui.core.design.components.controls.RetroTextField
+import com.funapp.retroui.core.design.components.branding.RetroAppIcon
+import com.funapp.retroui.core.design.components.branding.RetroBolt
+import com.funapp.retroui.core.design.components.branding.RetroDuelLogo
+import com.funapp.retroui.core.design.components.branding.RetroLogoSize
+import com.funapp.retroui.core.design.components.branding.RetroSparkle
+import com.funapp.retroui.core.design.components.branding.RetroStar
 import com.funapp.retroui.core.design.components.feedback.RetroEmptyState
 import com.funapp.retroui.core.design.components.feedback.RetroLoadingIndicator
 import com.funapp.retroui.core.design.components.feedback.RetroProgressBar
@@ -98,6 +104,43 @@ fun DesignSystemScreen() {
         contentPadding = PaddingValues(bottom = RetroTheme.spacing.xxl),
     ) {
         item { Header() }
+
+        item { SectionHeader("Branding") }
+        item {
+            Column(
+                modifier = Modifier.padding(horizontal = RetroTheme.spacing.lg),
+                verticalArrangement = Arrangement.spacedBy(RetroTheme.spacing.md),
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                RetroDuelLogo()
+                RetroDuelLogo(size = RetroLogoSize.Medium, fill = colors.accent, decorated = false)
+                RetroDuelLogo(size = RetroLogoSize.Small, fill = colors.secondary, decorated = false)
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(RetroTheme.spacing.lg),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    RetroAppIcon(size = RetroTheme.dimensions.avatarXL)
+                    RetroAppIcon(
+                        size = 56.dp,
+                        backgroundColor = colors.secondary,
+                        monogramColor = colors.onSecondary,
+                    )
+                    RetroAppIcon(
+                        size = 48.dp,
+                        backgroundColor = colors.primary,
+                        monogramColor = colors.onPrimary,
+                    )
+                }
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(RetroTheme.spacing.md),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    RetroStar(modifier = Modifier.size(RetroTheme.dimensions.iconLG), color = colors.warning)
+                    RetroSparkle(modifier = Modifier.size(RetroTheme.dimensions.iconLG), color = colors.info)
+                    RetroBolt(modifier = Modifier.size(RetroTheme.dimensions.iconLG), color = colors.error)
+                }
+            }
+        }
 
         item { SectionHeader("Colors") }
         item { ColorSwatches() }
@@ -621,9 +664,9 @@ private fun ColorSwatches() {
         "textPrimary" to colors.textPrimary,
         "textSecondary" to colors.textSecondary,
         "textMuted" to colors.textMuted,
-        "doodlePrimary" to colors.doodlePrimary,
-        "doodleSecondary" to colors.doodleSecondary,
-        "doodleAccent" to colors.doodleAccent,
+        "decorPrimary" to colors.decorPrimary,
+        "decorSecondary" to colors.decorSecondary,
+        "decorAccent" to colors.decorAccent,
     )
     Column(
         modifier = Modifier.padding(horizontal = RetroTheme.spacing.lg),

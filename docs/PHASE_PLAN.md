@@ -32,10 +32,10 @@
 - `DesignSystemScreen` — one scrollable screen rendering every token + component
 - `App.kt` → `RetroTheme { DesignSystemScreen() }`
 
-## 🔜 Phase 6: Icons & Doodles
+## 🔜 Phase 6: Icons & Decorations
 
 - Retro icon set (bold, illustrative, dark outlines)
-- Decorative doodles (hearts, lightning, stars, sparks) as Canvas composables
+- Decorative pixel elements (hearts, lightning, stars, sparks) as Canvas composables
 
 ## 🔜 Phase 7: Navigation & App Shell
 

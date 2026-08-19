@@ -1,6 +1,6 @@
 <resources>
     <!-- App / brand -->
-    <string name="app_name">DOODLE DUEL</string>
+    <string name="app_name">RETRO DUEL</string>
     <string name="app_tagline">Build. Battle. Become the Champion.</string>
 
     <!-- Generic UI -->
@@ -16,5 +16,5 @@
 
     <!-- Design-system showcase -->
     <string name="showcase_title">Design System</string>
-    <string name="showcase_subtitle">Retro / Doodle Duel kit</string>
+    <string name="showcase_subtitle">Retro UI kit</string>
 </resources>

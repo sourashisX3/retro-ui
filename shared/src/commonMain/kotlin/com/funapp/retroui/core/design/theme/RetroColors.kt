@@ -63,10 +63,10 @@ data class RetroColors(
     val infoContainer: Color,
     val onInfoContainer: Color,
 
-    // Doodle / decorative accents
-    val doodlePrimary: Color,
-    val doodleSecondary: Color,
-    val doodleAccent: Color,
+    // Decorative accents
+    val decorPrimary: Color,
+    val decorSecondary: Color,
+    val decorAccent: Color,
 )
 
 val LightRetroColors = RetroColors(
@@ -115,9 +115,9 @@ val LightRetroColors = RetroColors(
     infoContainer = Color(0xFFC9D3FF),
     onInfoContainer = Prim.BlueDeep,
 
-    doodlePrimary = Prim.Purple,
-    doodleSecondary = Prim.Blue,
-    doodleAccent = Prim.Pink,
+    decorPrimary = Prim.Purple,
+    decorSecondary = Prim.Blue,
+    decorAccent = Prim.Pink,
 )
 
 val DarkRetroColors = RetroColors(
@@ -166,7 +166,7 @@ val DarkRetroColors = RetroColors(
     infoContainer = Color(0xFF1E2A5E),
     onInfoContainer = Color(0xFFB3C2FF),
 
-    doodlePrimary = Prim.Purple,
-    doodleSecondary = Prim.Blue,
-    doodleAccent = Prim.Pink,
+    decorPrimary = Prim.Purple,
+    decorSecondary = Prim.Blue,
+    decorAccent = Prim.Pink,
 )
