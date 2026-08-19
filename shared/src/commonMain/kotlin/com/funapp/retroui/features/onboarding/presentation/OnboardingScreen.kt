@@ -8,6 +8,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -95,7 +96,10 @@ fun OnboardingScreen(
     val nextLabel = stringResource(Res.string.common_next)
     val startLabel = stringResource(Res.string.btn_start_playing)
 
-    RetroScreenStatic(modifier = modifier) {
+    RetroScreenStatic(
+        modifier = modifier,
+        contentPadding = PaddingValues(bottom = spacing.md),
+    ) {
         Column(modifier = Modifier.fillMaxSize()) {
             // Skip (top-right)
             Row(
