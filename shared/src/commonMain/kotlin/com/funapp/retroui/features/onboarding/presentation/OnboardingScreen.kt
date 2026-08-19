@@ -1,8 +1,7 @@
 package com.funapp.retroui.features.onboarding.presentation
-import com.funapp.retroui.core.ui.icons.RetroIcons
 
 import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -18,26 +17,29 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
-import com.funapp.retroui.core.ui.icons.Create
-import com.funapp.retroui.core.ui.icons.PlayArrow
-import com.funapp.retroui.core.ui.icons.Star
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
+import io.github.alexzhirkevich.compottie.Compottie
+import io.github.alexzhirkevich.compottie.LottieCompositionSpec
+import io.github.alexzhirkevich.compottie.rememberLottieAnimatable
+import io.github.alexzhirkevich.compottie.rememberLottieComposition
+import io.github.alexzhirkevich.compottie.rememberLottiePainter
 import com.funapp.retroui.core.ui.animation.RetroEntranceStyle
 import com.funapp.retroui.core.ui.animation.retroEntrance
 import com.funapp.retroui.core.ui.components.controls.RetroButton
 import com.funapp.retroui.core.ui.components.controls.RetroButtonVariant
-import com.funapp.retroui.core.ui.token.RetroAnimation
 import com.funapp.retroui.core.ui.components.feedback.RetroEmptyState
 import com.funapp.retroui.core.ui.components.surfaces.RetroScreenStatic
 import com.funapp.retroui.core.ui.theme.RetroTheme
+import com.funapp.retroui.core.ui.token.RetroAnimation
 import kotlin.math.absoluteValue
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
@@ -54,15 +56,16 @@ import retroui.shared.generated.resources.onboarding_page_3_body
 import retroui.shared.generated.resources.onboarding_page_3_title
 
 private data class OnboardingPage(
-    val icon: ImageVector,
+    val animationPath: String,
     val title: String,
     val body: String,
 )
 
 /**
- * Onboarding: a 3-page arcade intro pager. Pages pop in with a subtle
- * fade/slide, a pixel dot indicator tracks progress, SKIP/ALREADY PLAYER
- * hop to login and START PLAYING (last page) begins the auth flow.
+ * Onboarding: a 3-page arcade intro pager with looping Lottie animations
+ * (compottie) per page. Pages fade/slide, a pixel dot indicator tracks
+ * progress, SKIP/ALREADY PLAYER hop to login and START PLAYING (last page)
+ * begins the auth flow.
  */
 @Composable
 fun OnboardingScreen(
@@ -74,17 +77,17 @@ fun OnboardingScreen(
 
     val pages = listOf(
         OnboardingPage(
-            icon = RetroIcons.Create,
+            animationPath = "files/question_coin.json",
             title = stringResource(Res.string.onboarding_page_1_title),
             body = stringResource(Res.string.onboarding_page_1_body),
         ),
         OnboardingPage(
-            icon = RetroIcons.PlayArrow,
+            animationPath = "files/pixel_earth.json",
             title = stringResource(Res.string.onboarding_page_2_title),
             body = stringResource(Res.string.onboarding_page_2_body),
         ),
         OnboardingPage(
-            icon = RetroIcons.Star,
+            animationPath = "files/pixel_duck.json",
             title = stringResource(Res.string.onboarding_page_3_title),
             body = stringResource(Res.string.onboarding_page_3_body),
         ),
@@ -132,10 +135,19 @@ fun OnboardingScreen(
                         .alpha(1f - offScreen * 0.35f),
                     contentAlignment = Alignment.Center,
                 ) {
-                    RetroEmptyState(
-                        title = pages[page].title,
-                        subtitle = pages[page].body,
-                        icon = pages[page].icon, modifier = Modifier.retroEntrance(style = RetroEntranceStyle.Coin),)
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        OnboardingLottie(
+                            animationPath = pages[page].animationPath,
+                            modifier = Modifier
+                                .size(160.dp)
+                                .retroEntrance(style = RetroEntranceStyle.Coin),
+                        )
+                        RetroEmptyState(
+                            title = pages[page].title,
+                            subtitle = pages[page].body,
+                            icon = null,
+                        )
+                    }
                 }
             }
 
@@ -167,6 +179,26 @@ fun OnboardingScreen(
             Spacer(modifier = Modifier.height(spacing.md))
         }
     }
+}
+
+/** Looping Lottie animation loaded from the shared compose resources. */
+@Composable
+private fun OnboardingLottie(
+    animationPath: String,
+    modifier: Modifier = Modifier,
+) {
+    val composition by rememberLottieComposition {
+        LottieCompositionSpec.JsonString(Res.readBytes(animationPath).decodeToString())
+    }
+    val animatable = rememberLottieAnimatable()
+    LaunchedEffect(composition) {
+        animatable.animate(composition, iterations = Compottie.IterateForever)
+    }
+    Image(
+        painter = rememberLottiePainter(composition, progress = animatable::value),
+        contentDescription = null,
+        modifier = modifier,
+    )
 }
 
 /** Pixel dot indicator: the active dot stretches into a capsule. */
