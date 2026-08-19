@@ -48,6 +48,8 @@ import com.funapp.retroui.core.design.components.controls.RetroIconButton
 import com.funapp.retroui.core.design.components.controls.RetroRadio
 import com.funapp.retroui.core.design.components.controls.RetroSwitch
 import com.funapp.retroui.core.design.components.controls.RetroTextField
+import com.funapp.retroui.core.design.components.feedback.RetroEmptyState
+import com.funapp.retroui.core.design.components.feedback.RetroLoadingIndicator
 import com.funapp.retroui.core.design.components.feedback.RetroProgressBar
 import com.funapp.retroui.core.design.components.feedback.RetroProgressColor
 import com.funapp.retroui.core.design.components.feedback.RetroStatusLabel
@@ -55,11 +57,22 @@ import com.funapp.retroui.core.design.components.feedback.SpeechBubble
 import com.funapp.retroui.core.design.components.foundation.RetroDivider
 import com.funapp.retroui.core.design.components.foundation.RetroText
 import com.funapp.retroui.core.design.components.foundation.retroHardShadow
+import com.funapp.retroui.core.design.components.game.RetroAvatar
+import com.funapp.retroui.core.design.components.game.RetroBattleLog
+import com.funapp.retroui.core.design.components.game.RetroBattleLogEntry
+import com.funapp.retroui.core.design.components.game.RetroBattleLogType
+import com.funapp.retroui.core.design.components.game.RetroCardRarity
+import com.funapp.retroui.core.design.components.game.RetroCardSlot
+import com.funapp.retroui.core.design.components.game.RetroGameCard
 import com.funapp.retroui.core.design.components.hud.HudStat
 import com.funapp.retroui.core.design.components.hud.StatHud
 import com.funapp.retroui.core.design.components.surfaces.RetroCard
 import com.funapp.retroui.core.design.components.surfaces.RetroCardHeader
+import com.funapp.retroui.core.design.components.surfaces.RetroCharacterCard
 import com.funapp.retroui.core.design.components.surfaces.RetroDashedGroup
+import com.funapp.retroui.core.design.components.surfaces.RetroPanel
+import com.funapp.retroui.core.design.components.surfaces.RetroSection
+import com.funapp.retroui.core.design.components.surfaces.RetroStatCard
 import com.funapp.retroui.core.design.theme.RetroTheme
 
 /**
@@ -94,8 +107,11 @@ fun DesignSystemScreen() {
             Column(modifier = Modifier.padding(horizontal = RetroTheme.spacing.lg)) {
                 TypeRow("Display", RetroTheme.typography.display, colors.textPrimary, "RETRO UI")
                 TypeRow("Headline", RetroTheme.typography.headline, colors.textPrimary, "GAME OVER")
+                TypeRow("Heading", RetroTheme.typography.heading, colors.textPrimary, "TODAY'S QUEST")
                 TypeRow("Title", RetroTheme.typography.title, colors.textPrimary, "Score 1250")
+                TypeRow("Score", RetroTheme.typography.score, colors.textPrimary, "01250")
                 TypeRow("Label", RetroTheme.typography.label, colors.textPrimary, "PLAY NOW")
+                TypeRow("Button", RetroTheme.typography.button, colors.textPrimary, "START BATTLE")
                 TypeRow("Body", RetroTheme.typography.body, colors.textSecondary, "Select a player to continue with the tournament.")
                 TypeRow("Body small", RetroTheme.typography.bodySmall, colors.textSecondary, "The quick brown fox jumps over the lazy dog.")
                 TypeRow("Caption", RetroTheme.typography.caption, colors.textMuted, "Muted helper text")
@@ -360,6 +376,173 @@ fun DesignSystemScreen() {
                     "Select a player to continue with the tournament!",
                     style = RetroTheme.typography.bodySmall,
                     color = colors.textPrimary,
+                )
+            }
+        }
+
+        item { SectionHeader("Avatars") }
+        item {
+            Row(
+                modifier = Modifier.padding(horizontal = RetroTheme.spacing.lg),
+                horizontalArrangement = Arrangement.spacedBy(RetroTheme.spacing.md),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                RetroAvatar(label = "🎮", size = RetroTheme.dimensions.avatarLG)
+                RetroAvatar(label = "⚔", size = RetroTheme.dimensions.avatarMD, borderColor = colors.error)
+                RetroAvatar(label = "🛡", size = RetroTheme.dimensions.avatarMD, circle = true)
+                RetroAvatar(label = "?", size = RetroTheme.dimensions.avatarSM, backgroundColor = colors.surfaceMuted)
+            }
+        }
+
+        item { SectionHeader("Game cards") }
+        item {
+            LazyRow(
+                modifier = Modifier.padding(horizontal = RetroTheme.spacing.lg),
+                horizontalArrangement = Arrangement.spacedBy(RetroTheme.spacing.md),
+            ) {
+                items(4) { index ->
+                    RetroGameCard(
+                        title = listOf("FIRE PUNCH", "IRON GUARD", "MEGA BOLT", "PHOENIX RISE")[index],
+                        cost = "${index + 1}",
+                        type = listOf("ATTACK", "DEFENSE", "ATTACK", "HEAL")[index],
+                        artwork = listOf("🔥", "🛡", "⚡", "🐦")[index],
+                        description = "Strike with 25 damage.",
+                        footer = listOf("DMG 25", "+30 SHIELD", "DMG 40", "+50 HP")[index],
+                        rarity = listOf(
+                            RetroCardRarity.Common,
+                            RetroCardRarity.Rare,
+                            RetroCardRarity.Epic,
+                            RetroCardRarity.Legendary,
+                        )[index],
+                        selected = index == 1,
+                    )
+                }
+            }
+        }
+
+        item { SectionHeader("Card slots") }
+        item {
+            Row(
+                modifier = Modifier.padding(horizontal = RetroTheme.spacing.lg),
+                horizontalArrangement = Arrangement.spacedBy(RetroTheme.spacing.md),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                RetroCardSlot()
+                RetroCardSlot(empty = true)
+                RetroCardSlot {
+                    RetroText("x3", style = RetroTheme.typography.label, color = colors.textPrimary)
+                }
+            }
+        }
+
+        item { SectionHeader("Stat cards") }
+        item {
+            Row(
+                modifier = Modifier.padding(horizontal = RetroTheme.spacing.lg),
+                horizontalArrangement = Arrangement.spacedBy(RetroTheme.spacing.md),
+            ) {
+                RetroStatCard(
+                    label = "HP",
+                    value = "150",
+                    progress = 0.75f,
+                    progressColor = RetroProgressColor.Health,
+                )
+                RetroStatCard(
+                    label = "MP",
+                    value = "80",
+                    progress = 0.4f,
+                    progressColor = RetroProgressColor.Energy,
+                )
+                RetroStatCard(
+                    label = "XP",
+                    value = "2,450",
+                    progress = 0.8f,
+                    progressColor = RetroProgressColor.Xp,
+                )
+            }
+        }
+
+        item { SectionHeader("Character card") }
+        item {
+            RetroCharacterCard(
+                name = "Sir Pixel",
+                level = "12",
+                avatarLabel = "🛡",
+                avatarColor = colors.surfaceVariant,
+                hp = 0.66f,
+                shield = 0.3f,
+                hpText = "132/200",
+                modifier = Modifier.padding(horizontal = RetroTheme.spacing.lg),
+            )
+        }
+
+        item { SectionHeader("Dashed group") }
+        item {
+            RetroDashedGroup(
+                modifier = Modifier.padding(horizontal = RetroTheme.spacing.lg),
+            ) {
+                RetroText("SETTINGS PANEL", style = RetroTheme.typography.label, color = colors.textSecondary)
+                Spacer(modifier = Modifier.height(RetroTheme.spacing.md))
+                RetroSwitch(checked = true, onCheckedChange = {})
+                Spacer(modifier = Modifier.height(RetroTheme.spacing.sm))
+                RetroText(
+                    "Dashed containers group related controls into a game panel.",
+                    style = RetroTheme.typography.bodySmall,
+                    color = colors.textMuted,
+                )
+            }
+        }
+
+        item { SectionHeader("Panels & sections") }
+        item {
+            Column(
+                modifier = Modifier.padding(horizontal = RetroTheme.spacing.lg),
+                verticalArrangement = Arrangement.spacedBy(RetroTheme.spacing.md),
+            ) {
+                RetroPanel(title = "TODAY'S QUEST", subtitle = "Win 2 battles") {
+                    RetroText(
+                        "Deal 100 damage with attack cards.",
+                        style = RetroTheme.typography.bodySmall,
+                        color = colors.textSecondary,
+                    )
+                    Spacer(modifier = Modifier.height(RetroTheme.spacing.sm))
+                    RetroProgressBar(progress = 0.8f, color = RetroProgressColor.Xp)
+                }
+                RetroSection(title = "ACHIEVEMENTS") {
+                    RetroText(
+                        "Completed milestones and rewards.",
+                        style = RetroTheme.typography.bodySmall,
+                        color = colors.textSecondary,
+                    )
+                }
+            }
+        }
+
+        item { SectionHeader("Battle log") }
+        item {
+            RetroBattleLog(
+                modifier = Modifier.padding(horizontal = RetroTheme.spacing.lg),
+                height = 140.dp,
+                entries = listOf(
+                    RetroBattleLogEntry("Fire Punch — 25 damage", RetroBattleLogType.Damage, "⚔"),
+                    RetroBattleLogEntry("Iron Guard — +30 shield", RetroBattleLogType.Shield, "🛡"),
+                    RetroBattleLogEntry("Healing Potion — +50 HP", RetroBattleLogType.Heal, "🧪"),
+                    RetroBattleLogEntry("Turn 3 — Player ready", RetroBattleLogType.System, "▶"),
+                ),
+            )
+        }
+
+        item { SectionHeader("Loading & empty states") }
+        item {
+            Column(
+                modifier = Modifier.padding(horizontal = RetroTheme.spacing.lg),
+                verticalArrangement = Arrangement.spacedBy(RetroTheme.spacing.md),
+            ) {
+                RetroLoadingIndicator()
+                RetroEmptyState(
+                    title = "NO CARDS YET",
+                    subtitle = "Complete battles to earn your first cards.",
+                    action = { RetroButton("BATTLE", small = true, onClick = {}) },
                 )
             }
         }

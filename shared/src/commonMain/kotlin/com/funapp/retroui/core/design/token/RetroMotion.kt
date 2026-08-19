@@ -1,6 +1,7 @@
 package com.funapp.retroui.core.design.token
 
 import androidx.compose.animation.core.CubicBezierEasing
+import androidx.compose.animation.core.DurationBasedAnimationSpec
 import androidx.compose.animation.core.Easing
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.FiniteAnimationSpec
@@ -54,14 +55,14 @@ object RetroMotion {
  * `Animatable`, `animate*AsState`, and `graphicsLayer` scale/rotation.
  */
 object RetroAnimation {
-    val press: FiniteAnimationSpec<Float> = tween(RetroMotion.FastMs, easing = RetroMotion.StandardEasing)
+    val press: DurationBasedAnimationSpec<Float> = tween(RetroMotion.FastMs, easing = RetroMotion.StandardEasing)
 
     val pop: FiniteAnimationSpec<Float> = spring(
         dampingRatio = 0.45f,
         stiffness = 900f,
     )
 
-    val bounce: FiniteAnimationSpec<Float> = keyframes {
+    val bounce: DurationBasedAnimationSpec<Float> = keyframes {
         durationMillis = RetroMotion.SlowMs
         0f at 0
         1f at RetroMotion.FastMs
@@ -69,7 +70,7 @@ object RetroAnimation {
         1f at durationMillis
     }
 
-    val shake: FiniteAnimationSpec<Float> = keyframes {
+    val shake: DurationBasedAnimationSpec<Float> = keyframes {
         durationMillis = RetroMotion.SlowMs
         0f at 0
         -1f at 60
@@ -79,16 +80,16 @@ object RetroAnimation {
         0f at durationMillis
     }
 
-    val slide: FiniteAnimationSpec<Float> = tween(RetroMotion.NormalMs, easing = RetroMotion.DecelerateEasing)
+    val slide: DurationBasedAnimationSpec<Float> = tween(RetroMotion.NormalMs, easing = RetroMotion.DecelerateEasing)
 
-    val fade: FiniteAnimationSpec<Float> = tween(RetroMotion.NormalMs, easing = RetroMotion.AccelerateEasing)
+    val fade: DurationBasedAnimationSpec<Float> = tween(RetroMotion.NormalMs, easing = RetroMotion.AccelerateEasing)
 
-    val flip: FiniteAnimationSpec<Float> = tween(RetroMotion.SlowMs, easing = RetroMotion.EmphasizedEasing)
+    val flip: DurationBasedAnimationSpec<Float> = tween(RetroMotion.SlowMs, easing = RetroMotion.EmphasizedEasing)
 
     val cardReveal: FiniteAnimationSpec<Float> = spring(
         dampingRatio = 0.5f,
         stiffness = 500f,
     )
 
-    val draw: FiniteAnimationSpec<Float> = tween(RetroMotion.NormalMs, easing = RetroMotion.EmphasizedEasing)
+    val draw: DurationBasedAnimationSpec<Float> = tween(RetroMotion.NormalMs, easing = RetroMotion.EmphasizedEasing)
 }
