@@ -1,4 +1,4 @@
-package com.funapp.retroui.features.auth.presentation
+package com.funapp.retroui.features.auth.presentation.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
