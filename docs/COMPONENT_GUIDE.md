@@ -122,6 +122,24 @@ SpeechBubble {
 }
 ```
 
+## RetroShine
+
+Soft glass/light sheen overlay for highlighting. A wide, softly-fading
+diagonal band sweeps top-left → bottom-right over the element it is stacked
+on, pauses, and loops. Reusable for any highlight need (CTAs, fresh cards,
+active slots).
+
+```kotlin
+Box {
+    RetroButton(text = "START BATTLE", onClick = { })
+    RetroShine(shape = RetroTheme.shapeTokens.button)
+}
+```
+
+Defaults: 45% band width, 20% peak alpha, 22° tilt, 2s sweep + 1.2s hold.
+Tune with `bandFraction` / `peakAlpha` / `rotation` / `sweepMillis` /
+`holdMillis`; disable with `enabled = false`.
+
 ## Other controls
 
 ```kotlin
