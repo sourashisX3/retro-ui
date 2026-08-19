@@ -14,9 +14,11 @@ import com.funapp.retroui.core.ui.icons.RetroIcons
 import com.funapp.retroui.core.ui.icons.Trophy
 import com.funapp.retroui.core.ui.icons.Star
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -27,6 +29,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.funapp.retroui.core.ui.components.feedback.LocalRetroToastController
+import com.funapp.retroui.core.ui.components.feedback.RetroToastController
+import com.funapp.retroui.core.ui.components.feedback.RetroToastHost
 import com.funapp.retroui.core.ui.components.navigation.RetroBottomBar
 import com.funapp.retroui.core.ui.components.navigation.RetroBottomBarItem
 import com.funapp.retroui.core.ui.token.RetroAnimation
@@ -83,6 +88,9 @@ fun AppNavHost(
 
     val matchmakingRepository = LocalAppContainer.current.matchmakingRepository
     val fallbackOpponent = mockChampionRoster().first()
+
+    val toastScope = rememberCoroutineScope()
+    val toastController = remember(toastScope) { RetroToastController(toastScope) }
     var matchedOpponent by remember { mutableStateOf<MockChampion?>(null) }
 
     val selectedTabIndex = bottomBarTabs().indexOfFirst { (_, route) ->
@@ -90,8 +98,9 @@ fun AppNavHost(
     }
     val showBottomBar = selectedTabIndex >= 0
 
-    Box(modifier = Modifier.fillMaxSize()) {
-        Column(modifier = Modifier.fillMaxSize()) {
+    CompositionLocalProvider(LocalRetroToastController provides toastController) {
+        Box(modifier = Modifier.fillMaxSize()) {
+            Column(modifier = Modifier.fillMaxSize()) {
             NavHost(
                 navController = navController,
                 startDestination = Route.Splash,
@@ -266,6 +275,12 @@ fun AppNavHost(
                 },
                 modifier = Modifier.align(Alignment.BottomCenter),
             )
+        }
+
+        RetroToastHost(
+            controller = toastController,
+            modifier = Modifier.align(Alignment.TopCenter),
+        )
         }
     }
 }

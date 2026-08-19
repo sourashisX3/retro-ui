@@ -31,6 +31,8 @@ import com.funapp.retroui.core.ui.animation.RetroEntranceStyle
 import com.funapp.retroui.core.ui.animation.retroEntrance
 import com.funapp.retroui.core.ui.components.controls.RetroButton
 import com.funapp.retroui.core.ui.components.controls.RetroButtonVariant
+import com.funapp.retroui.core.ui.components.feedback.LocalRetroToastController
+import com.funapp.retroui.core.ui.components.feedback.RetroToastType
 import com.funapp.retroui.core.ui.components.foundation.RetroText
 import com.funapp.retroui.core.ui.components.surfaces.RetroScreenStatic
 import com.funapp.retroui.core.ui.icons.RetroIcons
@@ -43,6 +45,7 @@ import retroui.shared.generated.resources.Res
 import retroui.shared.generated.resources.btn_cancel_search
 import retroui.shared.generated.resources.matchmaking_subtitle
 import retroui.shared.generated.resources.matchmaking_title
+import retroui.shared.generated.resources.toast_search_cancelled
 
 /**
  * Matchmaking queue. A radar-style spinner rotates arcade-style while the
@@ -57,6 +60,8 @@ fun MatchmakingScreen(
     modifier: Modifier = Modifier,
 ) {
     val colors = RetroTheme.colors
+    val cancelToast = stringResource(Res.string.toast_search_cancelled)
+    val toastController = LocalRetroToastController.current
 
     val radar = rememberInfiniteTransition(label = "matchmakingRadar")
     val spin by radar.animateFloat(
@@ -129,7 +134,13 @@ fun MatchmakingScreen(
             RetroButton(
                 text = stringResource(Res.string.btn_cancel_search),
                 variant = RetroButtonVariant.Outline,
-                onClick = onCancel,
+                onClick = {
+                    toastController.show(
+                        cancelToast,
+                        type = RetroToastType.Info,
+                    )
+                    onCancel()
+                },
                 small = true,
                 modifier = Modifier.retroEntrance(style = RetroEntranceStyle.Pop, delayMillis = 180),
             )

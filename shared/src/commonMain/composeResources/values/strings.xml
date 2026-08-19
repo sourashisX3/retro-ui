@@ -238,6 +238,11 @@
     <string name="lb_name_11">SHADOW MINT</string>
     <string name="lb_name_12">STAR LANCER</string>
 
+    <!-- Toasts -->
+    <string name="toast_deck_saved">DECK SAVED!</string>
+    <string name="toast_search_cancelled">SEARCH CANCELLED</string>
+    <string name="toast_reward_claimed">REWARD CLAIMED!</string>
+
     <!-- Matchmaking -->
     <string name="matchmaking_title">SEARCHING FOR OPPONENT</string>
     <string name="matchmaking_subtitle">SCANNING THE ARENA</string>

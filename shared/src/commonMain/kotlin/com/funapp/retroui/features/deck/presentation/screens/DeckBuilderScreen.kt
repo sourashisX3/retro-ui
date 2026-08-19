@@ -41,10 +41,13 @@ import com.funapp.retroui.core.ui.components.surfaces.RetroScreen
 import com.funapp.retroui.core.ui.theme.RetroTheme
 import com.funapp.retroui.core.data.mock.MockChampion
 import com.funapp.retroui.core.data.mock.mockChampionRoster
+import com.funapp.retroui.core.ui.components.feedback.LocalRetroToastController
+import com.funapp.retroui.core.ui.components.feedback.RetroToastType
 import org.jetbrains.compose.resources.stringResource
 import retroui.shared.generated.resources.Res
 import retroui.shared.generated.resources.btn_browse_collection
 import retroui.shared.generated.resources.btn_save_deck
+import retroui.shared.generated.resources.toast_deck_saved
 import retroui.shared.generated.resources.deck_add
 import retroui.shared.generated.resources.deck_available_title
 import retroui.shared.generated.resources.deck_empty_hint
@@ -68,6 +71,8 @@ fun DeckBuilderScreen(
 ) {
     val pool = mockChampionRoster()
     val deck = remember { mutableStateListOf<MockChampion>() }
+    val deckSavedToast = stringResource(Res.string.toast_deck_saved)
+    val toastController = LocalRetroToastController.current
 
     RetroScreen(modifier = modifier) {
         item {
@@ -126,7 +131,13 @@ fun DeckBuilderScreen(
                 RetroButton(
                     text = stringResource(Res.string.btn_save_deck),
                     leadingIcon = RetroIcons.Check,
-                    onClick = onGoHome,
+                    onClick = {
+                        toastController.show(
+                            deckSavedToast,
+                            type = RetroToastType.Success,
+                        )
+                        onGoHome()
+                    },
                     enabled = deck.size == DECK_SIZE,
                     small = true,
                     modifier = Modifier.fillMaxWidth(),

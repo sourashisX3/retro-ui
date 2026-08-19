@@ -13,6 +13,8 @@ import androidx.compose.ui.Modifier
 import com.funapp.retroui.core.ui.animation.RetroEntranceStyle
 import com.funapp.retroui.core.ui.animation.retroCascade
 import com.funapp.retroui.core.ui.animation.retroEntrance
+import com.funapp.retroui.core.ui.components.feedback.LocalRetroToastController
+import com.funapp.retroui.core.ui.components.feedback.RetroToastType
 import com.funapp.retroui.core.ui.components.foundation.RetroText
 import com.funapp.retroui.core.ui.components.surfaces.RetroScreen
 import com.funapp.retroui.core.ui.components.surfaces.RetroSection
@@ -27,6 +29,7 @@ import retroui.shared.generated.resources.quests_daily_title
 import retroui.shared.generated.resources.quests_weekly_title
 import retroui.shared.generated.resources.screen_quests_subtitle
 import retroui.shared.generated.resources.screen_quests_title
+import retroui.shared.generated.resources.toast_reward_claimed
 
 /**
  * Quests. Daily and weekly quest lists with progress and claim actions.
@@ -38,6 +41,8 @@ fun QuestsScreen(
 ) {
     val dailyQuests = remember { getMockDailyQuests() }
     val weeklyQuests = remember { getMockWeeklyQuests() }
+    val toastController = LocalRetroToastController.current
+    val claimedToast = stringResource(Res.string.toast_reward_claimed)
 
     RetroScreen(modifier = modifier) {
         item {
@@ -66,7 +71,7 @@ fun QuestsScreen(
                     if (index > 0) {
                         Spacer(modifier = Modifier.height(RetroTheme.spacing.sm))
                     }
-                    QuestRow(icon = quest.icon,label = quest.label.asString(),reward = quest.reward,progress = quest.progress,claimable = quest.claimable,onClaim = {},modifier = Modifier.retroEntrance(style = RetroEntranceStyle.Pop, delayMillis = 60 + retroCascade(index, stepMs = 40)),)
+                    QuestRow(icon = quest.icon,label = quest.label.asString(),reward = quest.reward,progress = quest.progress,claimable = quest.claimable,onClaim = { toastController.show(claimedToast, type = RetroToastType.Success) },modifier = Modifier.retroEntrance(style = RetroEntranceStyle.Pop, delayMillis = 60 + retroCascade(index, stepMs = 40)),)
                 }
             }
         }
@@ -82,7 +87,7 @@ fun QuestsScreen(
                     if (index > 0) {
                         Spacer(modifier = Modifier.height(RetroTheme.spacing.sm))
                     }
-                    QuestRow(icon = quest.icon,label = quest.label.asString(),reward = quest.reward,progress = quest.progress,claimable = quest.claimable,onClaim = {},modifier = Modifier.retroEntrance(style = RetroEntranceStyle.Pop, delayMillis = 120 + retroCascade(index, stepMs = 40)),)
+                    QuestRow(icon = quest.icon,label = quest.label.asString(),reward = quest.reward,progress = quest.progress,claimable = quest.claimable,onClaim = { toastController.show(claimedToast, type = RetroToastType.Success) },modifier = Modifier.retroEntrance(style = RetroEntranceStyle.Pop, delayMillis = 120 + retroCascade(index, stepMs = 40)),)
                 }
             }
         }
