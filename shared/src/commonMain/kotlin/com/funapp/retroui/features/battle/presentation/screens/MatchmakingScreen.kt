@@ -112,6 +112,7 @@ fun MatchmakingScreen(
                 text = stringResource(Res.string.matchmaking_title),
                 style = RetroTheme.typography.heading,
                 color = colors.textPrimary,
+                textAlign = androidx.compose.ui.text.style.TextAlign.Center,
                 modifier = Modifier.retroEntrance(style = RetroEntranceStyle.Stomp, delayMillis = 60),
             )
             Spacer(modifier = Modifier.height(RetroTheme.spacing.xs))
@@ -119,6 +120,7 @@ fun MatchmakingScreen(
                 text = stringResource(Res.string.matchmaking_subtitle),
                 style = RetroTheme.typography.caption,
                 color = colors.textSecondary,
+                textAlign = androidx.compose.ui.text.style.TextAlign.Center,
                 modifier = Modifier
                     .retroEntrance(style = RetroEntranceStyle.Stomp, delayMillis = 120)
                     .graphicsLayer { alpha = statusBlink },

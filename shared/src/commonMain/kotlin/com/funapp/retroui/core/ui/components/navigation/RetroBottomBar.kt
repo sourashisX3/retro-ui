@@ -1,5 +1,6 @@
 package com.funapp.retroui.core.ui.components.navigation
 import com.funapp.retroui.core.ui.icons.RetroIcons
+import com.funapp.retroui.core.ui.icons.Trophy
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.BorderStroke
@@ -42,6 +43,7 @@ import org.jetbrains.compose.resources.stringResource
 import retroui.shared.generated.resources.Res
 import retroui.shared.generated.resources.nav_cards
 import retroui.shared.generated.resources.nav_home
+import retroui.shared.generated.resources.nav_leaderboard
 import retroui.shared.generated.resources.nav_profile
 import retroui.shared.generated.resources.nav_quests
 import com.funapp.retroui.core.ui.components.foundation.RetroText
@@ -175,7 +177,7 @@ private fun RetroDockTab(
     }
 }
 
-/** Convenience: the four main Deckron tabs (matches app routes). */
+/** Convenience: the five main Deckron tabs (matches app routes). */
 object RetroBottomBarDestinations {
     @Composable
     fun all(): List<RetroBottomBarItem> = listOf(
@@ -183,6 +185,7 @@ object RetroBottomBarDestinations {
         RetroBottomBarItem(stringResource(Res.string.nav_cards), RetroIcons.Star),
         RetroBottomBarItem(stringResource(Res.string.nav_quests), RetroIcons.PlayArrow),
         RetroBottomBarItem(stringResource(Res.string.nav_profile), RetroIcons.Person),
+        RetroBottomBarItem(stringResource(Res.string.nav_leaderboard), RetroIcons.Trophy),
     )
 }
 

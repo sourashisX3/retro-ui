@@ -11,6 +11,7 @@ import com.funapp.retroui.core.ui.icons.Home
 import com.funapp.retroui.core.ui.icons.Person
 import com.funapp.retroui.core.ui.icons.PlayArrow
 import com.funapp.retroui.core.ui.icons.RetroIcons
+import com.funapp.retroui.core.ui.icons.Trophy
 import com.funapp.retroui.core.ui.icons.Star
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -35,6 +36,7 @@ import com.funapp.retroui.features.auth.presentation.screens.RegisterScreen
 import com.funapp.retroui.features.battle.presentation.screens.BattleScreen
 import com.funapp.retroui.features.battle.presentation.screens.MatchmakingScreen
 import com.funapp.retroui.features.collection.presentation.screens.CollectionScreen
+import com.funapp.retroui.features.leaderboard.presentation.screens.LeaderboardScreen
 import com.funapp.retroui.features.deck.presentation.screens.DeckBuilderScreen
 import com.funapp.retroui.features.home.presentation.screens.HomeScreen
 import com.funapp.retroui.features.onboarding.presentation.OnboardingScreen
@@ -49,6 +51,7 @@ import org.jetbrains.compose.resources.stringResource
 import retroui.shared.generated.resources.Res
 import retroui.shared.generated.resources.nav_cards
 import retroui.shared.generated.resources.nav_home
+import retroui.shared.generated.resources.nav_leaderboard
 import retroui.shared.generated.resources.nav_profile
 import retroui.shared.generated.resources.nav_quests
 
@@ -59,6 +62,7 @@ private fun bottomBarTabs(): List<Pair<RetroBottomBarItem, Route>> = listOf(
     RetroBottomBarItem(stringResource(Res.string.nav_cards), RetroIcons.Star) to Route.Collection,
     RetroBottomBarItem(stringResource(Res.string.nav_quests), RetroIcons.PlayArrow) to Route.Quests,
     RetroBottomBarItem(stringResource(Res.string.nav_profile), RetroIcons.Person) to Route.Profile,
+    RetroBottomBarItem(stringResource(Res.string.nav_leaderboard), RetroIcons.Trophy) to Route.Leaderboard,
 )
 
 /**
@@ -229,6 +233,10 @@ fun AppNavHost(
                         onGoSettings = { navController.navigate(Route.Settings) },
                         onGoHome = { navController.popBackStack() },
                     )
+                }
+
+                composable<Route.Leaderboard> {
+                    LeaderboardScreen()
                 }
 
                 composable<Route.Settings> {

@@ -9,6 +9,7 @@
     <string name="nav_cards">CARDS</string>
     <string name="nav_quests">QUESTS</string>
     <string name="nav_profile">PROFILE</string>
+    <string name="nav_leaderboard">RANK</string>
 
     <!-- Generic UI -->
     <string name="common_ok">OK</string>
@@ -219,6 +220,23 @@
     <string name="retreat_confirm_title">RETREAT?</string>
     <string name="retreat_confirm_body">Return to the main menu? Progress in this battle will be lost.</string>
     <string name="btn_confirm_retreat">RETREAT</string>
+
+    <!-- Leaderboard -->
+    <string name="screen_leaderboard_title">ARENA RANKS</string>
+    <string name="screen_leaderboard_subtitle">TOP FIGHTERS THIS SEASON</string>
+    <string name="lb_you">YOU</string>
+    <string name="lb_name_01">BLADE MASTER</string>
+    <string name="lb_name_02">NOVA QUEEN</string>
+    <string name="lb_name_03">IRON RONIN</string>
+    <string name="lb_name_04">GHOST PILOT</string>
+    <string name="lb_name_05">VOID SORCERER</string>
+    <string name="lb_name_06">TURBO VIXEN</string>
+    <string name="lb_name_07">CRIMSON ACE</string>
+    <string name="lb_name_08">HEX KNIGHT</string>
+    <string name="lb_name_09">LUCKY CLOWN</string>
+    <string name="lb_name_10">BOLT PRINCE</string>
+    <string name="lb_name_11">SHADOW MINT</string>
+    <string name="lb_name_12">STAR LANCER</string>
 
     <!-- Matchmaking -->
     <string name="matchmaking_title">SEARCHING FOR OPPONENT</string>
