@@ -52,8 +52,6 @@ import retroui.shared.generated.resources.onboarding_page_1_body
 import retroui.shared.generated.resources.onboarding_page_1_title
 import retroui.shared.generated.resources.onboarding_page_2_body
 import retroui.shared.generated.resources.onboarding_page_2_title
-import retroui.shared.generated.resources.onboarding_page_3_body
-import retroui.shared.generated.resources.onboarding_page_3_title
 
 private data class OnboardingPage(
     val animationPath: String,
@@ -62,7 +60,7 @@ private data class OnboardingPage(
 )
 
 /**
- * Onboarding: a 3-page arcade intro pager with looping Lottie animations
+ * Onboarding: a 2-page arcade intro pager with looping Lottie animations
  * (compottie) per page. Pages fade/slide, a pixel dot indicator tracks
  * progress, SKIP/ALREADY PLAYER hop to login and START PLAYING (last page)
  * begins the auth flow.
@@ -82,14 +80,9 @@ fun OnboardingScreen(
             body = stringResource(Res.string.onboarding_page_1_body),
         ),
         OnboardingPage(
-            animationPath = "files/pixel_earth.json",
+            animationPath = "files/pixel_duck.json",
             title = stringResource(Res.string.onboarding_page_2_title),
             body = stringResource(Res.string.onboarding_page_2_body),
-        ),
-        OnboardingPage(
-            animationPath = "files/pixel_duck.json",
-            title = stringResource(Res.string.onboarding_page_3_title),
-            body = stringResource(Res.string.onboarding_page_3_body),
         ),
     )
     val pagerState = rememberPagerState(pageCount = { pages.size })
