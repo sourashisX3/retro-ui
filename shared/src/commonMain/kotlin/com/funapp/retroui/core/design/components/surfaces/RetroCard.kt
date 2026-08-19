@@ -26,6 +26,7 @@ import com.funapp.retroui.core.design.components.foundation.RetroText
 import com.funapp.retroui.core.design.components.foundation.retroHardShadow
 import com.funapp.retroui.core.design.theme.RetroTheme
 import com.funapp.retroui.core.feedback.rememberRetroTapFeedback
+import com.funapp.retroui.core.design.animation.retroPressFeedback
 
 /**
  * Physical paper/game card.
@@ -45,10 +46,11 @@ fun RetroCard(
     val colors = RetroTheme.colors
     val shape: CornerBasedShape = RetroTheme.shapeTokens.card
     val tap = rememberRetroTapFeedback()
+    val interactionSource = remember { MutableInteractionSource() }
 
     val clickModifier = if (onClick != null) {
         Modifier.clickable(
-            interactionSource = remember { MutableInteractionSource() },
+            interactionSource = interactionSource,
             indication = null,
         ) {
             tap.play()
@@ -58,6 +60,7 @@ fun RetroCard(
 
     Box(
         modifier = modifier
+            .then(if (onClick != null) Modifier.retroPressFeedback(interactionSource) else Modifier)
             .retroHardShadow(
                 offsetX = 3.dp,
                 offsetY = 4.dp,

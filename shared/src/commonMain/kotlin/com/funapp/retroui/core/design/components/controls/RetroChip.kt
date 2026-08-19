@@ -23,6 +23,7 @@ import com.funapp.retroui.core.design.components.foundation.RetroText
 import com.funapp.retroui.core.design.components.foundation.retroHardShadow
 import com.funapp.retroui.core.design.theme.RetroTheme
 import com.funapp.retroui.core.feedback.rememberRetroTapFeedback
+import com.funapp.retroui.core.design.animation.retroPressFeedback
 
 enum class RetroChipVariant { Filled, Outline }
 
@@ -54,6 +55,7 @@ fun RetroChip(
         else -> colors.textPrimary
     }
     val tap = rememberRetroTapFeedback()
+    val interactionSource = remember { MutableInteractionSource() }
 
     Box(
         modifier = modifier
@@ -66,9 +68,10 @@ fun RetroChip(
             .clip(shape)
             .background(container)
             .border(BorderStroke(RetroTheme.borders.default, colors.outlineStrong), shape)
+            .retroPressFeedback(interactionSource)
             .clickable(
                 enabled = enabled,
-                interactionSource = remember { MutableInteractionSource() },
+                interactionSource = interactionSource,
                 indication = null,
             ) {
                 tap.play()

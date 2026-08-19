@@ -91,5 +91,10 @@ object RetroAnimation {
         stiffness = 500f,
     )
 
+    val liquid: FiniteAnimationSpec<Float> = spring(
+        dampingRatio = 0.72f,
+        stiffness = 380f,
+    )
+
     val draw: DurationBasedAnimationSpec<Float> = tween(RetroMotion.NormalMs, easing = RetroMotion.EmphasizedEasing)
 }

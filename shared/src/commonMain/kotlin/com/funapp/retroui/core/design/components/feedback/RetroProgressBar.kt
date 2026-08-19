@@ -1,5 +1,6 @@
 package com.funapp.retroui.core.design.components.feedback
 
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -12,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CornerBasedShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -24,6 +26,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.funapp.retroui.core.design.components.foundation.RetroText
 import com.funapp.retroui.core.design.theme.RetroTheme
+import com.funapp.retroui.core.design.token.RetroAnimation
 
 enum class RetroProgressColor { Health, Energy, Xp, Danger, Info }
 
@@ -47,6 +50,11 @@ fun RetroProgressBar(
     val colors = RetroTheme.colors
     val shape: CornerBasedShape = RoundedCornerShape(RetroTheme.shapes.sm)
     val clamped = progress.coerceIn(0f, 1f)
+    val animatedProgress by animateFloatAsState(
+        targetValue = clamped,
+        animationSpec = RetroAnimation.liquid,
+        label = "progressFill",
+    )
     val fillColor = when (color) {
         RetroProgressColor.Health -> colors.primary
         RetroProgressColor.Energy -> colors.secondary
@@ -65,7 +73,7 @@ fun RetroProgressBar(
     ) {
         Box(
             modifier = Modifier
-                .fillMaxWidth(clamped)
+                .fillMaxWidth(animatedProgress)
                 .fillMaxHeight()
                 .background(fillColor),
         )
@@ -74,7 +82,7 @@ fun RetroProgressBar(
         }
         if (showValue || valueText != null) {
             RetroText(
-                text = valueText ?: "${(clamped * 100).toInt()}",
+                text = valueText ?: "${(animatedProgress * 100).toInt()}",
                 style = RetroTheme.typography.caption,
                 color = colors.textPrimary,
                 modifier = Modifier.align(Alignment.Center),
