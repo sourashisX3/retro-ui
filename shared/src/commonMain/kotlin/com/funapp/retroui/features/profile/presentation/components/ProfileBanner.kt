@@ -29,8 +29,8 @@ import retroui.shared.generated.resources.player_display_name
  * Full profile banner: large avatar, name, rank chip and XP progress.
  */
 @Composable
-internal fun ProfileBanner() {
-    RetroCard {
+internal fun ProfileBanner(modifier: Modifier = Modifier) {
+    RetroCard(modifier = modifier) {
         Column(
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally,

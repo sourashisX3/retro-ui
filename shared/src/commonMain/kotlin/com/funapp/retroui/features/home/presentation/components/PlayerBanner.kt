@@ -29,8 +29,8 @@ import retroui.shared.generated.resources.player_display_name
  * Tapping the card opens the profile.
  */
 @Composable
-internal fun PlayerBanner(onClick: () -> Unit) {
-    RetroCard(onClick = onClick) {
+internal fun PlayerBanner(onClick: () -> Unit, modifier: Modifier = Modifier) {
+    RetroCard(modifier = modifier, onClick = onClick) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             RetroAvatar(
                 size = RetroTheme.dimensions.avatarLG,

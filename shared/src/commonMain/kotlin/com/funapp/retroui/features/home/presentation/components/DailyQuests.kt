@@ -26,6 +26,7 @@ import com.funapp.retroui.core.design.components.feedback.RetroProgressColor
 import com.funapp.retroui.core.design.components.foundation.RetroText
 import com.funapp.retroui.core.design.components.surfaces.RetroPanel
 import com.funapp.retroui.core.design.theme.RetroTheme
+import com.funapp.retroui.core.design.animation.retroEntrance
 import org.jetbrains.compose.resources.stringResource
 import retroui.shared.generated.resources.Res
 import retroui.shared.generated.resources.home_daily_subtitle
@@ -41,7 +42,7 @@ import retroui.shared.generated.resources.quest_win_battles
  * screen.
  */
 @Composable
-internal fun DailyQuests(onViewAll: () -> Unit) {
+internal fun DailyQuests(onViewAll: () -> Unit, modifier: Modifier = Modifier) {
     RetroPanel(
         title = stringResource(Res.string.home_daily_title),
         subtitle = stringResource(Res.string.home_daily_subtitle),
@@ -52,12 +53,14 @@ internal fun DailyQuests(onViewAll: () -> Unit) {
                 variant = RetroChipVariant.Outline,
             )
         },
+        modifier = modifier,
     ) {
         QuestRow(
             icon = Icons.Filled.Star,
             label = stringResource(Res.string.quest_win_battles),
             reward = 50,
             progress = 0.67f,
+            modifier = Modifier.retroEntrance(delayMillis = 40),
         )
         Spacer(modifier = Modifier.height(RetroTheme.spacing.md))
         QuestRow(
@@ -65,6 +68,7 @@ internal fun DailyQuests(onViewAll: () -> Unit) {
             label = stringResource(Res.string.quest_play_rounds),
             reward = 30,
             progress = 0.60f,
+            modifier = Modifier.retroEntrance(delayMillis = 80),
         )
         Spacer(modifier = Modifier.height(RetroTheme.spacing.md))
         QuestRow(
@@ -72,6 +76,7 @@ internal fun DailyQuests(onViewAll: () -> Unit) {
             label = stringResource(Res.string.quest_login_today),
             reward = 20,
             progress = 1f,
+            modifier = Modifier.retroEntrance(delayMillis = 120),
         )
     }
 }
@@ -82,8 +87,9 @@ private fun QuestRow(
     label: String,
     reward: Int,
     progress: Float,
+    modifier: Modifier = Modifier,
 ) {
-    Column {
+    Column(modifier = modifier) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Icon(
                 imageVector = icon,

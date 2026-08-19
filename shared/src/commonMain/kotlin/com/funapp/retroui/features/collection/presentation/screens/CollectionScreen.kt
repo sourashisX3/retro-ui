@@ -30,6 +30,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.funapp.retroui.core.design.animation.retroEntrance
 import com.funapp.retroui.core.design.components.controls.RetroChip
 import com.funapp.retroui.core.design.components.controls.RetroIconButton
 import com.funapp.retroui.core.design.components.feedback.RetroStatusLabel
@@ -114,7 +115,10 @@ fun CollectionScreen(
             verticalArrangement = Arrangement.spacedBy(RetroTheme.spacing.sm),
         ) {
             item(span = { GridItemSpan(maxLineSpan) }) {
-                CollectionHeader(onGoDeckBuilder = onGoDeckBuilder)
+                CollectionHeader(
+                    onGoDeckBuilder = onGoDeckBuilder,
+                    modifier = Modifier.retroEntrance(delayMillis = 0),
+                )
             }
             item(span = { GridItemSpan(maxLineSpan) }) {
                 Spacer(modifier = Modifier.height(RetroTheme.spacing.md))
@@ -123,6 +127,7 @@ fun CollectionScreen(
                 RarityFilters(
                     filter = filter,
                     onSelect = { filter = it },
+                    modifier = Modifier.retroEntrance(delayMillis = 60),
                 )
             }
             item(span = { GridItemSpan(maxLineSpan) }) {
@@ -131,12 +136,15 @@ fun CollectionScreen(
                     text = stringResource(Res.string.collection_count, filtered.size),
                     style = RetroTheme.typography.caption,
                     color = RetroTheme.colors.textSecondary,
+                    modifier = Modifier.retroEntrance(delayMillis = 100),
                 )
                 Spacer(modifier = Modifier.height(RetroTheme.spacing.sm))
             }
             items(filtered) { card ->
                 Box(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .retroEntrance(delayMillis = 140),
                     contentAlignment = Alignment.Center,
                 ) {
                     RetroGameCard(
@@ -221,8 +229,8 @@ private fun CardDetailRow(label: String, value: String) {
 }
 
 @Composable
-private fun CollectionHeader(onGoDeckBuilder: () -> Unit) {
-    Row(verticalAlignment = Alignment.CenterVertically) {
+private fun CollectionHeader(onGoDeckBuilder: () -> Unit, modifier: Modifier = Modifier) {
+    Row(modifier = modifier, verticalAlignment = Alignment.CenterVertically) {
         Column(modifier = Modifier.weight(1f)) {
             RetroText(
                 text = stringResource(Res.string.screen_collection_title),
@@ -248,9 +256,10 @@ private fun CollectionHeader(onGoDeckBuilder: () -> Unit) {
 private fun RarityFilters(
     filter: RetroCardRarity?,
     onSelect: (RetroCardRarity?) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Row(
-        modifier = Modifier.horizontalScroll(rememberScrollState()),
+        modifier = modifier.horizontalScroll(rememberScrollState()),
         horizontalArrangement = Arrangement.spacedBy(RetroTheme.spacing.xs),
     ) {
         rarityFilters.forEach { (rarity, label) ->

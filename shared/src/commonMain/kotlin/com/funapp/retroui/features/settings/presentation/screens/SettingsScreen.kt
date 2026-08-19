@@ -19,6 +19,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.funapp.retroui.core.config.theme.ThemeMode
+import com.funapp.retroui.core.design.animation.retroEntrance
 import com.funapp.retroui.core.design.components.controls.RetroButton
 import com.funapp.retroui.core.design.components.controls.RetroButtonVariant
 import com.funapp.retroui.core.design.components.controls.RetroChip
@@ -88,7 +89,10 @@ fun SettingsScreen(
 
     RetroScreen(modifier = modifier) {
         item {
-            Row(verticalAlignment = Alignment.CenterVertically) {
+            Row(
+                modifier = Modifier.retroEntrance(delayMillis = 0),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
                 RetroIconButton(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = stringResource(Res.string.common_back),
@@ -114,7 +118,10 @@ fun SettingsScreen(
             Spacer(modifier = Modifier.height(RetroTheme.spacing.lg))
         }
         item {
-            RetroSection(title = stringResource(Res.string.settings_theme_title)) {
+            RetroSection(
+                title = stringResource(Res.string.settings_theme_title),
+                modifier = Modifier.retroEntrance(delayMillis = 60),
+            ) {
                 RetroText(
                     text = stringResource(Res.string.settings_theme_subtitle),
                     style = RetroTheme.typography.caption,
@@ -144,7 +151,10 @@ fun SettingsScreen(
             Spacer(modifier = Modifier.height(RetroTheme.spacing.lg))
         }
         item {
-            RetroSection(title = stringResource(Res.string.settings_audio_title)) {
+            RetroSection(
+                title = stringResource(Res.string.settings_audio_title),
+                modifier = Modifier.retroEntrance(delayMillis = 120),
+            ) {
                 SettingRow(
                     title = stringResource(Res.string.setting_sound_title),
                     subtitle = stringResource(Res.string.setting_sound_subtitle),
@@ -174,7 +184,10 @@ fun SettingsScreen(
             Spacer(modifier = Modifier.height(RetroTheme.spacing.lg))
         }
         item {
-            RetroSection(title = stringResource(Res.string.settings_gameplay_title)) {
+            RetroSection(
+                title = stringResource(Res.string.settings_gameplay_title),
+                modifier = Modifier.retroEntrance(delayMillis = 180),
+            ) {
                 SettingRow(
                     title = stringResource(Res.string.setting_enemy_hp_title),
                     subtitle = stringResource(Res.string.setting_enemy_hp_subtitle),
@@ -206,7 +219,10 @@ fun SettingsScreen(
             Spacer(modifier = Modifier.height(RetroTheme.spacing.lg))
         }
         item {
-            RetroSection(title = stringResource(Res.string.settings_account_title)) {
+            RetroSection(
+                title = stringResource(Res.string.settings_account_title),
+                modifier = Modifier.retroEntrance(delayMillis = 240),
+            ) {
                 SettingRow(
                     title = stringResource(Res.string.setting_version_title),
                     trailing = {

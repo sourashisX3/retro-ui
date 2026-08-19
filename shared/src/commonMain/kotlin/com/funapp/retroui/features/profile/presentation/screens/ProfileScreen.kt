@@ -1,6 +1,7 @@
 package com.funapp.retroui.features.profile.presentation.screens
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,6 +14,7 @@ import androidx.compose.material.icons.filled.ThumbUp
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.funapp.retroui.core.design.animation.retroEntrance
 import com.funapp.retroui.core.design.components.feedback.RetroProgressColor
 import com.funapp.retroui.core.design.components.foundation.RetroText
 import com.funapp.retroui.core.design.components.surfaces.RetroScreen
@@ -51,29 +53,33 @@ fun ProfileScreen(
 ) {
     RetroScreen(modifier = modifier) {
         item {
-            RetroText(
-                text = stringResource(Res.string.screen_profile_title),
-                style = RetroTheme.typography.heading,
-                color = RetroTheme.colors.textPrimary,
-            )
-            RetroText(
-                text = stringResource(Res.string.screen_profile_subtitle),
-                style = RetroTheme.typography.caption,
-                color = RetroTheme.colors.textMuted,
-            )
+            Column(modifier = Modifier.retroEntrance(delayMillis = 0)) {
+                RetroText(
+                    text = stringResource(Res.string.screen_profile_title),
+                    style = RetroTheme.typography.heading,
+                    color = RetroTheme.colors.textPrimary,
+                )
+                RetroText(
+                    text = stringResource(Res.string.screen_profile_subtitle),
+                    style = RetroTheme.typography.caption,
+                    color = RetroTheme.colors.textMuted,
+                )
+            }
         }
         item {
             Spacer(modifier = Modifier.height(RetroTheme.spacing.lg))
         }
         item {
-            ProfileBanner()
+            ProfileBanner(modifier = Modifier.retroEntrance(delayMillis = 60))
         }
         item {
             Spacer(modifier = Modifier.height(RetroTheme.spacing.lg))
         }
         item {
             Row(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .retroEntrance(delayMillis = 120),
                 horizontalArrangement = Arrangement.SpaceBetween,
             ) {
                 RetroStatCard(
@@ -106,7 +112,10 @@ fun ProfileScreen(
             Spacer(modifier = Modifier.height(RetroTheme.spacing.lg))
         }
         item {
-            RetroSection(title = stringResource(Res.string.profile_badges_title)) {
+            RetroSection(
+                title = stringResource(Res.string.profile_badges_title),
+                modifier = Modifier.retroEntrance(delayMillis = 180),
+            ) {
                 BadgeGrid()
             }
         }
@@ -114,7 +123,10 @@ fun ProfileScreen(
             Spacer(modifier = Modifier.height(RetroTheme.spacing.lg))
         }
         item {
-            RetroSection(title = stringResource(Res.string.profile_records_title)) {
+            RetroSection(
+                title = stringResource(Res.string.profile_records_title),
+                modifier = Modifier.retroEntrance(delayMillis = 240),
+            ) {
                 RecordRow(
                     label = stringResource(Res.string.profile_record_streak),
                     value = stringResource(Res.string.profile_value_streak),

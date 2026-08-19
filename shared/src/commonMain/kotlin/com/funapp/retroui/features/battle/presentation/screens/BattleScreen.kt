@@ -17,6 +17,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.funapp.retroui.core.design.animation.retroEntrance
 import com.funapp.retroui.core.design.components.controls.RetroButton
 import com.funapp.retroui.core.design.components.controls.RetroButtonVariant
 import com.funapp.retroui.core.design.components.foundation.RetroText
@@ -63,7 +64,10 @@ fun BattleScreen(
 
     RetroScreenStatic(modifier = modifier) {
         Column {
-            Row(verticalAlignment = Alignment.CenterVertically) {
+            Row(
+                modifier = Modifier.retroEntrance(delayMillis = 0),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
                 Column(modifier = Modifier.weight(1f)) {
                     RetroText(
                         text = stringResource(Res.string.screen_battle_title),
@@ -92,10 +96,13 @@ fun BattleScreen(
                 hp = 0.82f,
                 shield = 0.4f,
                 hpText = "82",
+                modifier = Modifier.retroEntrance(delayMillis = 60, fromY = -12.dp),
             )
             Spacer(modifier = Modifier.height(RetroTheme.spacing.sm))
             Column(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .retroEntrance(delayMillis = 140),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 VsBadge()
@@ -108,6 +115,7 @@ fun BattleScreen(
                 avatarColor = RetroTheme.colors.primaryContainer,
                 hp = 0.65f,
                 hpText = "65",
+                modifier = Modifier.retroEntrance(delayMillis = 200, fromY = 12.dp),
             )
             Spacer(modifier = Modifier.height(RetroTheme.spacing.lg))
             RetroBattleLog(
@@ -115,12 +123,16 @@ fun BattleScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .weight(1f)
-                    .height(120.dp),
+                    .height(120.dp)
+                    .retroEntrance(delayMillis = 260),
             )
             Spacer(modifier = Modifier.height(RetroTheme.spacing.lg))
-            HandRow()
+            HandRow(modifier = Modifier.retroEntrance(delayMillis = 320))
             Spacer(modifier = Modifier.height(RetroTheme.spacing.lg))
-            Row(horizontalArrangement = Arrangement.spacedBy(RetroTheme.spacing.sm)) {
+            Row(
+                modifier = Modifier.retroEntrance(delayMillis = 380),
+                horizontalArrangement = Arrangement.spacedBy(RetroTheme.spacing.sm),
+            ) {
                 RetroButton(
                     text = stringResource(Res.string.battle_defend),
                     variant = RetroButtonVariant.Secondary,

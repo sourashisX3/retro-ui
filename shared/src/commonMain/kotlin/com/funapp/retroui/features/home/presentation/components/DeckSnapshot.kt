@@ -14,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
+import com.funapp.retroui.core.design.animation.retroEntrance
 import com.funapp.retroui.core.design.components.controls.RetroChip
 import com.funapp.retroui.core.design.components.controls.RetroChipVariant
 import com.funapp.retroui.core.design.components.game.RetroCardSlot
@@ -32,7 +33,7 @@ import retroui.shared.generated.resources.home_deck_title
  * Deck snapshot: the five champion slots with a shortcut to the deck builder.
  */
 @Composable
-internal fun DeckSnapshot(onDeckBuilder: () -> Unit) {
+internal fun DeckSnapshot(onDeckBuilder: () -> Unit, modifier: Modifier = Modifier) {
     val champions = mockChampionRoster().take(5)
     RetroPanel(
         title = stringResource(Res.string.home_deck_title),
@@ -44,13 +45,18 @@ internal fun DeckSnapshot(onDeckBuilder: () -> Unit) {
                 variant = RetroChipVariant.Outline,
             )
         },
+        modifier = modifier,
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
-            champions.forEach { champion ->
-                DeckChampionCell(champion = champion, onClick = onDeckBuilder)
+            champions.forEachIndexed { index, champion ->
+                DeckChampionCell(
+                    champion = champion,
+                    onClick = onDeckBuilder,
+                    modifier = Modifier.retroEntrance(delayMillis = 20 * index),
+                )
             }
         }
     }
@@ -60,11 +66,13 @@ internal fun DeckSnapshot(onDeckBuilder: () -> Unit) {
 private fun DeckChampionCell(
     champion: MockChampion,
     onClick: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val colors = RetroTheme.colors
     RetroCardSlot(
         size = 56.dp,
         onClick = onClick,
+        modifier = modifier,
     ) {
         Box(
             modifier = Modifier

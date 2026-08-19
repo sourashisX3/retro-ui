@@ -9,6 +9,7 @@ import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
+import com.funapp.retroui.core.design.animation.retroEntrance
 import com.funapp.retroui.core.design.components.controls.RetroButton
 import com.funapp.retroui.core.design.components.foundation.RetroText
 import com.funapp.retroui.core.design.components.surfaces.RetroScreen
@@ -38,19 +39,25 @@ fun HomeScreen(
 ) {
     RetroScreen(modifier = modifier) {
         item {
-            HomeHeader(onGoSettings = onGoSettings)
+            HomeHeader(
+                onGoSettings = onGoSettings,
+                modifier = Modifier.retroEntrance(delayMillis = 0),
+            )
         }
         item {
             Spacer(modifier = Modifier.height(RetroTheme.spacing.sm))
         }
         item {
-            PlayerBanner(onClick = onGoProfile)
+            PlayerBanner(
+                onClick = onGoProfile,
+                modifier = Modifier.retroEntrance(delayMillis = 60),
+            )
         }
         item {
             Spacer(modifier = Modifier.height(RetroTheme.spacing.lg))
         }
         item {
-            Column {
+            Column(modifier = Modifier.retroEntrance(delayMillis = 120)) {
                 RetroButton(
                     text = stringResource(Res.string.btn_start_battle),
                     leadingIcon = Icons.Filled.PlayArrow,
@@ -71,13 +78,19 @@ fun HomeScreen(
             Spacer(modifier = Modifier.height(RetroTheme.spacing.lg))
         }
         item {
-            DeckSnapshot(onDeckBuilder = onGoDeckBuilder)
+            DeckSnapshot(
+                onDeckBuilder = onGoDeckBuilder,
+                modifier = Modifier.retroEntrance(delayMillis = 180),
+            )
         }
         item {
             Spacer(modifier = Modifier.height(RetroTheme.spacing.lg))
         }
         item {
-            DailyQuests(onViewAll = onGoQuests)
+            DailyQuests(
+                onViewAll = onGoQuests,
+                modifier = Modifier.retroEntrance(delayMillis = 240),
+            )
         }
     }
 }

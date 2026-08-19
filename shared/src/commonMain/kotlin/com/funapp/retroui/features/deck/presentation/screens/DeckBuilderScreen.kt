@@ -11,13 +11,14 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -25,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.funapp.retroui.core.design.animation.retroEntrance
 import com.funapp.retroui.core.design.components.controls.RetroButton
 import com.funapp.retroui.core.design.components.controls.RetroButtonVariant
 import com.funapp.retroui.core.design.components.controls.RetroChip
@@ -68,7 +70,10 @@ fun DeckBuilderScreen(
 
     RetroScreen(modifier = modifier) {
         item {
-            Row(verticalAlignment = Alignment.CenterVertically) {
+            Row(
+                modifier = Modifier.retroEntrance(delayMillis = 0),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
                 RetroIconButton(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = stringResource(Res.string.common_back),
@@ -97,51 +102,58 @@ fun DeckBuilderScreen(
             DeckPanel(
                 deck = deck,
                 onRemoveAt = { deck.removeAt(it) },
+                modifier = Modifier.retroEntrance(delayMillis = 60),
             )
         }
         item {
             Spacer(modifier = Modifier.height(RetroTheme.spacing.md))
         }
         item {
-            RetroText(
-                text = stringResource(Res.string.deck_slots_ready, deck.size, DECK_SIZE),
-                style = RetroTheme.typography.label,
-                color = if (deck.size == DECK_SIZE) {
-                    RetroTheme.colors.success
-                } else {
-                    RetroTheme.colors.textSecondary
-                },
-            )
-            Spacer(modifier = Modifier.height(RetroTheme.spacing.sm))
+            Column(modifier = Modifier.retroEntrance(delayMillis = 120)) {
+                RetroText(
+                    text = stringResource(Res.string.deck_slots_ready, deck.size, DECK_SIZE),
+                    style = RetroTheme.typography.label,
+                    color = if (deck.size == DECK_SIZE) {
+                        RetroTheme.colors.success
+                    } else {
+                        RetroTheme.colors.textSecondary
+                    },
+                )
+                Spacer(modifier = Modifier.height(RetroTheme.spacing.sm))
+            }
         }
         item {
-            RetroButton(
-                text = stringResource(Res.string.btn_save_deck),
-                leadingIcon = Icons.Filled.Check,
-                onClick = onGoHome,
-                enabled = deck.size == DECK_SIZE,
-                small = true,
-                modifier = Modifier.fillMaxWidth(),
-            )
-            Spacer(modifier = Modifier.height(RetroTheme.spacing.md))
-            RetroButton(
-                text = stringResource(Res.string.btn_browse_collection),
-                variant = RetroButtonVariant.Outline,
-                onClick = onGoCollection,
-                small = true,
-                modifier = Modifier.fillMaxWidth(),
-            )
+            Column(modifier = Modifier.retroEntrance(delayMillis = 140)) {
+                RetroButton(
+                    text = stringResource(Res.string.btn_save_deck),
+                    leadingIcon = Icons.Filled.Check,
+                    onClick = onGoHome,
+                    enabled = deck.size == DECK_SIZE,
+                    small = true,
+                    modifier = Modifier.fillMaxWidth(),
+                )
+                Spacer(modifier = Modifier.height(RetroTheme.spacing.md))
+                RetroButton(
+                    text = stringResource(Res.string.btn_browse_collection),
+                    variant = RetroButtonVariant.Outline,
+                    onClick = onGoCollection,
+                    small = true,
+                    modifier = Modifier.fillMaxWidth(),
+                )
+            }
         }
         item {
             Spacer(modifier = Modifier.height(RetroTheme.spacing.lg))
         }
         item {
-            RetroText(
-                text = stringResource(Res.string.deck_available_title),
-                style = RetroTheme.typography.title,
-                color = RetroTheme.colors.textPrimary,
-            )
-            Spacer(modifier = Modifier.height(RetroTheme.spacing.sm))
+            Column(modifier = Modifier.retroEntrance(delayMillis = 200)) {
+                RetroText(
+                    text = stringResource(Res.string.deck_available_title),
+                    style = RetroTheme.typography.title,
+                    color = RetroTheme.colors.textPrimary,
+                )
+                Spacer(modifier = Modifier.height(RetroTheme.spacing.sm))
+            }
         }
         item {
             if (deck.isEmpty()) {
@@ -153,14 +165,15 @@ fun DeckBuilderScreen(
                 Spacer(modifier = Modifier.height(RetroTheme.spacing.sm))
             }
         }
-        items(
+        itemsIndexed(
             items = pool.filter { card -> deck.none { it.name == card.name } },
-            key = { it.name },
-        ) { card ->
+            key = { _, card -> card.name },
+        ) { index, card ->
             AvailableChampionRow(
                 card = card,
                 addEnabled = deck.size < DECK_SIZE,
                 onAdd = { deck.add(card) },
+                modifier = Modifier.retroEntrance(delayMillis = 220 + index * 30),
             )
         }
     }
@@ -170,10 +183,12 @@ fun DeckBuilderScreen(
 private fun DeckPanel(
     deck: List<MockChampion>,
     onRemoveAt: (Int) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     RetroPanel(
         title = stringResource(Res.string.screen_deck_title),
         subtitle = stringResource(Res.string.deck_slots_ready, deck.size, DECK_SIZE),
+        modifier = modifier,
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -189,7 +204,12 @@ private fun DeckPanel(
                     } else null,
                 ) {
                     if (card != null) {
-                        ChampionTile(card = card)
+                        key(card.name) {
+                            ChampionTile(
+                                card = card,
+                                modifier = Modifier.retroEntrance(delayMillis = 0, fromY = 8.dp),
+                            )
+                        }
                     }
                 }
             }
@@ -202,10 +222,11 @@ private fun AvailableChampionRow(
     card: MockChampion,
     addEnabled: Boolean,
     onAdd: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val colors = RetroTheme.colors
     Row(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(vertical = RetroTheme.spacing.xs),
         verticalAlignment = Alignment.CenterVertically,
@@ -234,10 +255,10 @@ private fun AvailableChampionRow(
 }
 
 @Composable
-private fun ChampionTile(card: MockChampion) {
+private fun ChampionTile(card: MockChampion, modifier: Modifier = Modifier) {
     val colors = RetroTheme.colors
     Box(
-        modifier = Modifier
+        modifier = modifier
             .size(40.dp)
             .clip(RetroTheme.shapeTokens.chip)
             .background(card.rarity.rarityColor(colors)),

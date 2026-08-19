@@ -20,8 +20,8 @@ import retroui.shared.generated.resources.home_greeting
  * Home top bar: brand title + tagline with a settings action.
  */
 @Composable
-internal fun HomeHeader(onGoSettings: () -> Unit) {
-    Row(verticalAlignment = Alignment.CenterVertically) {
+internal fun HomeHeader(onGoSettings: () -> Unit, modifier: Modifier = Modifier) {
+    Row(modifier = modifier, verticalAlignment = Alignment.CenterVertically) {
         Column(modifier = Modifier.weight(1f)) {
             RetroText(
                 text = stringResource(Res.string.app_name),

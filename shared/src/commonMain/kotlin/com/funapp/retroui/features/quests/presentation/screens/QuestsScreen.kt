@@ -1,5 +1,6 @@
 package com.funapp.retroui.features.quests.presentation.screens
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.material.icons.Icons
@@ -9,6 +10,7 @@ import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.filled.ThumbUp
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.funapp.retroui.core.design.animation.retroEntrance
 import com.funapp.retroui.core.design.components.foundation.RetroText
 import com.funapp.retroui.core.design.components.surfaces.RetroScreen
 import com.funapp.retroui.core.design.components.surfaces.RetroSection
@@ -37,22 +39,27 @@ fun QuestsScreen(
 ) {
     RetroScreen(modifier = modifier) {
         item {
-            RetroText(
-                text = stringResource(Res.string.screen_quests_title),
-                style = RetroTheme.typography.heading,
-                color = RetroTheme.colors.textPrimary,
-            )
-            RetroText(
-                text = stringResource(Res.string.screen_quests_subtitle),
-                style = RetroTheme.typography.caption,
-                color = RetroTheme.colors.textMuted,
-            )
+            Column(modifier = Modifier.retroEntrance(delayMillis = 0)) {
+                RetroText(
+                    text = stringResource(Res.string.screen_quests_title),
+                    style = RetroTheme.typography.heading,
+                    color = RetroTheme.colors.textPrimary,
+                )
+                RetroText(
+                    text = stringResource(Res.string.screen_quests_subtitle),
+                    style = RetroTheme.typography.caption,
+                    color = RetroTheme.colors.textMuted,
+                )
+            }
         }
         item {
             Spacer(modifier = Modifier.height(RetroTheme.spacing.lg))
         }
         item {
-            RetroSection(title = stringResource(Res.string.quests_daily_title)) {
+            RetroSection(
+                title = stringResource(Res.string.quests_daily_title),
+                modifier = Modifier.retroEntrance(delayMillis = 60),
+            ) {
                 QuestRow(
                     icon = Icons.Filled.Star,
                     label = stringResource(Res.string.quest_win_battles),
@@ -85,7 +92,10 @@ fun QuestsScreen(
             Spacer(modifier = Modifier.height(RetroTheme.spacing.lg))
         }
         item {
-            RetroSection(title = stringResource(Res.string.quests_weekly_title)) {
+            RetroSection(
+                title = stringResource(Res.string.quests_weekly_title),
+                modifier = Modifier.retroEntrance(delayMillis = 120),
+            ) {
                 QuestRow(
                     icon = Icons.Filled.ThumbUp,
                     label = stringResource(Res.string.quest_win_10),

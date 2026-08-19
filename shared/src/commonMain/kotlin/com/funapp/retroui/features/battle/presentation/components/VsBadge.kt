@@ -20,10 +20,10 @@ import retroui.shared.generated.resources.battle_vs
  * VS badge shown between the two fighters.
  */
 @Composable
-internal fun VsBadge() {
+internal fun VsBadge(modifier: Modifier = Modifier) {
     val shape = RetroTheme.shapeTokens.button
     Box(
-        modifier = Modifier
+        modifier = modifier
             .retroHardShadow(
                 offsetX = 2.dp,
                 offsetY = 2.dp,
