@@ -57,6 +57,7 @@ fun RetroProgressBar(
 
     Box(
         modifier = modifier
+            .fillMaxWidth()
             .height(height)
             .clip(shape)
             .background(colors.surfaceMuted)
