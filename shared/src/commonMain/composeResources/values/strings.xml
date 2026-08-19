@@ -84,24 +84,92 @@
     <string name="screen_battle_title">BATTLE ARENA</string>
     <string name="screen_battle_subtitle">VS — prepare for the showdown.</string>
     <string name="btn_retreat">RETREAT TO MENU</string>
+    <string name="battle_vs">VS</string>
+    <string name="battle_round">ROUND %1$d</string>
+    <string name="battle_attack">ATTACK</string>
+    <string name="battle_defend">DEFEND</string>
+    <string name="battle_opponent_name">RIVAL_FROST</string>
+    <string name="battle_opponent_level">3</string>
+    <string name="battle_player_level">2</string>
+    <string name="battle_hand_title">YOUR HAND</string>
+    <string name="battle_log_start">Battle begins — draw your hand.</string>
+    <string name="battle_log_damage">BLAZE strikes for 12 damage!</string>
+    <string name="battle_log_heal">FROST heals 8 HP.</string>
+    <string name="battle_log_shield">TERRA raises a shield.</string>
 
     <!-- Collection -->
     <string name="screen_collection_title">COLLECTION</string>
     <string name="screen_collection_subtitle">Browse every card you\'ve earned.</string>
     <string name="btn_deck_builder">DECK BUILDER</string>
+    <string name="collection_count">%1$d CARDS</string>
+    <string name="rarity_all">ALL</string>
+    <string name="rarity_common">COMMON</string>
+    <string name="rarity_rare">RARE</string>
+    <string name="rarity_epic">EPIC</string>
+    <string name="rarity_legendary">LEGENDARY</string>
+    <string name="card_owned">x%1$d</string>
+    <string name="card_blaze">BLAZE</string>
+    <string name="card_frost">FROST</string>
+    <string name="card_volt">VOLT</string>
+    <string name="card_terra">TERRA</string>
+    <string name="card_shade">SHADE</string>
+    <string name="card_nova">NOVA</string>
+    <string name="card_rock">ROCK</string>
+    <string name="card_gale">GALE</string>
+    <string name="card_ember">EMBER</string>
+    <string name="card_sage">SAGE</string>
+    <string name="type_warrior">WARRIOR</string>
+    <string name="type_mage">MAGE</string>
+    <string name="type_rogue">ROGUE</string>
+    <string name="type_guardian">GUARDIAN</string>
+    <string name="type_assassin">ASSASSIN</string>
+    <string name="type_sage">SAGE</string>
 
     <!-- Deck builder -->
     <string name="screen_deck_title">DECK BUILDER</string>
     <string name="screen_deck_subtitle">Assemble your deck of 5 champions.</string>
     <string name="btn_browse_collection">BROWSE COLLECTION</string>
+    <string name="deck_slots_ready">%1$d / %2$d READY</string>
+    <string name="deck_available_title">AVAILABLE CHAMPIONS</string>
+    <string name="deck_empty_hint">DECK EMPTY — TAP A CHAMPION TO ADD</string>
+    <string name="btn_save_deck">SAVE DECK</string>
+    <string name="deck_add">ADD</string>
 
     <!-- Quests -->
     <string name="screen_quests_title">QUESTS</string>
     <string name="screen_quests_subtitle">Complete quests to earn rewards.</string>
+    <string name="quests_daily_title">DAILY QUESTS</string>
+    <string name="quests_weekly_title">WEEKLY QUESTS</string>
+    <string name="quests_claim">CLAIM</string>
+    <string name="quests_in_progress">IN PROGRESS</string>
+    <string name="quest_win_10">WIN 10 BATTLES</string>
+    <string name="quest_reach_rank">REACH BRONZE III</string>
+    <string name="quest_collect_cards">COLLECT 20 CARDS</string>
+    <string name="quest_reward_xp">+%1$d XP</string>
 
     <!-- Profile -->
     <string name="screen_profile_title">PROFILE</string>
     <string name="screen_profile_subtitle">Player stats, badges and records.</string>
+    <string name="profile_stat_wins">WINS</string>
+    <string name="profile_stat_losses">LOSSES</string>
+    <string name="profile_stat_winrate">WIN RATE</string>
+    <string name="profile_badges_title">BADGES</string>
+    <string name="profile_records_title">RECORDS</string>
+    <string name="profile_record_streak">LONGEST STREAK</string>
+    <string name="profile_record_damage">TOTAL DAMAGE</string>
+    <string name="profile_record_favorite">FAVORITE FIGHTER</string>
+    <string name="profile_value_wins">24</string>
+    <string name="profile_value_losses">11</string>
+    <string name="profile_value_winrate">69%</string>
+    <string name="profile_value_streak">8</string>
+    <string name="profile_value_damage">12,480</string>
+    <string name="profile_value_favorite">BLAZE</string>
+    <string name="badge_first_blood">FIRST BLOOD</string>
+    <string name="badge_win_streak">STREAK 5</string>
+    <string name="badge_collector">COLLECTOR</string>
+    <string name="badge_veteran">VETERAN</string>
+    <string name="badge_champion">CHAMPION</string>
+    <string name="badge_hunter">HUNTER</string>
 
     <!-- Settings -->
     <string name="screen_settings_title">SETTINGS</string>

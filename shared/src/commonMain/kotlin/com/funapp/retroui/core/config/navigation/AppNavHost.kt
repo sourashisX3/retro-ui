@@ -1,4 +1,4 @@
-package com.funapp.retroui.core.config.navigation
+     package com.funapp.retroui.core.config.navigation
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -139,6 +139,7 @@ fun AppNavHost(
                         onGoQuests = { navController.navigate(Route.Quests) },
                         onGoProfile = { navController.navigate(Route.Profile) },
                         onGoSettings = { navController.navigate(Route.Settings) },
+                        onGoDeckBuilder = { navController.navigate(Route.DeckBuilder) },
                     )
                 }
 
