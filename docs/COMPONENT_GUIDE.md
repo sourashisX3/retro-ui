@@ -46,6 +46,27 @@ RetroCard(
 ) { /* body */ }
 ```
 
+`RetroGameCard` (the collectible) additionally supports double taps: pass `onDoubleTap` and the card uses `combinedClickable` — single tap fires `onClick`, double tap fires `onDoubleTap` (tactile press preserved on both).
+
+## RetroDialog
+
+Scrim + raised panel dialog with pixel title, optional icon/message and actions. Pass `content` to render custom body (skips icon/message/actions).
+
+```kotlin
+RetroDialog(
+    visible = show,
+    onDismiss = { show = false },
+    title = "RETREAT?",
+    message = "Return to home?",
+    variant = RetroDialogVariant.Danger,
+    confirmText = "YES", onConfirm = { },
+    dismissText = "CANCEL",
+)
+RetroDialog(visible = show, onDismiss = { }, title = card.name) {
+    RetroGameCard(title = card.name, cost = "2", type = "WARRIOR")
+}
+```
+
 ## RetroDashedGroup
 
 Dashed-ink grouping container for settings/panels/related controls.

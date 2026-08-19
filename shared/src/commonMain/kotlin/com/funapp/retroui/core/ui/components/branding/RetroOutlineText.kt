@@ -17,8 +17,9 @@ import kotlin.math.roundToInt
 
 /**
  * Pixel text with the signature retro treatment: thick ink outline + hard
- * offset shadow. Rendered with layered [Text] (stroke behind, fill on top) so
- * it works with any [TextStyle] — used by the logo and app icon.
+ * offset shadow. Rendered with layered [Text] (solid shadow behind, stroke
+ * behind, fill on top) so it works with any [TextStyle] — used by the logo
+ * and app icon.
  */
 @Composable
 internal fun RetroOutlineText(
@@ -38,7 +39,7 @@ internal fun RetroOutlineText(
     Box(modifier = modifier, contentAlignment = Alignment.Center) {
         Text(
             text = text,
-            style = style.copy(color = shadow, drawStyle = Stroke(width = strokePx * 2f)),
+            style = style.copy(color = shadow),
             modifier = Modifier.offset { IntOffset(shadowX.roundToInt(), shadowY.roundToInt()) },
         )
         Text(

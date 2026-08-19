@@ -3,7 +3,6 @@ package com.funapp.retroui.features.splash.presentation
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
-import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
@@ -17,31 +16,33 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.text.style.TextAlign
-import com.funapp.retroui.core.ui.components.branding.RetroDuelLogo
-import com.funapp.retroui.core.ui.components.branding.RetroLogoSize
+import androidx.compose.ui.unit.dp
+import com.funapp.retroui.core.ui.components.branding.RetroOutlineText
 import com.funapp.retroui.core.ui.components.foundation.RetroText
 import com.funapp.retroui.core.ui.theme.RetroTheme
 import com.funapp.retroui.core.ui.token.RetroAnimation
 import com.funapp.retroui.core.ui.token.RetroMotion
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 import retroui.shared.generated.resources.Res
 import retroui.shared.generated.resources.app_tagline
 import retroui.shared.generated.resources.splash_press_start
+import retroui.shared.generated.resources.splash_wordmark_bottom
+import retroui.shared.generated.resources.splash_wordmark_top
 
 private const val SplashScreenDurationMs = 2600L
 
 /**
- * Splash screen: the RETRO DUEL wordmark pops in (spring scale + fade),
- * the tagline fades in, and a "PRESS START" hint blinks arcade-style.
+ * Splash screen: the DECKRON wordmark drops in like a slot-machine reel
+ * (per-line arcade spring with a crisp solid shadow from the first frame),
+ * the tagline slides up, and a "PRESS START" hint blinks arcade-style.
  * Auto-advances to [onFinished] after [SplashScreenDurationMs].
  */
 @Composable
@@ -53,30 +54,24 @@ fun SplashScreen(
     val spacing = RetroTheme.spacing
     val pressStart = stringResource(Res.string.splash_press_start)
 
-    var started by remember { mutableStateOf(false) }
-    LaunchedEffect(Unit) { started = true }
+    val dropTop = remember { androidx.compose.animation.core.Animatable(-260f) }
+    val dropBottom = remember { androidx.compose.animation.core.Animatable(-300f) }
+    val taglineY = remember { androidx.compose.animation.core.Animatable(24f) }
+    val taglineAlpha = remember { androidx.compose.animation.core.Animatable(0f) }
+    val columnAlpha = remember { androidx.compose.animation.core.Animatable(0f) }
 
-    val logoScale by animateFloatAsState(
-        targetValue = if (started) 1f else 0.6f,
-        animationSpec = RetroAnimation.pop,
-        label = "splashLogoScale",
-    )
-    val logoAlpha by animateFloatAsState(
-        targetValue = if (started) 1f else 0f,
-        animationSpec = tween(
-            durationMillis = RetroMotion.ExpressiveMs,
-            delayMillis = RetroMotion.FastMs,
-        ),
-        label = "splashLogoAlpha",
-    )
-    val taglineAlpha by animateFloatAsState(
-        targetValue = if (started) 1f else 0f,
-        animationSpec = tween(
-            durationMillis = RetroMotion.NormalMs,
-            delayMillis = RetroMotion.ExpressiveMs,
-        ),
-        label = "splashTaglineAlpha",
-    )
+    LaunchedEffect(Unit) {
+        launch { columnAlpha.animateTo(1f, tween(durationMillis = 80)) }
+        launch {
+            dropTop.animateTo(0f, RetroAnimation.arcade)
+            dropBottom.animateTo(0f, RetroAnimation.arcade)
+        }
+        launch {
+            delay(RetroMotion.ExpressiveMs.toLong())
+            taglineAlpha.animateTo(1f, tween(durationMillis = RetroMotion.NormalMs))
+            taglineY.animateTo(0f, RetroAnimation.slide)
+        }
+    }
 
     val blink = rememberInfiniteTransition(label = "pressStartBlink")
     val blinkAlpha by blink.animateFloat(
@@ -102,15 +97,29 @@ fun SplashScreen(
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.padding(spacing.xl),
+            modifier = Modifier
+                .padding(spacing.xl)
+                .alpha(columnAlpha.value),
         ) {
-            RetroDuelLogo(
-                size = RetroLogoSize.Large,
-                modifier = Modifier.graphicsLayer {
-                    scaleX = logoScale
-                    scaleY = logoScale
-                    alpha = logoAlpha
-                },
+            RetroOutlineText(
+                text = stringResource(Res.string.splash_wordmark_top),
+                style = RetroTheme.typography.display,
+                fill = colors.primary,
+                outline = colors.outlineStrong,
+                shadow = colors.shadow,
+                outlineWidth = 4.dp,
+                modifier = Modifier.graphicsLayer { translationY = dropTop.value },
+            )
+            RetroOutlineText(
+                text = stringResource(Res.string.splash_wordmark_bottom),
+                style = RetroTheme.typography.display,
+                fill = colors.primary,
+                outline = colors.outlineStrong,
+                shadow = colors.shadow,
+                outlineWidth = 4.dp,
+                modifier = Modifier
+                    .padding(top = 2.dp)
+                    .graphicsLayer { translationY = dropBottom.value },
             )
             Spacer(Modifier.height(spacing.lg))
             RetroText(
@@ -118,7 +127,9 @@ fun SplashScreen(
                 style = RetroTheme.typography.body,
                 color = colors.textSecondary,
                 textAlign = TextAlign.Center,
-                modifier = Modifier.alpha(taglineAlpha),
+                modifier = Modifier
+                    .alpha(taglineAlpha.value)
+                    .graphicsLayer { translationY = taglineY.value },
             )
             Spacer(Modifier.height(spacing.xxl))
             RetroText(

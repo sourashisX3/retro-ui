@@ -7,6 +7,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -43,6 +44,9 @@ enum class RetroDialogVariant { Info, Danger }
  * Common retro app dialog: scrim + raised panel with hard border/shadow,
  * pixel title, optional icon/message and configurable actions. All text is
  * supplied by the caller (from strings). Prefer this over stock M3 dialogs.
+ *
+ * When [content] is provided, the dialog renders the title followed by the
+ * custom [content] (icon/message/action row are skipped).
  */
 @Composable
 fun RetroDialog(
@@ -56,6 +60,7 @@ fun RetroDialog(
     confirmText: String? = null,
     onConfirm: (() -> Unit)? = null,
     dismissText: String? = null,
+    content: (@Composable ColumnScope.() -> Unit)? = null,
 ) {
     if (!visible) return
 
@@ -124,44 +129,49 @@ fun RetroDialog(
                     style = RetroTheme.typography.title,
                     color = colors.textPrimary,
                 )
-                if (message != null) {
-                    Spacer(modifier = Modifier.height(RetroTheme.spacing.sm))
-                    RetroText(
-                        text = message,
-                        style = RetroTheme.typography.bodySmall,
-                        color = colors.textMuted,
-                    )
-                }
-                Spacer(modifier = Modifier.height(RetroTheme.spacing.lg))
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(RetroTheme.spacing.md),
-                ) {
-                    if (dismissText != null) {
-                        RetroButton(
-                            text = dismissText,
-                            variant = RetroButtonVariant.Outline,
-                            onClick = onDismiss,
-                            small = true,
-                            modifier = Modifier
-                                .weight(1f)
-                                .height(RetroTheme.dimensions.buttonHeightSmall),
+                if (content != null) {
+                    Spacer(modifier = Modifier.height(RetroTheme.spacing.md))
+                    content()
+                } else {
+                    if (message != null) {
+                        Spacer(modifier = Modifier.height(RetroTheme.spacing.sm))
+                        RetroText(
+                            text = message,
+                            style = RetroTheme.typography.bodySmall,
+                            color = colors.textMuted,
                         )
                     }
-                    if (confirmText != null && onConfirm != null) {
-                        RetroButton(
-                            text = confirmText,
-                            variant = if (variant == RetroDialogVariant.Danger) {
-                                RetroButtonVariant.Danger
-                            } else {
-                                RetroButtonVariant.Primary
-                            },
-                            onClick = onConfirm,
-                            small = true,
-                            modifier = Modifier
-                                .weight(1f)
-                                .height(RetroTheme.dimensions.buttonHeightSmall),
-                        )
+                    Spacer(modifier = Modifier.height(RetroTheme.spacing.lg))
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(RetroTheme.spacing.md),
+                    ) {
+                        if (dismissText != null) {
+                            RetroButton(
+                                text = dismissText,
+                                variant = RetroButtonVariant.Outline,
+                                onClick = onDismiss,
+                                small = true,
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .height(RetroTheme.dimensions.buttonHeightSmall),
+                            )
+                        }
+                        if (confirmText != null && onConfirm != null) {
+                            RetroButton(
+                                text = confirmText,
+                                variant = if (variant == RetroDialogVariant.Danger) {
+                                    RetroButtonVariant.Danger
+                                } else {
+                                    RetroButtonVariant.Primary
+                                },
+                                onClick = onConfirm,
+                                small = true,
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .height(RetroTheme.dimensions.buttonHeightSmall),
+                            )
+                        }
                     }
                 }
             }

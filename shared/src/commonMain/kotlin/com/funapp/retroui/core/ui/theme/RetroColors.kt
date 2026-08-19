@@ -46,6 +46,9 @@ data class RetroColors(
     val outline: Color,
     val outlineStrong: Color,
 
+    // Hard shadows (offset copies behind chrome)
+    val shadow: Color,
+
     // Feedback
     val error: Color,
     val onError: Color,
@@ -99,6 +102,7 @@ val LightRetroColors = RetroColors(
 
     outline = Prim.Ink,
     outlineStrong = Prim.Ink,
+    shadow = Color(0xFF111111),
 
     error = Prim.Red,
     onError = Prim.Ink,
@@ -151,6 +155,7 @@ val DarkRetroColors = RetroColors(
 
     outline = Prim.NightInk,
     outlineStrong = Prim.NightInk,
+    shadow = Color(0xFF04060C),
 
     error = Prim.Red,
     onError = Prim.Night,

@@ -19,6 +19,9 @@ import retroui.shared.generated.resources.press_start_2p
  * The retro kit deliberately mixes two voices:
  *  - PIXEL DISPLAY (Press Start 2P) for headings, buttons, HUD, stats
  *  - READABLE BODY (Pixelify Sans — pixel-styled but legible) for long text
+ *
+ * Body styles use tabular numerals (`tnum`) so digits keep uniform width and
+ * stay readable in scores, counts and stat rows.
  */
 data class RetroTypography(
     val display: TextStyle,
@@ -97,21 +100,27 @@ fun buildRetroTypography(): RetroTypography = RetroTypography(
     ),
     body = TextStyle(
         fontFamily = bodyFontFamily(),
-        fontSize = 16.sp,
-        lineHeight = 24.sp,
+        fontSize = 17.sp,
+        lineHeight = 26.sp,
         fontWeight = FontWeight.Normal,
+        letterSpacing = 0.25.sp,
+        fontFeatureSettings = "tnum",
     ),
     bodySmall = TextStyle(
         fontFamily = bodyFontFamily(),
-        fontSize = 14.sp,
-        lineHeight = 20.sp,
-        fontWeight = FontWeight.Normal,
+        fontSize = 15.sp,
+        lineHeight = 22.sp,
+        fontWeight = FontWeight.Medium,
+        letterSpacing = 0.25.sp,
+        fontFeatureSettings = "tnum",
     ),
     caption = TextStyle(
         fontFamily = bodyFontFamily(),
-        fontSize = 12.sp,
-        lineHeight = 16.sp,
-        fontWeight = FontWeight.Normal,
+        fontSize = 13.sp,
+        lineHeight = 18.sp,
+        fontWeight = FontWeight.Medium,
+        letterSpacing = 0.25.sp,
+        fontFeatureSettings = "tnum",
     ),
 )
 
@@ -124,7 +133,7 @@ val FallbackRetroTypography = RetroTypography(
     score = TextStyle(fontSize = 20.sp, lineHeight = 26.sp, fontWeight = FontWeight.Normal),
     label = TextStyle(fontSize = 12.sp, lineHeight = 16.sp, fontWeight = FontWeight.Normal),
     button = TextStyle(fontSize = 14.sp, lineHeight = 18.sp, fontWeight = FontWeight.Normal),
-    body = TextStyle(fontSize = 16.sp, lineHeight = 24.sp, fontWeight = FontWeight.Normal),
-    bodySmall = TextStyle(fontSize = 14.sp, lineHeight = 20.sp, fontWeight = FontWeight.Normal),
-    caption = TextStyle(fontSize = 12.sp, lineHeight = 16.sp, fontWeight = FontWeight.Normal),
+    body = TextStyle(fontSize = 17.sp, lineHeight = 26.sp, fontWeight = FontWeight.Normal, fontFeatureSettings = "tnum"),
+    bodySmall = TextStyle(fontSize = 15.sp, lineHeight = 22.sp, fontWeight = FontWeight.Medium, fontFeatureSettings = "tnum"),
+    caption = TextStyle(fontSize = 13.sp, lineHeight = 18.sp, fontWeight = FontWeight.Medium, fontFeatureSettings = "tnum"),
 )

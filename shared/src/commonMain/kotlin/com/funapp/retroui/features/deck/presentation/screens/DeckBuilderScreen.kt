@@ -108,6 +108,7 @@ fun DeckBuilderScreen(
         }
         item {
             Column(modifier = Modifier.retroEntrance(delayMillis = 120)) {
+                Spacer(modifier = Modifier.height(RetroTheme.spacing.md))
                 RetroText(
                     text = stringResource(Res.string.deck_slots_ready, deck.size, DECK_SIZE),
                     style = RetroTheme.typography.label,
@@ -185,7 +186,6 @@ private fun DeckPanel(
 ) {
     RetroPanel(
         title = stringResource(Res.string.screen_deck_title),
-        subtitle = stringResource(Res.string.deck_slots_ready, deck.size, DECK_SIZE),
         modifier = modifier,
     ) {
         Row(

@@ -33,6 +33,8 @@ import androidx.compose.ui.unit.dp
 import com.funapp.retroui.core.ui.animation.RetroEntranceStyle
 import com.funapp.retroui.core.ui.animation.retroCascade
 import com.funapp.retroui.core.ui.animation.retroEntrance
+import com.funapp.retroui.core.ui.components.controls.RetroButton
+import com.funapp.retroui.core.ui.components.controls.RetroButtonVariant
 import com.funapp.retroui.core.ui.components.controls.RetroChip
 import com.funapp.retroui.core.ui.components.controls.RetroIconButton
 import com.funapp.retroui.core.ui.components.feedback.RetroStatusLabel
@@ -40,7 +42,7 @@ import com.funapp.retroui.core.ui.components.foundation.RetroText
 import com.funapp.retroui.core.ui.components.game.RetroCardRarity
 import com.funapp.retroui.core.ui.components.game.RetroGameCard
 import com.funapp.retroui.core.ui.components.game.rarityColor
-import com.funapp.retroui.core.ui.components.surfaces.RetroBottomSheet
+import com.funapp.retroui.core.ui.components.surfaces.RetroDialog
 import com.funapp.retroui.core.ui.theme.RetroTheme
 import com.funapp.retroui.core.data.mock.MockChampion
 import com.funapp.retroui.core.data.mock.mockChampionRoster
@@ -49,12 +51,12 @@ import retroui.shared.generated.resources.Res
 import retroui.shared.generated.resources.btn_deck_builder
 import retroui.shared.generated.resources.card_owned
 import retroui.shared.generated.resources.collection_count
+import retroui.shared.generated.resources.common_close
 import retroui.shared.generated.resources.rarity_all
 import retroui.shared.generated.resources.rarity_common
 import retroui.shared.generated.resources.rarity_epic
 import retroui.shared.generated.resources.rarity_legendary
 import retroui.shared.generated.resources.rarity_rare
-import retroui.shared.generated.resources.screen_collection_subtitle
 import retroui.shared.generated.resources.screen_collection_title
 import retroui.shared.generated.resources.sheet_card_cost
 import retroui.shared.generated.resources.sheet_card_owned_no
@@ -94,7 +96,8 @@ fun CollectionScreen(
 ) {
     val cards = mockChampionRoster()
     var filter by remember { mutableStateOf<RetroCardRarity?>(null) }
-    var selectedCard by remember { mutableStateOf<MockChampion?>(null) }
+    var detailsCard by remember { mutableStateOf<MockChampion?>(null) }
+    var previewCard by remember { mutableStateOf<MockChampion?>(null) }
     val filtered = if (filter == null) cards else cards.filter { it.rarity == filter }
 
     Box(
@@ -156,49 +159,93 @@ fun CollectionScreen(
                         artworkIcon = card.icon,
                         rarity = card.rarity,
                         footer = stringResource(Res.string.card_owned, card.owned),
-                        onClick = { selectedCard = card },
+                        onClick = {
+                            previewCard = null
+                            detailsCard = card
+                        },
+                        onDoubleTap = {
+                            detailsCard = null
+                            previewCard = card
+                        },
                     )
                 }
             }
         }
     }
 
-    selectedCard?.let { card ->
-        RetroBottomSheet(
+    detailsCard?.let { card ->
+        RetroDialog(
             visible = true,
-            onDismiss = { selectedCard = null },
+            onDismiss = { detailsCard = null },
             title = card.name,
-        ) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                RetroChip(
-                    text = rarityLabel(card.rarity),
-                    onClick = {},
-                    selected = false,
+            content = {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    RetroChip(
+                        text = rarityLabel(card.rarity),
+                        onClick = {},
+                        selected = false,
+                    )
+                    Spacer(modifier = Modifier.weight(1f))
+                    RetroStatusLabel(
+                        text = stringResource(
+                            if (card.owned > 0) {
+                                Res.string.sheet_card_owned_yes
+                            } else {
+                                Res.string.sheet_card_owned_no
+                            },
+                        ),
+                        dotColor = if (card.owned > 0) RetroTheme.colors.success else RetroTheme.colors.textMuted,
+                        container = RetroTheme.colors.surfaceVariant,
+                    )
+                }
+                Spacer(modifier = Modifier.height(RetroTheme.spacing.md))
+                CardDetailRow(
+                    label = stringResource(Res.string.sheet_card_type),
+                    value = card.type,
                 )
-                Spacer(modifier = Modifier.weight(1f))
-                RetroStatusLabel(
-                    text = stringResource(
-                        if (card.owned > 0) {
-                            Res.string.sheet_card_owned_yes
-                        } else {
-                            Res.string.sheet_card_owned_no
-                        },
-                    ),
-                    dotColor = if (card.owned > 0) RetroTheme.colors.success else RetroTheme.colors.textMuted,
-                    container = RetroTheme.colors.surfaceVariant,
+                Spacer(modifier = Modifier.height(RetroTheme.spacing.xs))
+                CardDetailRow(
+                    label = stringResource(Res.string.sheet_card_cost),
+                    value = card.cost,
                 )
-            }
-            Spacer(modifier = Modifier.height(RetroTheme.spacing.md))
-            CardDetailRow(
-                label = stringResource(Res.string.sheet_card_type),
-                value = card.type,
-            )
-            Spacer(modifier = Modifier.height(RetroTheme.spacing.xs))
-            CardDetailRow(
-                label = stringResource(Res.string.sheet_card_cost),
-                value = card.cost,
-            )
-        }
+                Spacer(modifier = Modifier.height(RetroTheme.spacing.md))
+                RetroButton(
+                    text = stringResource(Res.string.common_close),
+                    variant = RetroButtonVariant.Danger,
+                    onClick = { detailsCard = null },
+                    small = true,
+                    modifier = Modifier.fillMaxWidth(),
+                )
+            },
+        )
+    }
+
+    previewCard?.let { card ->
+        RetroDialog(
+            visible = true,
+            onDismiss = { previewCard = null },
+            title = card.name,
+            content = {
+                RetroGameCard(
+                    title = card.name,
+                    cost = card.cost,
+                    type = card.type,
+                    artworkIcon = card.icon,
+                    rarity = card.rarity,
+                    footer = stringResource(Res.string.card_owned, card.owned),
+                    width = 240.dp,
+                    height = 340.dp,
+                )
+                Spacer(modifier = Modifier.height(RetroTheme.spacing.md))
+                RetroButton(
+                    text = stringResource(Res.string.common_close),
+                    variant = RetroButtonVariant.Outline,
+                    onClick = { previewCard = null },
+                    small = true,
+                    modifier = Modifier.fillMaxWidth(),
+                )
+            },
+        )
     }
 }
 
@@ -238,11 +285,6 @@ private fun CollectionHeader(onGoDeckBuilder: () -> Unit, modifier: Modifier = M
                 text = stringResource(Res.string.screen_collection_title),
                 style = RetroTheme.typography.heading,
                 color = RetroTheme.colors.textPrimary,
-            )
-            RetroText(
-                text = stringResource(Res.string.screen_collection_subtitle),
-                style = RetroTheme.typography.caption,
-                color = RetroTheme.colors.textMuted,
             )
         }
         RetroIconButton(

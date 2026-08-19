@@ -1,9 +1,11 @@
 package com.funapp.retroui.core.ui.components.game
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -52,7 +54,13 @@ internal fun RetroCardRarity.rarityColor(colors: RetroColors): Color = when (thi
  * Thick ink outline + hard shadow + rarity accent + pixel title + artwork
  * slot + cost badge + type chip + optional stat footer. All visuals come from
  * tokens; only the [artworkIcon] is content.
+ *
+ * When [onDoubleTap] is set, the card also detects double taps via
+ * `combinedClickable` (sharing the same interaction source, so the tactile
+ * press still works on both taps). Single tap fires [onClick], double tap
+ * fires [onDoubleTap].
  */
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun RetroGameCard(
     title: String,
@@ -68,28 +76,43 @@ fun RetroGameCard(
     selected: Boolean = false,
     enabled: Boolean = true,
     onClick: (() -> Unit)? = null,
+    onDoubleTap: (() -> Unit)? = null,
 ) {
     val colors = RetroTheme.colors
     val shape: CornerBasedShape = RetroTheme.shapeTokens.card
     val accent = rarity.rarityColor(colors)
     val tap = rememberRetroTapFeedback()
     val interactionSource = remember { MutableInteractionSource() }
-    val clickModifier = if (onClick != null) {
-        Modifier.clickable(
+    val interactive = onClick != null || onDoubleTap != null
+    val clickModifier = when {
+        onClick != null && onDoubleTap != null -> Modifier.combinedClickable(
+            interactionSource = interactionSource,
+            indication = null,
+            onClick = {
+                tap.play()
+                onClick()
+            },
+            onDoubleClick = {
+                tap.play()
+                onDoubleTap()
+            },
+        )
+        onClick != null -> Modifier.clickable(
             interactionSource = interactionSource,
             indication = null,
         ) {
             tap.play()
             onClick()
         }
-    } else Modifier
+        else -> Modifier
+    }
 
     Box(
         modifier = modifier
             .width(width)
             .height(height)
             .then(
-                if (onClick != null) {
+                if (interactive) {
                     Modifier.retroTactilePress(interactionSource, shape, colors.outline)
                 } else {
                     Modifier.retroHardShadow(

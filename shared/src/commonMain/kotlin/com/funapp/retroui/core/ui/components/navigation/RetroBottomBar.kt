@@ -38,6 +38,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
+import org.jetbrains.compose.resources.stringResource
+import retroui.shared.generated.resources.Res
+import retroui.shared.generated.resources.nav_cards
+import retroui.shared.generated.resources.nav_home
+import retroui.shared.generated.resources.nav_profile
+import retroui.shared.generated.resources.nav_quests
 import com.funapp.retroui.core.ui.components.foundation.RetroText
 import com.funapp.retroui.core.ui.components.foundation.retroHardShadow
 import com.funapp.retroui.core.ui.theme.RetroTheme
@@ -130,6 +136,7 @@ private fun RetroDockTab(
     Column(
         modifier = modifier
             .clickable(
+                enabled = !selected,
                 interactionSource = interactionSource,
                 indication = null,
             ) {
@@ -168,13 +175,14 @@ private fun RetroDockTab(
     }
 }
 
-/** Convenience: the four main Retro Duel tabs (matches app routes). */
+/** Convenience: the four main Deckron tabs (matches app routes). */
 object RetroBottomBarDestinations {
-    val all: List<RetroBottomBarItem> = listOf(
-        RetroBottomBarItem("HOME", RetroIcons.Home),
-        RetroBottomBarItem("CARDS", RetroIcons.Star),
-        RetroBottomBarItem("QUESTS", RetroIcons.PlayArrow),
-        RetroBottomBarItem("PROFILE", RetroIcons.Person),
+    @Composable
+    fun all(): List<RetroBottomBarItem> = listOf(
+        RetroBottomBarItem(stringResource(Res.string.nav_home), RetroIcons.Home),
+        RetroBottomBarItem(stringResource(Res.string.nav_cards), RetroIcons.Star),
+        RetroBottomBarItem(stringResource(Res.string.nav_quests), RetroIcons.PlayArrow),
+        RetroBottomBarItem(stringResource(Res.string.nav_profile), RetroIcons.Person),
     )
 }
 

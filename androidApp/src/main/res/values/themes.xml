@@ -1,0 +1,12 @@
+<resources>
+    <!-- Retro paper window background so no white flash shows through
+         during navigation transitions. Light system bars on paper. -->
+    <style name="Theme.Deckron" parent="android:style/Theme.Material.Light.NoActionBar">
+        <item name="android:windowBackground">@color/retro_window_background</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
+    </style>
+</resources>

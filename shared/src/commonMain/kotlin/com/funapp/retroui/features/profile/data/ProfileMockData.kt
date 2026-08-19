@@ -26,6 +26,7 @@ import retroui.shared.generated.resources.profile_value_wins
 internal data class Badge(
     val label: UiText,
     val icon: ImageVector,
+    val earned: Boolean = true,
 )
 
 internal fun getMockBadges(): List<Badge> = listOf(
@@ -33,8 +34,8 @@ internal fun getMockBadges(): List<Badge> = listOf(
     Badge(ResId(Res.string.badge_win_streak), RetroIcons.ThumbUp),
     Badge(ResId(Res.string.badge_collector), RetroIcons.Check),
     Badge(ResId(Res.string.badge_veteran), RetroIcons.Person),
-    Badge(ResId(Res.string.badge_champion), RetroIcons.Star),
-    Badge(ResId(Res.string.badge_hunter), RetroIcons.Search),
+    Badge(ResId(Res.string.badge_champion), RetroIcons.Star, earned = false),
+    Badge(ResId(Res.string.badge_hunter), RetroIcons.Search, earned = false),
 )
 
 data class ProfileStats(

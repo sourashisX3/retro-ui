@@ -38,13 +38,20 @@ import com.funapp.retroui.features.profile.presentation.screens.ProfileScreen
 import com.funapp.retroui.features.quests.presentation.screens.QuestsScreen
 import com.funapp.retroui.features.settings.presentation.screens.SettingsScreen
 import com.funapp.retroui.features.splash.presentation.SplashScreen
+import org.jetbrains.compose.resources.stringResource
+import retroui.shared.generated.resources.Res
+import retroui.shared.generated.resources.nav_cards
+import retroui.shared.generated.resources.nav_home
+import retroui.shared.generated.resources.nav_profile
+import retroui.shared.generated.resources.nav_quests
 
 /** Tabs shown in the retro bottom bar, mapped to their [Route] types. */
-private val bottomBarTabs: List<Pair<RetroBottomBarItem, Route>> = listOf(
-    RetroBottomBarItem("HOME", RetroIcons.Home) to Route.Home,
-    RetroBottomBarItem("CARDS", RetroIcons.Star) to Route.Collection,
-    RetroBottomBarItem("QUESTS", RetroIcons.PlayArrow) to Route.Quests,
-    RetroBottomBarItem("PROFILE", RetroIcons.Person) to Route.Profile,
+@Composable
+private fun bottomBarTabs(): List<Pair<RetroBottomBarItem, Route>> = listOf(
+    RetroBottomBarItem(stringResource(Res.string.nav_home), RetroIcons.Home) to Route.Home,
+    RetroBottomBarItem(stringResource(Res.string.nav_cards), RetroIcons.Star) to Route.Collection,
+    RetroBottomBarItem(stringResource(Res.string.nav_quests), RetroIcons.PlayArrow) to Route.Quests,
+    RetroBottomBarItem(stringResource(Res.string.nav_profile), RetroIcons.Person) to Route.Profile,
 )
 
 /**
@@ -63,7 +70,7 @@ fun AppNavHost(
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = backStackEntry?.destination
 
-    val selectedTabIndex = bottomBarTabs.indexOfFirst { (_, route) ->
+    val selectedTabIndex = bottomBarTabs().indexOfFirst { (_, route) ->
         currentDestination?.hasRoute(route::class) == true
     }
     val showBottomBar = selectedTabIndex >= 0
@@ -209,11 +216,13 @@ fun AppNavHost(
         }
 
         if (showBottomBar) {
+            val tabs = bottomBarTabs()
             RetroBottomBar(
-                items = bottomBarTabs.map { it.first },
+                items = tabs.map { it.first },
                 selectedIndex = selectedTabIndex,
                 onSelect = { index ->
-                    val route = bottomBarTabs[index].second
+                    if (index == selectedTabIndex) return@RetroBottomBar
+                    val route = tabs[index].second
                     navController.navigate(route) {
                         popUpTo(navController.graph.findStartDestination().id) {
                             saveState = true

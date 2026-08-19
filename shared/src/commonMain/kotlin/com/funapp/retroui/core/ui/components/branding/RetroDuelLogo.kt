@@ -1,9 +1,7 @@
 package com.funapp.retroui.core.ui.components.branding
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -13,16 +11,18 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.funapp.retroui.core.ui.theme.RetroTheme
+import org.jetbrains.compose.resources.stringResource
+import retroui.shared.generated.resources.Res
+import retroui.shared.generated.resources.brand_wordmark
 
 /** Wordmark size variants. */
 enum class RetroLogoSize { Large, Medium, Small }
 
 /**
- * RETRO DUEL wordmark.
+ * DECKRON wordmark.
  *
  * Typographic only — pixel display font, thick ink outline, bright arcade
- * accent fill and a hard offset shadow. Large/Medium are stacked two-line;
- * Small is a single line for headers. Optional pixel [RetroStar]/[RetroSparkle]
+ * accent fill and a hard offset shadow. Optional pixel [RetroStar]/[RetroSparkle]
  * decorations frame the wordmark.
  */
 @Composable
@@ -31,7 +31,7 @@ fun RetroDuelLogo(
     size: RetroLogoSize = RetroLogoSize.Large,
     fill: Color = RetroTheme.colors.primary,
     outline: Color = RetroTheme.colors.outline,
-    shadow: Color = RetroTheme.colors.outline,
+    shadow: Color = RetroTheme.colors.shadow,
     decorated: Boolean = true,
 ) {
     val typography = RetroTheme.typography
@@ -64,35 +64,13 @@ fun RetroDuelLogo(
             )
         }
 
-        if (size == RetroLogoSize.Small) {
-            RetroOutlineText(
-                text = "RETRO DUEL",
-                style = style,
-                fill = fill,
-                outline = outline,
-                shadow = shadow,
-                outlineWidth = outlineWidth,
-            )
-        } else {
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                RetroOutlineText(
-                    text = "RETRO",
-                    style = style,
-                    fill = fill,
-                    outline = outline,
-                    shadow = shadow,
-                    outlineWidth = outlineWidth,
-                )
-                RetroOutlineText(
-                    text = "DUEL",
-                    style = style,
-                    fill = fill,
-                    outline = outline,
-                    shadow = shadow,
-                    outlineWidth = outlineWidth,
-                    modifier = Modifier.padding(top = 2.dp),
-                )
-            }
-        }
+        RetroOutlineText(
+            text = stringResource(Res.string.brand_wordmark),
+            style = style,
+            fill = fill,
+            outline = outline,
+            shadow = shadow,
+            outlineWidth = outlineWidth,
+        )
     }
 }
