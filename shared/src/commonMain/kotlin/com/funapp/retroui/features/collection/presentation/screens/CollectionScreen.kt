@@ -21,17 +21,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountCircle
-import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.Face
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material.icons.filled.Star
-import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -39,7 +29,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import com.funapp.retroui.core.design.components.controls.RetroButton
 import com.funapp.retroui.core.design.components.controls.RetroButtonVariant
@@ -48,20 +37,11 @@ import com.funapp.retroui.core.design.components.foundation.RetroText
 import com.funapp.retroui.core.design.components.game.RetroCardRarity
 import com.funapp.retroui.core.design.components.game.RetroGameCard
 import com.funapp.retroui.core.design.theme.RetroTheme
+import com.funapp.retroui.core.mock.mockChampionRoster
 import org.jetbrains.compose.resources.stringResource
 import retroui.shared.generated.resources.Res
 import retroui.shared.generated.resources.btn_deck_builder
-import retroui.shared.generated.resources.card_blaze
-import retroui.shared.generated.resources.card_ember
-import retroui.shared.generated.resources.card_frost
-import retroui.shared.generated.resources.card_gale
-import retroui.shared.generated.resources.card_nova
 import retroui.shared.generated.resources.card_owned
-import retroui.shared.generated.resources.card_rock
-import retroui.shared.generated.resources.card_sage
-import retroui.shared.generated.resources.card_shade
-import retroui.shared.generated.resources.card_terra
-import retroui.shared.generated.resources.card_volt
 import retroui.shared.generated.resources.collection_count
 import retroui.shared.generated.resources.rarity_all
 import retroui.shared.generated.resources.rarity_common
@@ -70,21 +50,6 @@ import retroui.shared.generated.resources.rarity_legendary
 import retroui.shared.generated.resources.rarity_rare
 import retroui.shared.generated.resources.screen_collection_subtitle
 import retroui.shared.generated.resources.screen_collection_title
-import retroui.shared.generated.resources.type_assassin
-import retroui.shared.generated.resources.type_guardian
-import retroui.shared.generated.resources.type_mage
-import retroui.shared.generated.resources.type_rogue
-import retroui.shared.generated.resources.type_sage
-import retroui.shared.generated.resources.type_warrior
-
-private data class CollectionCard(
-    val title: String,
-    val cost: String,
-    val type: String,
-    val artworkIcon: ImageVector,
-    val rarity: RetroCardRarity,
-    val owned: Int,
-)
 
 private val rarityFilters: List<Pair<RetroCardRarity?, RarityLabel>> = listOf(
     null to RarityLabel.All,
@@ -117,7 +82,7 @@ fun CollectionScreen(
     onGoHome: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val cards = mockCollection()
+    val cards = mockChampionRoster()
     var filter by remember { mutableStateOf<RetroCardRarity?>(null) }
     val filtered = if (filter == null) cards else cards.filter { it.rarity == filter }
 
@@ -162,10 +127,10 @@ fun CollectionScreen(
                     contentAlignment = Alignment.Center,
                 ) {
                     RetroGameCard(
-                        title = card.title,
+                        title = card.name,
                         cost = card.cost,
                         type = card.type,
-                        artworkIcon = card.artworkIcon,
+                        artworkIcon = card.icon,
                         rarity = card.rarity,
                         footer = stringResource(Res.string.card_owned, card.owned),
                     )
@@ -218,87 +183,3 @@ private fun RarityFilters(
         }
     }
 }
-
-@Composable
-private fun mockCollection(): List<CollectionCard> = listOf(
-    CollectionCard(
-        title = stringResource(Res.string.card_blaze),
-        cost = "2",
-        type = stringResource(Res.string.type_warrior),
-        artworkIcon = Icons.Filled.Star,
-        rarity = RetroCardRarity.Legendary,
-        owned = 1,
-    ),
-    CollectionCard(
-        title = stringResource(Res.string.card_frost),
-        cost = "3",
-        type = stringResource(Res.string.type_mage),
-        artworkIcon = Icons.Filled.Favorite,
-        rarity = RetroCardRarity.Epic,
-        owned = 2,
-    ),
-    CollectionCard(
-        title = stringResource(Res.string.card_volt),
-        cost = "1",
-        type = stringResource(Res.string.type_rogue),
-        artworkIcon = Icons.Filled.Person,
-        rarity = RetroCardRarity.Rare,
-        owned = 3,
-    ),
-    CollectionCard(
-        title = stringResource(Res.string.card_terra),
-        cost = "4",
-        type = stringResource(Res.string.type_guardian),
-        artworkIcon = Icons.Filled.Face,
-        rarity = RetroCardRarity.Common,
-        owned = 4,
-    ),
-    CollectionCard(
-        title = stringResource(Res.string.card_shade),
-        cost = "2",
-        type = stringResource(Res.string.type_assassin),
-        artworkIcon = Icons.Filled.AccountCircle,
-        rarity = RetroCardRarity.Epic,
-        owned = 1,
-    ),
-    CollectionCard(
-        title = stringResource(Res.string.card_nova),
-        cost = "3",
-        type = stringResource(Res.string.type_mage),
-        artworkIcon = Icons.Filled.Check,
-        rarity = RetroCardRarity.Rare,
-        owned = 2,
-    ),
-    CollectionCard(
-        title = stringResource(Res.string.card_rock),
-        cost = "5",
-        type = stringResource(Res.string.type_guardian),
-        artworkIcon = Icons.Filled.Home,
-        rarity = RetroCardRarity.Common,
-        owned = 2,
-    ),
-    CollectionCard(
-        title = stringResource(Res.string.card_gale),
-        cost = "1",
-        type = stringResource(Res.string.type_rogue),
-        artworkIcon = Icons.Filled.Search,
-        rarity = RetroCardRarity.Common,
-        owned = 3,
-    ),
-    CollectionCard(
-        title = stringResource(Res.string.card_ember),
-        cost = "2",
-        type = stringResource(Res.string.type_warrior),
-        artworkIcon = Icons.Filled.Settings,
-        rarity = RetroCardRarity.Rare,
-        owned = 1,
-    ),
-    CollectionCard(
-        title = stringResource(Res.string.card_sage),
-        cost = "4",
-        type = stringResource(Res.string.type_sage),
-        artworkIcon = Icons.Filled.Notifications,
-        rarity = RetroCardRarity.Legendary,
-        owned = 1,
-    ),
-)

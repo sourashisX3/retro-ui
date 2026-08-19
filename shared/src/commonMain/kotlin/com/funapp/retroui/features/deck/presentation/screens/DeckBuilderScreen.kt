@@ -13,17 +13,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.Face
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material.icons.filled.Star
-import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
@@ -32,7 +23,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import com.funapp.retroui.core.design.components.controls.RetroButton
 import com.funapp.retroui.core.design.components.controls.RetroButtonVariant
@@ -40,53 +30,24 @@ import com.funapp.retroui.core.design.components.controls.RetroChip
 import com.funapp.retroui.core.design.components.foundation.RetroText
 import com.funapp.retroui.core.design.components.game.RetroCardRarity
 import com.funapp.retroui.core.design.components.game.RetroCardSlot
+import com.funapp.retroui.core.design.components.game.rarityColor
 import com.funapp.retroui.core.design.components.surfaces.RetroPanel
 import com.funapp.retroui.core.design.components.surfaces.RetroScreen
-import com.funapp.retroui.core.design.theme.RetroColors
 import com.funapp.retroui.core.design.theme.RetroTheme
+import com.funapp.retroui.core.mock.MockChampion
+import com.funapp.retroui.core.mock.mockChampionRoster
 import org.jetbrains.compose.resources.stringResource
 import retroui.shared.generated.resources.Res
 import retroui.shared.generated.resources.btn_browse_collection
 import retroui.shared.generated.resources.btn_save_deck
-import retroui.shared.generated.resources.card_blaze
-import retroui.shared.generated.resources.card_ember
-import retroui.shared.generated.resources.card_frost
-import retroui.shared.generated.resources.card_gale
-import retroui.shared.generated.resources.card_nova
-import retroui.shared.generated.resources.card_rock
-import retroui.shared.generated.resources.card_sage
-import retroui.shared.generated.resources.card_shade
-import retroui.shared.generated.resources.card_terra
-import retroui.shared.generated.resources.card_volt
 import retroui.shared.generated.resources.deck_add
 import retroui.shared.generated.resources.deck_available_title
 import retroui.shared.generated.resources.deck_empty_hint
 import retroui.shared.generated.resources.deck_slots_ready
 import retroui.shared.generated.resources.screen_deck_subtitle
 import retroui.shared.generated.resources.screen_deck_title
-import retroui.shared.generated.resources.type_assassin
-import retroui.shared.generated.resources.type_guardian
-import retroui.shared.generated.resources.type_mage
-import retroui.shared.generated.resources.type_rogue
-import retroui.shared.generated.resources.type_sage
-import retroui.shared.generated.resources.type_warrior
 
 private const val DECK_SIZE = 5
-
-private data class DeckCard(
-    val title: String,
-    val type: String,
-    val cost: String,
-    val icon: ImageVector,
-    val rarity: RetroCardRarity,
-)
-
-private fun RetroCardRarity.tileColor(colors: RetroColors): Color = when (this) {
-    RetroCardRarity.Common -> colors.surfaceMuted
-    RetroCardRarity.Rare -> colors.info
-    RetroCardRarity.Epic -> colors.accent
-    RetroCardRarity.Legendary -> colors.secondary
-}
 
 /**
  * Deck builder. Assemble a 5-champion deck from the available pool.
@@ -98,8 +59,8 @@ fun DeckBuilderScreen(
     onGoHome: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val pool = mockPool()
-    val deck = remember { mutableStateListOf<DeckCard>() }
+    val pool = mockChampionRoster()
+    val deck = remember { mutableStateListOf<MockChampion>() }
 
     RetroScreen(modifier = modifier) {
         item {
@@ -176,8 +137,8 @@ fun DeckBuilderScreen(
             }
         }
         items(
-            items = pool.filter { card -> deck.none { it.title == card.title } },
-            key = { it.title },
+            items = pool.filter { card -> deck.none { it.name == card.name } },
+            key = { it.name },
         ) { card ->
             AvailableChampionRow(
                 card = card,
@@ -190,7 +151,7 @@ fun DeckBuilderScreen(
 
 @Composable
 private fun DeckPanel(
-    deck: List<DeckCard>,
+    deck: List<MockChampion>,
     onRemoveAt: (Int) -> Unit,
 ) {
     RetroPanel(
@@ -221,7 +182,7 @@ private fun DeckPanel(
 
 @Composable
 private fun AvailableChampionRow(
-    card: DeckCard,
+    card: MockChampion,
     addEnabled: Boolean,
     onAdd: () -> Unit,
 ) {
@@ -236,7 +197,7 @@ private fun AvailableChampionRow(
         Spacer(modifier = Modifier.width(RetroTheme.spacing.sm))
         Column(modifier = Modifier.weight(1f)) {
             RetroText(
-                text = card.title,
+                text = card.name,
                 style = RetroTheme.typography.label,
                 color = colors.textPrimary,
             )
@@ -256,13 +217,13 @@ private fun AvailableChampionRow(
 }
 
 @Composable
-private fun ChampionTile(card: DeckCard) {
+private fun ChampionTile(card: MockChampion) {
     val colors = RetroTheme.colors
     Box(
         modifier = Modifier
             .size(40.dp)
             .clip(RetroTheme.shapeTokens.chip)
-            .background(card.rarity.tileColor(colors)),
+            .background(card.rarity.rarityColor(colors)),
         contentAlignment = Alignment.Center,
     ) {
         Icon(
@@ -273,77 +234,3 @@ private fun ChampionTile(card: DeckCard) {
         )
     }
 }
-
-@Composable
-private fun mockPool(): List<DeckCard> = listOf(
-    DeckCard(
-        title = stringResource(Res.string.card_blaze),
-        type = stringResource(Res.string.type_warrior),
-        cost = "2",
-        icon = Icons.Filled.Star,
-        rarity = RetroCardRarity.Legendary,
-    ),
-    DeckCard(
-        title = stringResource(Res.string.card_frost),
-        type = stringResource(Res.string.type_mage),
-        cost = "3",
-        icon = Icons.Filled.Favorite,
-        rarity = RetroCardRarity.Epic,
-    ),
-    DeckCard(
-        title = stringResource(Res.string.card_volt),
-        type = stringResource(Res.string.type_rogue),
-        cost = "1",
-        icon = Icons.Filled.Person,
-        rarity = RetroCardRarity.Rare,
-    ),
-    DeckCard(
-        title = stringResource(Res.string.card_terra),
-        type = stringResource(Res.string.type_guardian),
-        cost = "4",
-        icon = Icons.Filled.Face,
-        rarity = RetroCardRarity.Common,
-    ),
-    DeckCard(
-        title = stringResource(Res.string.card_shade),
-        type = stringResource(Res.string.type_assassin),
-        cost = "2",
-        icon = Icons.Filled.AccountCircle,
-        rarity = RetroCardRarity.Epic,
-    ),
-    DeckCard(
-        title = stringResource(Res.string.card_nova),
-        type = stringResource(Res.string.type_mage),
-        cost = "3",
-        icon = Icons.Filled.Check,
-        rarity = RetroCardRarity.Rare,
-    ),
-    DeckCard(
-        title = stringResource(Res.string.card_rock),
-        type = stringResource(Res.string.type_guardian),
-        cost = "5",
-        icon = Icons.Filled.Home,
-        rarity = RetroCardRarity.Common,
-    ),
-    DeckCard(
-        title = stringResource(Res.string.card_gale),
-        type = stringResource(Res.string.type_rogue),
-        cost = "1",
-        icon = Icons.Filled.Search,
-        rarity = RetroCardRarity.Common,
-    ),
-    DeckCard(
-        title = stringResource(Res.string.card_ember),
-        type = stringResource(Res.string.type_warrior),
-        cost = "2",
-        icon = Icons.Filled.Settings,
-        rarity = RetroCardRarity.Rare,
-    ),
-    DeckCard(
-        title = stringResource(Res.string.card_sage),
-        type = stringResource(Res.string.type_sage),
-        cost = "4",
-        icon = Icons.Filled.Notifications,
-        rarity = RetroCardRarity.Legendary,
-    ),
-)

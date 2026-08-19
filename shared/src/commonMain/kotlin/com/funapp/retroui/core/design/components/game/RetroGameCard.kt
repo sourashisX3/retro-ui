@@ -37,7 +37,8 @@ import com.funapp.retroui.core.feedback.rememberRetroTapFeedback
 /** Collectible-card rarity tiers. Colors come from the semantic palette. */
 enum class RetroCardRarity { Common, Rare, Epic, Legendary }
 
-private fun RetroCardRarity.rarityColor(colors: RetroColors): Color = when (this) {
+/** Semantic rarity accent color. Shared across cards and feature tiles. */
+internal fun RetroCardRarity.rarityColor(colors: RetroColors): Color = when (this) {
     RetroCardRarity.Common -> colors.surfaceMuted
     RetroCardRarity.Rare -> colors.info
     RetroCardRarity.Epic -> colors.accent
