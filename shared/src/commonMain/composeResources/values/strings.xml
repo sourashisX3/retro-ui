@@ -51,7 +51,7 @@
     <string name="screen_register_subtitle">Forge your hero and join the arena.</string>
     <string name="btn_start_quest">START QUEST</string>
     <string name="screen_forgot_title">RECOVER ACCOUNT</string>
-    <string name="screen_forgot_subtitle">We\'ll send you a recovery link.</string>
+    <string name="screen_forgot_subtitle">We’ll send you a recovery link.</string>
     <string name="btn_send_link">SEND LINK</string>
 
     <!-- Auth fields -->
@@ -110,7 +110,7 @@
 
     <!-- Collection -->
     <string name="screen_collection_title">COLLECTION</string>
-    <string name="screen_collection_subtitle">Browse every card you\'ve earned.</string>
+    <string name="screen_collection_subtitle">Browse every card you’ve earned.</string>
     <string name="btn_deck_builder">DECK BUILDER</string>
     <string name="collection_count">%1$d CARDS</string>
     <string name="rarity_all">ALL</string>
