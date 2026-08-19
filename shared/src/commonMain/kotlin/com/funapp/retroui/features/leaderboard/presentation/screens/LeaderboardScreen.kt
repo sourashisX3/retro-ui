@@ -28,6 +28,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.funapp.retroui.core.ui.animation.RetroEntranceStyle
 import com.funapp.retroui.core.ui.animation.retroEntrance
+import com.funapp.retroui.core.ui.components.feedback.RetroShine
 import com.funapp.retroui.core.ui.components.foundation.RetroText
 import com.funapp.retroui.core.ui.components.foundation.retroHardShadow
 import com.funapp.retroui.core.ui.components.surfaces.RetroScreen
@@ -243,13 +244,21 @@ private fun CompactRankRow(
     val colors = RetroTheme.colors
     val rowColor = if (entry.isYou) colors.primaryContainer else colors.surface
 
-    Row(
-        modifier = modifier
-            .background(rowColor)
-            .border(RetroTheme.borders.thin, colors.outline, RetroTheme.shapeTokens.chip)
-            .padding(horizontal = RetroTheme.spacing.sm, vertical = RetroTheme.spacing.xs),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
+    Box(modifier = modifier) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .retroHardShadow(
+                    offsetX = 2.dp,
+                    offsetY = 2.dp,
+                    color = colors.outline,
+                    shape = RetroTheme.shapeTokens.chip,
+                )
+                .background(rowColor)
+                .border(RetroTheme.borders.default, colors.outlineStrong, RetroTheme.shapeTokens.chip)
+                .padding(horizontal = RetroTheme.spacing.sm, vertical = RetroTheme.spacing.xs),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
         RetroText(
             text = entry.rank.toString(),
             style = RetroTheme.typography.caption,
@@ -323,5 +332,9 @@ private fun CompactRankRow(
             style = RetroTheme.typography.caption,
             color = if (entry.isYou) colors.onPrimaryContainer else colors.textSecondary,
         )
+        }
+        if (entry.isYou) {
+            RetroShine(shape = RetroTheme.shapeTokens.chip)
+        }
     }
 }
