@@ -98,7 +98,11 @@ fun OnboardingScreen(
 
     RetroScreenStatic(
         modifier = modifier,
-        contentPadding = PaddingValues(bottom = spacing.md),
+        contentPadding = PaddingValues(
+            start = spacing.lg,
+            end = spacing.lg,
+            bottom = spacing.md,
+        ),
     ) {
         Column(modifier = Modifier.fillMaxSize()) {
             // Skip (top-right)
