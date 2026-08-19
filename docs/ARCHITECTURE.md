@@ -97,7 +97,7 @@ grid — generated to Compose by the `dev.tonholo.s2c` Gradle plugin.
   `mapIconNameTo` entry if the Kotlin name should differ, rebuild.
 - **Rule:** features use only `RetroIcons.*` — Material icons are not a dependency.
 
-## Data flow (future features, per Liquefied pattern)
+## Data flow (per Liquefied pattern)
 
 ```
 User Action → UI Event → ViewModel → UseCase → Repository → API / DB
@@ -106,6 +106,25 @@ User Action → UI Event → ViewModel → UseCase → Repository → API / DB
 ```
 
 Each feature: `presentation → domain → data` (one-way dependency).
+
+## Repositories & DI
+
+`AppContainer` (`core/di`, created in `App.kt`, provided via
+`LocalAppContainer`) registers every repository behind an interface:
+
+- `SettingsRepository` (theme persistence, expect/actual storage)
+- `MatchmakingRepository` + `MockMatchmakingRepository` (battle)
+- `LeaderboardRepository` + `MockLeaderboardRepository` (rank tab)
+
+Screens never reference mock types — the backend phase swaps the constructors
+in `App.kt` for Ktor-backed implementations. See `docs/GAME_FLOW.md`.
+
+## Toasts
+
+`RetroToastController` (queued, auto-dismissing) is created in `AppNavHost`
+and provided via `LocalRetroToastController`; `RetroToastHost` overlays the
+top of the root `Box` so toasts survive navigation. Fire with
+`LocalRetroToastController.current.show(msg, type = ...)`.
 
 ## Build & verify
 

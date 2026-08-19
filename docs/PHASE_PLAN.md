@@ -73,3 +73,16 @@
 ## Phase 18+: Data & domain layers
 
 Per Liquefied MVVM + Clean pattern (`feature/<name>` with `data/domain/presentation`): di growth, network, repository, use cases, ViewModels, StateFlow state, `Result`/`SafeCall` + snackbar patterns.
+
+## Online game flow — `feature/online-game-flow` branch (Complete)
+
+Sprint for the first real player-facing online loop, one commit per phase:
+
+- **Phase 0 — Arcade feel & branding**: deck spacing, collection tap exclusivity, red CLOSE, circular earned/locked badge coins, slot-machine splash drop-in (DECK/RON), solid shadow in `RetroOutlineText` + `shadow` semantic color, Android/web white-flash fix, DECKRON branding, nav-bar guard + disabled active tab, full hardcoded-string cleanup, readable body/number typography (`tnum`, bumped sizes)
+- **Phase 1 — Arcade navy palette**: dark `#0E1220`/`#1A2032`/`#242C45`/`#2D3553` + light hierarchy (`#F3E9D2`/`#FFFDF5`/`#E3E7EF`/`#FFFFFF`), `shadow` semantic, Android/web sync
+- **Phase 2 — Collection search**: query state + `RetroTextField` with search icon + CLEAR trailing action, stacks with rarity filter
+- **Phase 3 — Matchmaking mock + battle**: `MatchmakingRepository` (interface + mock, 2.5s random opponent), radar-spinner `MatchmakingScreen`, `Route.Matchmaking`, `BattleScreen` now takes the found `MockChampion`
+- **Phase 4 — Leaderboard**: 5th RANK tab, gold/silver/bronze 1-2-3 podium (2-1-3 blocks), compact full list below, YOU highlight
+- **Phase 5 — BE-ready data layer**: `AppContainer` registers `MatchmakingRepository` + `LeaderboardRepository`; screens only see interfaces; red retreat icon button (Danger `RetroIconButton`)
+- **Phase 6 — Retro top toasts**: `RetroToastController`/`RetroToastHost` (queue, auto-dismiss 2/3.5/5s, liquid entrance), wired to deck SAVE / quest CLAIM / search CANCEL
+- **Phase 7 — Docs** (GAME_FLOW.md) + final verification + `git push`
