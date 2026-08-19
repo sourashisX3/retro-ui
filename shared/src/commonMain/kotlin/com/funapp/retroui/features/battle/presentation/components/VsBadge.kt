@@ -9,9 +9,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
-import com.funapp.retroui.core.design.components.foundation.RetroText
-import com.funapp.retroui.core.design.components.foundation.retroHardShadow
-import com.funapp.retroui.core.design.theme.RetroTheme
+import com.funapp.retroui.core.ui.components.foundation.RetroText
+import com.funapp.retroui.core.ui.components.foundation.retroHardShadow
+import com.funapp.retroui.core.ui.theme.RetroTheme
 import org.jetbrains.compose.resources.stringResource
 import retroui.shared.generated.resources.Res
 import retroui.shared.generated.resources.battle_vs

@@ -1,4 +1,5 @@
 package com.funapp.retroui.features.profile.presentation.screens
+import com.funapp.retroui.core.ui.icons.RetroIcons
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -7,20 +8,23 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.PlayArrow
-import androidx.compose.material.icons.filled.Star
-import androidx.compose.material.icons.filled.ThumbUp
+import com.funapp.retroui.core.ui.icons.PlayArrow
+import com.funapp.retroui.core.ui.icons.Star
+import com.funapp.retroui.core.ui.icons.ThumbUp
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.funapp.retroui.core.design.animation.retroEntrance
-import com.funapp.retroui.core.design.components.feedback.RetroProgressColor
-import com.funapp.retroui.core.design.components.foundation.RetroText
-import com.funapp.retroui.core.design.components.surfaces.RetroScreen
-import com.funapp.retroui.core.design.components.surfaces.RetroSection
-import com.funapp.retroui.core.design.components.surfaces.RetroStatCard
-import com.funapp.retroui.core.design.theme.RetroTheme
+import com.funapp.retroui.core.ui.animation.retroEntrance
+import com.funapp.retroui.core.ui.components.feedback.RetroProgressColor
+import com.funapp.retroui.core.ui.components.foundation.RetroText
+import com.funapp.retroui.core.ui.components.surfaces.RetroScreen
+import com.funapp.retroui.core.ui.components.surfaces.RetroSection
+import com.funapp.retroui.core.ui.components.surfaces.RetroStatCard
+import com.funapp.retroui.core.ui.theme.RetroTheme
+import com.funapp.retroui.core.utils.asString
+import com.funapp.retroui.features.profile.data.getMockProfileRecords
+import com.funapp.retroui.features.profile.data.getMockProfileStats
 import com.funapp.retroui.features.profile.presentation.components.BadgeGrid
 import com.funapp.retroui.features.profile.presentation.components.ProfileBanner
 import org.jetbrains.compose.resources.stringResource
@@ -33,12 +37,6 @@ import retroui.shared.generated.resources.profile_records_title
 import retroui.shared.generated.resources.profile_stat_losses
 import retroui.shared.generated.resources.profile_stat_winrate
 import retroui.shared.generated.resources.profile_stat_wins
-import retroui.shared.generated.resources.profile_value_damage
-import retroui.shared.generated.resources.profile_value_favorite
-import retroui.shared.generated.resources.profile_value_streak
-import retroui.shared.generated.resources.profile_value_wins
-import retroui.shared.generated.resources.profile_value_losses
-import retroui.shared.generated.resources.profile_value_winrate
 import retroui.shared.generated.resources.screen_profile_subtitle
 import retroui.shared.generated.resources.screen_profile_title
 
@@ -51,6 +49,9 @@ fun ProfileScreen(
     onGoHome: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val profileStats = remember { getMockProfileStats() }
+    val profileRecords = remember { getMockProfileRecords() }
+
     RetroScreen(modifier = modifier) {
         item {
             Column(modifier = Modifier.retroEntrance(delayMillis = 0)) {
@@ -84,24 +85,24 @@ fun ProfileScreen(
             ) {
                 RetroStatCard(
                     label = stringResource(Res.string.profile_stat_wins),
-                    value = stringResource(Res.string.profile_value_wins),
-                    icon = Icons.Filled.Star,
+                    value = profileStats.wins.asString(),
+                    icon = RetroIcons.Star,
                     progress = 0.69f,
                     progressColor = RetroProgressColor.Health,
                     width = 100.dp,
                 )
                 RetroStatCard(
                     label = stringResource(Res.string.profile_stat_losses),
-                    value = stringResource(Res.string.profile_value_losses),
-                    icon = Icons.Filled.PlayArrow,
+                    value = profileStats.losses.asString(),
+                    icon = RetroIcons.PlayArrow,
                     progress = 0.31f,
                     progressColor = RetroProgressColor.Danger,
                     width = 100.dp,
                 )
                 RetroStatCard(
                     label = stringResource(Res.string.profile_stat_winrate),
-                    value = stringResource(Res.string.profile_value_winrate),
-                    icon = Icons.Filled.ThumbUp,
+                    value = profileStats.winrate.asString(),
+                    icon = RetroIcons.ThumbUp,
                     progress = 0.69f,
                     progressColor = RetroProgressColor.Info,
                     width = 100.dp,
@@ -129,17 +130,17 @@ fun ProfileScreen(
             ) {
                 RecordRow(
                     label = stringResource(Res.string.profile_record_streak),
-                    value = stringResource(Res.string.profile_value_streak),
+                    value = profileRecords.streak.asString(),
                 )
                 Spacer(modifier = Modifier.height(RetroTheme.spacing.sm))
                 RecordRow(
                     label = stringResource(Res.string.profile_record_damage),
-                    value = stringResource(Res.string.profile_value_damage),
+                    value = profileRecords.damage.asString(),
                 )
                 Spacer(modifier = Modifier.height(RetroTheme.spacing.sm))
                 RecordRow(
                     label = stringResource(Res.string.profile_record_favorite),
-                    value = stringResource(Res.string.profile_value_favorite),
+                    value = profileRecords.favorite.asString(),
                 )
             }
         }

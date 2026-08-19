@@ -1,4 +1,5 @@
 package com.funapp.retroui.features.deck.presentation.screens
+import com.funapp.retroui.core.ui.icons.RetroIcons
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -12,10 +13,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.Edit
+import com.funapp.retroui.core.ui.icons.ArrowBack
+import com.funapp.retroui.core.ui.icons.Check
+import com.funapp.retroui.core.ui.icons.Edit
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.key
@@ -26,20 +26,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.funapp.retroui.core.design.animation.retroEntrance
-import com.funapp.retroui.core.design.components.controls.RetroButton
-import com.funapp.retroui.core.design.components.controls.RetroButtonVariant
-import com.funapp.retroui.core.design.components.controls.RetroChip
-import com.funapp.retroui.core.design.components.controls.RetroIconButton
-import com.funapp.retroui.core.design.components.foundation.RetroText
-import com.funapp.retroui.core.design.components.game.RetroCardRarity
-import com.funapp.retroui.core.design.components.game.RetroCardSlot
-import com.funapp.retroui.core.design.components.game.rarityColor
-import com.funapp.retroui.core.design.components.surfaces.RetroPanel
-import com.funapp.retroui.core.design.components.surfaces.RetroScreen
-import com.funapp.retroui.core.design.theme.RetroTheme
-import com.funapp.retroui.core.mock.MockChampion
-import com.funapp.retroui.core.mock.mockChampionRoster
+import com.funapp.retroui.core.ui.animation.retroEntrance
+import com.funapp.retroui.core.ui.components.controls.RetroButton
+import com.funapp.retroui.core.ui.components.controls.RetroButtonVariant
+import com.funapp.retroui.core.ui.components.controls.RetroChip
+import com.funapp.retroui.core.ui.components.controls.RetroIconButton
+import com.funapp.retroui.core.ui.components.foundation.RetroText
+import com.funapp.retroui.core.ui.components.game.RetroCardRarity
+import com.funapp.retroui.core.ui.components.game.RetroCardSlot
+import com.funapp.retroui.core.ui.components.game.rarityColor
+import com.funapp.retroui.core.ui.components.surfaces.RetroPanel
+import com.funapp.retroui.core.ui.components.surfaces.RetroScreen
+import com.funapp.retroui.core.ui.theme.RetroTheme
+import com.funapp.retroui.core.data.mock.MockChampion
+import com.funapp.retroui.core.data.mock.mockChampionRoster
 import org.jetbrains.compose.resources.stringResource
 import retroui.shared.generated.resources.Res
 import retroui.shared.generated.resources.btn_browse_collection
@@ -75,7 +75,7 @@ fun DeckBuilderScreen(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 RetroIconButton(
-                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                    imageVector = RetroIcons.ArrowBack,
                     contentDescription = stringResource(Res.string.common_back),
                     onClick = onBack,
                     containerColor = RetroTheme.colors.surfaceVariant,
@@ -126,7 +126,7 @@ fun DeckBuilderScreen(
             Column(modifier = Modifier.retroEntrance(delayMillis = 140)) {
                 RetroButton(
                     text = stringResource(Res.string.btn_save_deck),
-                    leadingIcon = Icons.Filled.Check,
+                    leadingIcon = RetroIcons.Check,
                     onClick = onGoHome,
                     enabled = deck.size == DECK_SIZE,
                     small = true,
@@ -272,3 +272,4 @@ private fun ChampionTile(card: MockChampion, modifier: Modifier = Modifier) {
         )
     }
 }
+

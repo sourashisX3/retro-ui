@@ -1,4 +1,5 @@
 package com.funapp.retroui.features.collection.presentation.screens
+import com.funapp.retroui.core.ui.icons.RetroIcons
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
@@ -20,8 +21,7 @@ import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Edit
+import com.funapp.retroui.core.ui.icons.Edit
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -30,18 +30,18 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.funapp.retroui.core.design.animation.retroEntrance
-import com.funapp.retroui.core.design.components.controls.RetroChip
-import com.funapp.retroui.core.design.components.controls.RetroIconButton
-import com.funapp.retroui.core.design.components.feedback.RetroStatusLabel
-import com.funapp.retroui.core.design.components.foundation.RetroText
-import com.funapp.retroui.core.design.components.game.RetroCardRarity
-import com.funapp.retroui.core.design.components.game.RetroGameCard
-import com.funapp.retroui.core.design.components.game.rarityColor
-import com.funapp.retroui.core.design.components.surfaces.RetroBottomSheet
-import com.funapp.retroui.core.design.theme.RetroTheme
-import com.funapp.retroui.core.mock.MockChampion
-import com.funapp.retroui.core.mock.mockChampionRoster
+import com.funapp.retroui.core.ui.animation.retroEntrance
+import com.funapp.retroui.core.ui.components.controls.RetroChip
+import com.funapp.retroui.core.ui.components.controls.RetroIconButton
+import com.funapp.retroui.core.ui.components.feedback.RetroStatusLabel
+import com.funapp.retroui.core.ui.components.foundation.RetroText
+import com.funapp.retroui.core.ui.components.game.RetroCardRarity
+import com.funapp.retroui.core.ui.components.game.RetroGameCard
+import com.funapp.retroui.core.ui.components.game.rarityColor
+import com.funapp.retroui.core.ui.components.surfaces.RetroBottomSheet
+import com.funapp.retroui.core.ui.theme.RetroTheme
+import com.funapp.retroui.core.data.mock.MockChampion
+import com.funapp.retroui.core.data.mock.mockChampionRoster
 import org.jetbrains.compose.resources.stringResource
 import retroui.shared.generated.resources.Res
 import retroui.shared.generated.resources.btn_deck_builder
@@ -244,7 +244,7 @@ private fun CollectionHeader(onGoDeckBuilder: () -> Unit, modifier: Modifier = M
             )
         }
         RetroIconButton(
-            imageVector = Icons.Filled.Edit,
+            imageVector = RetroIcons.Edit,
             contentDescription = stringResource(Res.string.btn_deck_builder),
             onClick = onGoDeckBuilder,
             containerColor = RetroTheme.colors.surfaceVariant,
@@ -271,3 +271,4 @@ private fun RarityFilters(
         }
     }
 }
+

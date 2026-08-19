@@ -7,13 +7,13 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.tooling.preview.Preview
-import com.funapp.retroui.core.config.theme.SettingsRepository
-import com.funapp.retroui.core.config.theme.ThemeMode
-import com.funapp.retroui.core.config.theme.rememberPlatformSettingsStorage
+import com.funapp.retroui.core.ui.theme.SettingsRepository
+import com.funapp.retroui.core.ui.theme.ThemeMode
+import com.funapp.retroui.core.ui.theme.rememberPlatformSettingsStorage
 import com.funapp.retroui.core.config.navigation.AppNavHost
 import com.funapp.retroui.core.di.AppContainer
 import com.funapp.retroui.core.di.LocalAppContainer
-import com.funapp.retroui.core.design.theme.RetroTheme
+import com.funapp.retroui.core.ui.theme.RetroTheme
 
 /**
  * Root composable. Provides the app container, resolves the theme preference

@@ -1,12 +1,12 @@
 package com.funapp.retroui.features.auth.presentation.screens
+import com.funapp.retroui.core.ui.icons.RetroIcons
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountCircle
-import androidx.compose.material.icons.filled.Lock
-import androidx.compose.material.icons.filled.MailOutline
-import androidx.compose.material.icons.filled.Person
+import com.funapp.retroui.core.ui.icons.AccountCircle
+import com.funapp.retroui.core.ui.icons.Lock
+import com.funapp.retroui.core.ui.icons.MailOutline
+import com.funapp.retroui.core.ui.icons.Person
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -15,9 +15,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import com.funapp.retroui.core.design.components.controls.RetroButton
-import com.funapp.retroui.core.design.components.controls.RetroButtonVariant
-import com.funapp.retroui.core.design.components.controls.RetroTextField
+import com.funapp.retroui.core.ui.components.controls.RetroButton
+import com.funapp.retroui.core.ui.components.controls.RetroButtonVariant
+import com.funapp.retroui.core.ui.components.controls.RetroTextField
 import com.funapp.retroui.features.auth.presentation.components.AuthScreenLayout
 import org.jetbrains.compose.resources.stringResource
 import retroui.shared.generated.resources.Res
@@ -49,7 +49,7 @@ fun RegisterScreen(
     var confirmPassword by remember { mutableStateOf("") }
 
     AuthScreenLayout(
-        icon = Icons.Filled.AccountCircle,
+        icon = RetroIcons.AccountCircle,
         title = stringResource(Res.string.screen_register_title),
         subtitle = stringResource(Res.string.screen_register_subtitle),
         modifier = modifier,
@@ -59,14 +59,14 @@ fun RegisterScreen(
                 onValueChange = { username = it },
                 label = stringResource(Res.string.field_username),
                 placeholder = stringResource(Res.string.placeholder_username),
-                leadingIcon = Icons.Filled.Person,
+                leadingIcon = RetroIcons.Person,
             )
             RetroTextField(
                 value = email,
                 onValueChange = { email = it },
                 label = stringResource(Res.string.field_email),
                 placeholder = stringResource(Res.string.placeholder_email),
-                leadingIcon = Icons.Filled.MailOutline,
+                leadingIcon = RetroIcons.MailOutline,
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
             )
             RetroTextField(
@@ -74,7 +74,7 @@ fun RegisterScreen(
                 onValueChange = { password = it },
                 label = stringResource(Res.string.field_password),
                 placeholder = stringResource(Res.string.placeholder_password),
-                leadingIcon = Icons.Filled.Lock,
+                leadingIcon = RetroIcons.Lock,
                 visualTransformation = PasswordVisualTransformation(),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
             )
@@ -83,7 +83,7 @@ fun RegisterScreen(
                 onValueChange = { confirmPassword = it },
                 label = stringResource(Res.string.field_confirm_password),
                 placeholder = stringResource(Res.string.placeholder_password),
-                leadingIcon = Icons.Filled.Lock,
+                leadingIcon = RetroIcons.Lock,
                 visualTransformation = PasswordVisualTransformation(),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
             )

@@ -1,4 +1,5 @@
 package com.funapp.retroui.features.onboarding.presentation
+import com.funapp.retroui.core.ui.icons.RetroIcons
 
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.background
@@ -15,10 +16,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Create
-import androidx.compose.material.icons.filled.PlayArrow
-import androidx.compose.material.icons.filled.Star
+import com.funapp.retroui.core.ui.icons.Create
+import com.funapp.retroui.core.ui.icons.PlayArrow
+import com.funapp.retroui.core.ui.icons.Star
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
@@ -28,11 +28,11 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
-import com.funapp.retroui.core.design.components.controls.RetroButton
-import com.funapp.retroui.core.design.components.controls.RetroButtonVariant
-import com.funapp.retroui.core.design.components.feedback.RetroEmptyState
-import com.funapp.retroui.core.design.components.surfaces.RetroScreenStatic
-import com.funapp.retroui.core.design.theme.RetroTheme
+import com.funapp.retroui.core.ui.components.controls.RetroButton
+import com.funapp.retroui.core.ui.components.controls.RetroButtonVariant
+import com.funapp.retroui.core.ui.components.feedback.RetroEmptyState
+import com.funapp.retroui.core.ui.components.surfaces.RetroScreenStatic
+import com.funapp.retroui.core.ui.theme.RetroTheme
 import kotlin.math.absoluteValue
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
@@ -69,17 +69,17 @@ fun OnboardingScreen(
 
     val pages = listOf(
         OnboardingPage(
-            icon = Icons.Filled.Create,
+            icon = RetroIcons.Create,
             title = stringResource(Res.string.onboarding_page_1_title),
             body = stringResource(Res.string.onboarding_page_1_body),
         ),
         OnboardingPage(
-            icon = Icons.Filled.PlayArrow,
+            icon = RetroIcons.PlayArrow,
             title = stringResource(Res.string.onboarding_page_2_title),
             body = stringResource(Res.string.onboarding_page_2_body),
         ),
         OnboardingPage(
-            icon = Icons.Filled.Star,
+            icon = RetroIcons.Star,
             title = stringResource(Res.string.onboarding_page_3_title),
             body = stringResource(Res.string.onboarding_page_3_body),
         ),

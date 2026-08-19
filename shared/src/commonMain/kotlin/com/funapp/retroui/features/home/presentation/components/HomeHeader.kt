@@ -1,15 +1,15 @@
 package com.funapp.retroui.features.home.presentation.components
+import com.funapp.retroui.core.ui.icons.RetroIcons
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Settings
+import com.funapp.retroui.core.ui.icons.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.funapp.retroui.core.design.components.controls.RetroIconButton
-import com.funapp.retroui.core.design.components.foundation.RetroText
-import com.funapp.retroui.core.design.theme.RetroTheme
+import com.funapp.retroui.core.ui.components.controls.RetroIconButton
+import com.funapp.retroui.core.ui.components.foundation.RetroText
+import com.funapp.retroui.core.ui.theme.RetroTheme
 import org.jetbrains.compose.resources.stringResource
 import retroui.shared.generated.resources.Res
 import retroui.shared.generated.resources.app_name
@@ -35,7 +35,7 @@ internal fun HomeHeader(onGoSettings: () -> Unit, modifier: Modifier = Modifier)
             )
         }
         RetroIconButton(
-            imageVector = Icons.Filled.Settings,
+            imageVector = RetroIcons.Settings,
             contentDescription = stringResource(Res.string.btn_settings),
             onClick = onGoSettings,
         )

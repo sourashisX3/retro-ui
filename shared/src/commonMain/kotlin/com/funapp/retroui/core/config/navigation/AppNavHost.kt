@@ -8,11 +8,11 @@ import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.PlayArrow
-import androidx.compose.material.icons.filled.Star
+import com.funapp.retroui.core.ui.icons.Home
+import com.funapp.retroui.core.ui.icons.Person
+import com.funapp.retroui.core.ui.icons.PlayArrow
+import com.funapp.retroui.core.ui.icons.RetroIcons
+import com.funapp.retroui.core.ui.icons.Star
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -24,8 +24,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.funapp.retroui.core.design.components.navigation.RetroBottomBar
-import com.funapp.retroui.core.design.components.navigation.RetroBottomBarItem
+import com.funapp.retroui.core.ui.components.navigation.RetroBottomBar
+import com.funapp.retroui.core.ui.components.navigation.RetroBottomBarItem
 import com.funapp.retroui.features.auth.presentation.screens.ForgotPasswordScreen
 import com.funapp.retroui.features.auth.presentation.screens.LoginScreen
 import com.funapp.retroui.features.auth.presentation.screens.RegisterScreen
@@ -41,10 +41,10 @@ import com.funapp.retroui.features.splash.presentation.SplashScreen
 
 /** Tabs shown in the retro bottom bar, mapped to their [Route] types. */
 private val bottomBarTabs: List<Pair<RetroBottomBarItem, Route>> = listOf(
-    RetroBottomBarItem("HOME", Icons.Filled.Home) to Route.Home,
-    RetroBottomBarItem("CARDS", Icons.Filled.Star) to Route.Collection,
-    RetroBottomBarItem("QUESTS", Icons.Filled.PlayArrow) to Route.Quests,
-    RetroBottomBarItem("PROFILE", Icons.Filled.Person) to Route.Profile,
+    RetroBottomBarItem("HOME", RetroIcons.Home) to Route.Home,
+    RetroBottomBarItem("CARDS", RetroIcons.Star) to Route.Collection,
+    RetroBottomBarItem("QUESTS", RetroIcons.PlayArrow) to Route.Quests,
+    RetroBottomBarItem("PROFILE", RetroIcons.Person) to Route.Profile,
 )
 
 /**

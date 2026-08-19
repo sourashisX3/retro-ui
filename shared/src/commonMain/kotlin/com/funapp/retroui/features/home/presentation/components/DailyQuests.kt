@@ -1,4 +1,5 @@
 package com.funapp.retroui.features.home.presentation.components
+import com.funapp.retroui.core.ui.icons.RetroIcons
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -9,24 +10,23 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.PlayArrow
-import androidx.compose.material.icons.filled.Star
+import com.funapp.retroui.core.ui.icons.Check
+import com.funapp.retroui.core.ui.icons.PlayArrow
+import com.funapp.retroui.core.ui.icons.Star
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
-import com.funapp.retroui.core.design.components.controls.RetroChip
-import com.funapp.retroui.core.design.components.controls.RetroChipVariant
-import com.funapp.retroui.core.design.components.feedback.RetroProgressBar
-import com.funapp.retroui.core.design.components.feedback.RetroProgressColor
-import com.funapp.retroui.core.design.components.foundation.RetroText
-import com.funapp.retroui.core.design.components.surfaces.RetroPanel
-import com.funapp.retroui.core.design.theme.RetroTheme
-import com.funapp.retroui.core.design.animation.retroEntrance
+import com.funapp.retroui.core.ui.components.controls.RetroChip
+import com.funapp.retroui.core.ui.components.controls.RetroChipVariant
+import com.funapp.retroui.core.ui.components.feedback.RetroProgressBar
+import com.funapp.retroui.core.ui.components.feedback.RetroProgressColor
+import com.funapp.retroui.core.ui.components.foundation.RetroText
+import com.funapp.retroui.core.ui.components.surfaces.RetroPanel
+import com.funapp.retroui.core.ui.theme.RetroTheme
+import com.funapp.retroui.core.ui.animation.retroEntrance
 import org.jetbrains.compose.resources.stringResource
 import retroui.shared.generated.resources.Res
 import retroui.shared.generated.resources.home_daily_subtitle
@@ -56,7 +56,7 @@ internal fun DailyQuests(onViewAll: () -> Unit, modifier: Modifier = Modifier) {
         modifier = modifier,
     ) {
         QuestRow(
-            icon = Icons.Filled.Star,
+            icon = RetroIcons.Star,
             label = stringResource(Res.string.quest_win_battles),
             reward = 50,
             progress = 0.67f,
@@ -64,7 +64,7 @@ internal fun DailyQuests(onViewAll: () -> Unit, modifier: Modifier = Modifier) {
         )
         Spacer(modifier = Modifier.height(RetroTheme.spacing.md))
         QuestRow(
-            icon = Icons.Filled.PlayArrow,
+            icon = RetroIcons.PlayArrow,
             label = stringResource(Res.string.quest_play_rounds),
             reward = 30,
             progress = 0.60f,
@@ -72,7 +72,7 @@ internal fun DailyQuests(onViewAll: () -> Unit, modifier: Modifier = Modifier) {
         )
         Spacer(modifier = Modifier.height(RetroTheme.spacing.md))
         QuestRow(
-            icon = Icons.Filled.Check,
+            icon = RetroIcons.Check,
             label = stringResource(Res.string.quest_login_today),
             reward = 20,
             progress = 1f,

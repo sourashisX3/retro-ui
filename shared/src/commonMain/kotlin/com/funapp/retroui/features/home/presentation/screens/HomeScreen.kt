@@ -1,19 +1,19 @@
 package com.funapp.retroui.features.home.presentation.screens
+import com.funapp.retroui.core.ui.icons.RetroIcons
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.PlayArrow
+import com.funapp.retroui.core.ui.icons.PlayArrow
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
-import com.funapp.retroui.core.design.animation.retroEntrance
-import com.funapp.retroui.core.design.components.controls.RetroButton
-import com.funapp.retroui.core.design.components.foundation.RetroText
-import com.funapp.retroui.core.design.components.surfaces.RetroScreen
-import com.funapp.retroui.core.design.theme.RetroTheme
+import com.funapp.retroui.core.ui.animation.retroEntrance
+import com.funapp.retroui.core.ui.components.controls.RetroButton
+import com.funapp.retroui.core.ui.components.foundation.RetroText
+import com.funapp.retroui.core.ui.components.surfaces.RetroScreen
+import com.funapp.retroui.core.ui.theme.RetroTheme
 import com.funapp.retroui.features.home.presentation.components.DailyQuests
 import com.funapp.retroui.features.home.presentation.components.DeckSnapshot
 import com.funapp.retroui.features.home.presentation.components.HomeHeader
@@ -60,7 +60,7 @@ fun HomeScreen(
             Column(modifier = Modifier.retroEntrance(delayMillis = 120)) {
                 RetroButton(
                     text = stringResource(Res.string.btn_start_battle),
-                    leadingIcon = Icons.Filled.PlayArrow,
+                    leadingIcon = RetroIcons.PlayArrow,
                     onClick = onGoBattle,
                     modifier = Modifier.fillMaxWidth(),
                 )

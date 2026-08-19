@@ -1,4 +1,5 @@
 package com.funapp.retroui.features.battle.presentation.screens
+import com.funapp.retroui.core.ui.icons.RetroIcons
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -6,9 +7,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.PlayArrow
-import androidx.compose.material.icons.filled.Warning
+import com.funapp.retroui.core.ui.icons.PlayArrow
+import com.funapp.retroui.core.ui.icons.Warning
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -17,28 +17,25 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.funapp.retroui.core.design.animation.retroEntrance
-import com.funapp.retroui.core.design.components.controls.RetroButton
-import com.funapp.retroui.core.design.components.controls.RetroButtonVariant
-import com.funapp.retroui.core.design.components.foundation.RetroText
-import com.funapp.retroui.core.design.components.game.RetroBattleLog
-import com.funapp.retroui.core.design.components.game.RetroBattleLogEntry
-import com.funapp.retroui.core.design.components.game.RetroBattleLogType
-import com.funapp.retroui.core.design.components.surfaces.RetroCharacterCard
-import com.funapp.retroui.core.design.components.surfaces.RetroDialog
-import com.funapp.retroui.core.design.components.surfaces.RetroDialogVariant
-import com.funapp.retroui.core.design.components.surfaces.RetroScreenStatic
-import com.funapp.retroui.core.design.theme.RetroTheme
+import com.funapp.retroui.core.ui.animation.retroEntrance
+import com.funapp.retroui.core.ui.components.controls.RetroButton
+import com.funapp.retroui.core.ui.components.controls.RetroButtonVariant
+import com.funapp.retroui.core.ui.components.foundation.RetroText
+import com.funapp.retroui.core.ui.components.game.RetroBattleLog
+import com.funapp.retroui.core.ui.components.game.RetroBattleLogEntry
+import com.funapp.retroui.core.ui.components.surfaces.RetroCharacterCard
+import com.funapp.retroui.core.ui.components.surfaces.RetroDialog
+import com.funapp.retroui.core.ui.components.surfaces.RetroDialogVariant
+import com.funapp.retroui.core.ui.components.surfaces.RetroScreenStatic
+import com.funapp.retroui.core.ui.theme.RetroTheme
+import com.funapp.retroui.core.utils.asString
+import com.funapp.retroui.features.battle.data.getMockBattleLogEntries
 import com.funapp.retroui.features.battle.presentation.components.HandRow
 import com.funapp.retroui.features.battle.presentation.components.VsBadge
 import org.jetbrains.compose.resources.stringResource
 import retroui.shared.generated.resources.Res
 import retroui.shared.generated.resources.battle_attack
 import retroui.shared.generated.resources.battle_defend
-import retroui.shared.generated.resources.battle_log_damage
-import retroui.shared.generated.resources.battle_log_heal
-import retroui.shared.generated.resources.battle_log_shield
-import retroui.shared.generated.resources.battle_log_start
 import retroui.shared.generated.resources.battle_opponent_level
 import retroui.shared.generated.resources.battle_opponent_name
 import retroui.shared.generated.resources.battle_player_level
@@ -61,6 +58,8 @@ fun BattleScreen(
     modifier: Modifier = Modifier,
 ) {
     var showRetreatDialog by remember { mutableStateOf(false) }
+
+    val battleLogEntries = remember { getMockBattleLogEntries() }
 
     RetroScreenStatic(modifier = modifier) {
         Column {
@@ -91,7 +90,7 @@ fun BattleScreen(
             RetroCharacterCard(
                 name = stringResource(Res.string.battle_opponent_name),
                 level = stringResource(Res.string.battle_opponent_level),
-                avatarIcon = Icons.Filled.PlayArrow,
+                avatarIcon = RetroIcons.PlayArrow,
                 avatarColor = RetroTheme.colors.surfaceVariant,
                 hp = 0.82f,
                 shield = 0.4f,
@@ -111,7 +110,7 @@ fun BattleScreen(
             RetroCharacterCard(
                 name = stringResource(Res.string.player_display_name),
                 level = stringResource(Res.string.battle_player_level),
-                avatarIcon = Icons.Filled.PlayArrow,
+                avatarIcon = RetroIcons.PlayArrow,
                 avatarColor = RetroTheme.colors.primaryContainer,
                 hp = 0.65f,
                 hpText = "65",
@@ -119,7 +118,9 @@ fun BattleScreen(
             )
             Spacer(modifier = Modifier.height(RetroTheme.spacing.lg))
             RetroBattleLog(
-                entries = battleLogEntries(),
+                entries = battleLogEntries.map { entry ->
+                    RetroBattleLogEntry(text = entry.text.asString(), type = entry.type)
+                },
                 modifier = Modifier
                     .fillMaxWidth()
                     .weight(1f)
@@ -141,7 +142,7 @@ fun BattleScreen(
                 )
                 RetroButton(
                     text = stringResource(Res.string.battle_attack),
-                    leadingIcon = Icons.Filled.PlayArrow,
+                    leadingIcon = RetroIcons.PlayArrow,
                     onClick = {},
                     modifier = Modifier.weight(1f),
                 )
@@ -154,7 +155,7 @@ fun BattleScreen(
         onDismiss = { showRetreatDialog = false },
         title = stringResource(Res.string.retreat_confirm_title),
         message = stringResource(Res.string.retreat_confirm_body),
-        icon = Icons.Filled.Warning,
+        icon = RetroIcons.Warning,
         variant = RetroDialogVariant.Danger,
         confirmText = stringResource(Res.string.btn_confirm_retreat),
         onConfirm = {
@@ -164,23 +165,3 @@ fun BattleScreen(
         dismissText = stringResource(Res.string.dialog_cancel),
     )
 }
-
-@Composable
-private fun battleLogEntries(): List<RetroBattleLogEntry> = listOf(
-    RetroBattleLogEntry(
-        text = stringResource(Res.string.battle_log_start),
-        type = RetroBattleLogType.System,
-    ),
-    RetroBattleLogEntry(
-        text = stringResource(Res.string.battle_log_damage),
-        type = RetroBattleLogType.Damage,
-    ),
-    RetroBattleLogEntry(
-        text = stringResource(Res.string.battle_log_heal),
-        type = RetroBattleLogType.Heal,
-    ),
-    RetroBattleLogEntry(
-        text = stringResource(Res.string.battle_log_shield),
-        type = RetroBattleLogType.Shield,
-    ),
-)

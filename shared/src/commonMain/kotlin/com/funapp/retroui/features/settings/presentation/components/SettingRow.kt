@@ -9,8 +9,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.funapp.retroui.core.design.components.foundation.RetroText
-import com.funapp.retroui.core.design.theme.RetroTheme
+import com.funapp.retroui.core.ui.components.foundation.RetroText
+import com.funapp.retroui.core.ui.theme.RetroTheme
 
 /**
  * One settings row: title, optional subtitle and a trailing control

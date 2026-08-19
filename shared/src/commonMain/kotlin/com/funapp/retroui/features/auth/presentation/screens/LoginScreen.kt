@@ -1,9 +1,9 @@
 package com.funapp.retroui.features.auth.presentation.screens
+import com.funapp.retroui.core.ui.icons.RetroIcons
 
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Lock
-import androidx.compose.material.icons.filled.Person
+import com.funapp.retroui.core.ui.icons.Lock
+import com.funapp.retroui.core.ui.icons.Person
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -14,10 +14,10 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.foundation.layout.fillMaxWidth
-import com.funapp.retroui.core.design.components.controls.RetroButton
-import com.funapp.retroui.core.design.components.controls.RetroButtonVariant
-import com.funapp.retroui.core.design.components.controls.RetroTextField
-import com.funapp.retroui.core.design.components.controls.RetroTextFieldTrailingAction
+import com.funapp.retroui.core.ui.components.controls.RetroButton
+import com.funapp.retroui.core.ui.components.controls.RetroButtonVariant
+import com.funapp.retroui.core.ui.components.controls.RetroTextField
+import com.funapp.retroui.core.ui.components.controls.RetroTextFieldTrailingAction
 import com.funapp.retroui.features.auth.presentation.components.AuthScreenLayout
 import org.jetbrains.compose.resources.stringResource
 import retroui.shared.generated.resources.Res
@@ -52,7 +52,7 @@ fun LoginScreen(
     val hideLabel = stringResource(Res.string.field_hide)
 
     AuthScreenLayout(
-        icon = Icons.Filled.Lock,
+        icon = RetroIcons.Lock,
         title = stringResource(Res.string.screen_login_title),
         subtitle = stringResource(Res.string.screen_login_subtitle),
         modifier = modifier,
@@ -62,14 +62,14 @@ fun LoginScreen(
                 onValueChange = { username = it },
                 label = stringResource(Res.string.field_username),
                 placeholder = stringResource(Res.string.placeholder_username),
-                leadingIcon = Icons.Filled.Person,
+                leadingIcon = RetroIcons.Person,
             )
             RetroTextField(
                 value = password,
                 onValueChange = { password = it },
                 label = stringResource(Res.string.field_password),
                 placeholder = stringResource(Res.string.placeholder_password),
-                leadingIcon = Icons.Filled.Lock,
+                leadingIcon = RetroIcons.Lock,
                 visualTransformation = if (showPassword) {
                     VisualTransformation.None
                 } else {

@@ -1,6 +1,6 @@
 package com.funapp.retroui.core.di
 
-import com.funapp.retroui.core.config.theme.SettingsRepository
+import com.funapp.retroui.core.ui.theme.SettingsRepository
 
 /**
  * Manual dependency container — no Hilt (Hilt is Android-only and would

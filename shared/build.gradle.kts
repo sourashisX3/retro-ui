@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.kotlinSerialization)
+    alias(libs.plugins.svgToCompose)
 }
 
 kotlin {
@@ -63,7 +64,6 @@ kotlin {
             implementation(libs.compose.material3)
             implementation(libs.compose.ui)
             implementation(libs.compose.components.resources)
-            implementation(libs.compose.materialIconsCore)
             implementation(libs.compose.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodelCompose)
             implementation(libs.androidx.lifecycle.runtimeCompose)
@@ -81,4 +81,58 @@ kotlin {
 
 dependencies {
     androidRuntimeClasspath(libs.compose.uiTooling)
+}
+
+svgToCompose {
+    processor {
+        val retroIcons by creating {
+            from(layout.projectDirectory.dir("../icons/pixelarticons"))
+            destinationPackage("com.funapp.retroui.core.ui.icons")
+            optimize(false)
+            icons {
+                minify()
+                noPreview()
+                receiverType("com.funapp.retroui.core.ui.icons.RetroIcons")
+                mapIconNameTo { name ->
+                    when (name.lowercase()) {
+                        "star" -> "Star"
+                        "play" -> "PlayArrow"
+                        "user" -> "Person"
+                        "check" -> "Check"
+                        "heart" -> "Favorite"
+                        "robot-face" -> "Face"
+                        "thumbs-up" -> "ThumbUp"
+                        "home" -> "Home"
+                        "search" -> "Search"
+                        "lock" -> "Lock"
+                        "mail" -> "MailOutline"
+                        "avatar-circle" -> "AccountCircle"
+                        "settings-cog" -> "Settings"
+                        "pencil" -> "Edit"
+                        "tools" -> "Build"
+                        "magic-edit" -> "Create"
+                        "logout" -> "ExitToApp"
+                        "plus-box" -> "AddCircle"
+                        "square-alert" -> "Warning"
+                        "plus" -> "Add"
+                        "circle-info" -> "Info"
+                        "bell" -> "Notifications"
+                        "arrow-left" -> "ArrowBack"
+                        "gamepad" -> "Gamepad"
+                        "trophy" -> "Trophy"
+                        "shield" -> "Shield"
+                        "sword" -> "Sword"
+                        "crown" -> "Crown"
+                        "card" -> "Card"
+                        "joystick" -> "Joystick"
+                        "flag" -> "Flag"
+                        "eye" -> "Eye"
+                        "eye-off" -> "EyeOff"
+                        "smile" -> "Smile"
+                        else -> name
+                    }
+                }
+            }
+        }
+    }
 }

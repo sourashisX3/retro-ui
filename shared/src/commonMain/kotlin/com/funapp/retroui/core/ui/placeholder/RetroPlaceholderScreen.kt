@@ -7,9 +7,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import com.funapp.retroui.core.design.components.feedback.RetroEmptyState
-import com.funapp.retroui.core.design.components.surfaces.RetroScreen
-import com.funapp.retroui.core.design.theme.RetroTheme
+import com.funapp.retroui.core.ui.components.feedback.RetroEmptyState
+import com.funapp.retroui.core.ui.components.surfaces.RetroScreen
+import com.funapp.retroui.core.ui.theme.RetroTheme
 
 /**
  * Interim placeholder used by features not yet implemented. Renders the

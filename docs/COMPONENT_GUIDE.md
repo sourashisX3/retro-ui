@@ -1,6 +1,19 @@
 # Component Guide
 
-All components live in `com.funapp.retroui.core.design.components.*` and must be rendered inside `RetroTheme`.
+All components live in `com.funapp.retroui.core.ui.components.*` and must be rendered inside `RetroTheme`.
+
+## Icons
+
+Every icon is a `RetroIcons.*` extension property generated from the Pixelarticons pack (MIT) by the svg-to-compose plugin — source SVGs live in `icons/pixelarticons/`. Import both the receiver and the icon:
+
+```kotlin
+import com.funapp.retroui.core.ui.icons.RetroIcons
+import com.funapp.retroui.core.ui.icons.Home
+
+Icon(imageVector = RetroIcons.Home, contentDescription = "Home", tint = RetroTheme.colors.primary)
+```
+
+**Rule:** features use only `RetroIcons.*` — never Material or third-party icon sets. Tint via `RetroTheme` colors; icons are flat 24×24 pixel art that match the theme by construction.
 
 ## RetroButton
 
@@ -13,7 +26,7 @@ RetroButton("MAGIC", variant = RetroButtonVariant.Accent, onClick = { })
 RetroButton("ATTACK", variant = RetroButtonVariant.Danger, onClick = { })
 RetroButton("OUTLINE", variant = RetroButtonVariant.Outline, onClick = { })
 RetroButton("LOADING", loading = true, onClick = { })
-RetroButton("SMALL", small = true, leadingIcon = Icons.Filled.Add, onClick = { })
+RetroButton("SMALL", small = true, leadingIcon = RetroIcons.Add, onClick = { })
 ```
 
 **Variants:** Primary (green), Secondary (yellow), Accent (purple), Danger (red), Outline (cream/ink)
@@ -63,8 +76,8 @@ Compact `ICON VALUE` game-HUD stat row.
 ```kotlin
 StatHud(
     stats = listOf(
-        HudStat(Icons.Filled.Favorite, "150", colors.error, "HP"),
-        HudStat(Icons.Filled.Star, "200", colors.accent, "XP"),
+        HudStat(RetroIcons.Favorite, "150", colors.error, "HP"),
+        HudStat(RetroIcons.Star, "200", colors.accent, "XP"),
     ),
 )
 ```
@@ -91,7 +104,7 @@ SpeechBubble {
 ## Other controls
 
 ```kotlin
-RetroIconButton(imageVector = Icons.Filled.Home, contentDescription = "Home", onClick = { })
+RetroIconButton(imageVector = RetroIcons.Home, contentDescription = "Home", onClick = { })
 RetroChip(text = "HEROES", selected = true, onClick = { })
 RetroTextField(value = text, onValueChange = { text = it }, label = "Player name")
 RetroSwitch(checked = switchOn, onCheckedChange = { switchOn = it })
@@ -112,3 +125,8 @@ Modifier.retroHardShadow(offsetX = 3.dp, offsetY = 4.dp, shape = RetroTheme.shap
 - Never create `GreenButton` / `PurpleButton` — use `RetroButtonVariant`.
 - Never hardcode colors/dp — use `RetroTheme.*` tokens.
 - Apply `retroHardShadow` BEFORE `.background`/`.border` in the modifier chain.
+- **Press feedback is two-tier** — never leave an interactive surface on raw `clickable`:
+  - `Modifier.retroTactilePress(interactionSource, shape, shadowColor, shadowX, shadowY)` — for surfaces **with a hard shadow** (buttons, icon buttons, chips, cards, slots): collapses the shadow + sinks 2dp, exactly like `RetroButton`.
+  - `Modifier.retroPopPress(interactionSource)` — for shadowless compact controls (switch, checkbox, radio, bottom-bar tabs): springy scale-down + sink with overshoot pop.
+  - Both wire the SAME `MutableInteractionSource` used by the component's `clickable`, with `indication = null`.
+- Every interactive control calls `rememberRetroTapFeedback().play()` (haptic + blip) in its click handler.

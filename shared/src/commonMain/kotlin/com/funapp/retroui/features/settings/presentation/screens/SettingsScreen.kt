@@ -1,4 +1,5 @@
 package com.funapp.retroui.features.settings.presentation.screens
+import com.funapp.retroui.core.ui.icons.RetroIcons
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -7,9 +8,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.ExitToApp
+import com.funapp.retroui.core.ui.icons.ArrowBack
+import com.funapp.retroui.core.ui.icons.ExitToApp
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -18,20 +18,20 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.funapp.retroui.core.config.theme.ThemeMode
-import com.funapp.retroui.core.design.animation.retroEntrance
-import com.funapp.retroui.core.design.components.controls.RetroButton
-import com.funapp.retroui.core.design.components.controls.RetroButtonVariant
-import com.funapp.retroui.core.design.components.controls.RetroChip
-import com.funapp.retroui.core.design.components.controls.RetroIconButton
-import com.funapp.retroui.core.design.components.controls.RetroSwitch
-import com.funapp.retroui.core.design.components.feedback.RetroStatusLabel
-import com.funapp.retroui.core.design.components.foundation.RetroText
-import com.funapp.retroui.core.design.components.surfaces.RetroDialog
-import com.funapp.retroui.core.design.components.surfaces.RetroDialogVariant
-import com.funapp.retroui.core.design.components.surfaces.RetroScreen
-import com.funapp.retroui.core.design.components.surfaces.RetroSection
-import com.funapp.retroui.core.design.theme.RetroTheme
+import com.funapp.retroui.core.ui.theme.ThemeMode
+import com.funapp.retroui.core.ui.animation.retroEntrance
+import com.funapp.retroui.core.ui.components.controls.RetroButton
+import com.funapp.retroui.core.ui.components.controls.RetroButtonVariant
+import com.funapp.retroui.core.ui.components.controls.RetroChip
+import com.funapp.retroui.core.ui.components.controls.RetroIconButton
+import com.funapp.retroui.core.ui.components.controls.RetroSwitch
+import com.funapp.retroui.core.ui.components.feedback.RetroStatusLabel
+import com.funapp.retroui.core.ui.components.foundation.RetroText
+import com.funapp.retroui.core.ui.components.surfaces.RetroDialog
+import com.funapp.retroui.core.ui.components.surfaces.RetroDialogVariant
+import com.funapp.retroui.core.ui.components.surfaces.RetroScreen
+import com.funapp.retroui.core.ui.components.surfaces.RetroSection
+import com.funapp.retroui.core.ui.theme.RetroTheme
 import com.funapp.retroui.core.di.LocalAppContainer
 import com.funapp.retroui.features.settings.presentation.components.SettingRow
 import org.jetbrains.compose.resources.stringResource
@@ -94,7 +94,7 @@ fun SettingsScreen(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 RetroIconButton(
-                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                    imageVector = RetroIcons.ArrowBack,
                     contentDescription = stringResource(Res.string.common_back),
                     onClick = onBack,
                     containerColor = RetroTheme.colors.surfaceVariant,
@@ -248,7 +248,7 @@ fun SettingsScreen(
         onDismiss = { showLogoutDialog = false },
         title = stringResource(Res.string.log_out_confirm_title),
         message = stringResource(Res.string.log_out_confirm_body),
-        icon = Icons.Filled.ExitToApp,
+        icon = RetroIcons.ExitToApp,
         variant = RetroDialogVariant.Danger,
         confirmText = stringResource(Res.string.btn_confirm_logout),
         onConfirm = {
