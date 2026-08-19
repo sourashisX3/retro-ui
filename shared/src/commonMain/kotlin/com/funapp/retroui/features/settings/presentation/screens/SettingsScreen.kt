@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -19,6 +21,8 @@ import com.funapp.retroui.core.design.components.controls.RetroChip
 import com.funapp.retroui.core.design.components.controls.RetroSwitch
 import com.funapp.retroui.core.design.components.feedback.RetroStatusLabel
 import com.funapp.retroui.core.design.components.foundation.RetroText
+import com.funapp.retroui.core.design.components.surfaces.RetroDialog
+import com.funapp.retroui.core.design.components.surfaces.RetroDialogVariant
 import com.funapp.retroui.core.design.components.surfaces.RetroScreen
 import com.funapp.retroui.core.design.components.surfaces.RetroSection
 import com.funapp.retroui.core.design.theme.RetroTheme
@@ -26,7 +30,11 @@ import com.funapp.retroui.core.di.LocalAppContainer
 import com.funapp.retroui.features.settings.presentation.components.SettingRow
 import org.jetbrains.compose.resources.stringResource
 import retroui.shared.generated.resources.Res
+import retroui.shared.generated.resources.btn_confirm_logout
 import retroui.shared.generated.resources.btn_log_out
+import retroui.shared.generated.resources.dialog_cancel
+import retroui.shared.generated.resources.log_out_confirm_body
+import retroui.shared.generated.resources.log_out_confirm_title
 import retroui.shared.generated.resources.screen_settings_subtitle
 import retroui.shared.generated.resources.screen_settings_title
 import retroui.shared.generated.resources.settings_account_title
@@ -67,6 +75,7 @@ fun SettingsScreen(
     var music by remember { mutableStateOf(true) }
     var showEnemyHp by remember { mutableStateOf(true) }
     var quickBattle by remember { mutableStateOf(false) }
+    var showLogoutDialog by remember { mutableStateOf(false) }
     val settingsRepository = LocalAppContainer.current.settingsRepository
     val themeMode by settingsRepository.themeMode.collectAsState()
 
@@ -193,10 +202,25 @@ fun SettingsScreen(
                 RetroButton(
                     text = stringResource(Res.string.btn_log_out),
                     variant = RetroButtonVariant.Danger,
-                    onClick = onGoHome,
+                    onClick = { showLogoutDialog = true },
                     modifier = Modifier.fillMaxWidth(),
                 )
             }
         }
     }
+
+    RetroDialog(
+        visible = showLogoutDialog,
+        onDismiss = { showLogoutDialog = false },
+        title = stringResource(Res.string.log_out_confirm_title),
+        message = stringResource(Res.string.log_out_confirm_body),
+        icon = Icons.Filled.ExitToApp,
+        variant = RetroDialogVariant.Danger,
+        confirmText = stringResource(Res.string.btn_confirm_logout),
+        onConfirm = {
+            showLogoutDialog = false
+            onGoHome()
+        },
+        dismissText = stringResource(Res.string.dialog_cancel),
+    )
 }

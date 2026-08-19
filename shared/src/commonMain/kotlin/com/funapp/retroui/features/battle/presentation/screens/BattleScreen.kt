@@ -8,7 +8,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material.icons.filled.Warning
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -19,6 +24,8 @@ import com.funapp.retroui.core.design.components.game.RetroBattleLog
 import com.funapp.retroui.core.design.components.game.RetroBattleLogEntry
 import com.funapp.retroui.core.design.components.game.RetroBattleLogType
 import com.funapp.retroui.core.design.components.surfaces.RetroCharacterCard
+import com.funapp.retroui.core.design.components.surfaces.RetroDialog
+import com.funapp.retroui.core.design.components.surfaces.RetroDialogVariant
 import com.funapp.retroui.core.design.components.surfaces.RetroScreenStatic
 import com.funapp.retroui.core.design.theme.RetroTheme
 import com.funapp.retroui.features.battle.presentation.components.HandRow
@@ -35,8 +42,12 @@ import retroui.shared.generated.resources.battle_opponent_level
 import retroui.shared.generated.resources.battle_opponent_name
 import retroui.shared.generated.resources.battle_player_level
 import retroui.shared.generated.resources.battle_round
+import retroui.shared.generated.resources.btn_confirm_retreat
 import retroui.shared.generated.resources.btn_retreat
+import retroui.shared.generated.resources.dialog_cancel
 import retroui.shared.generated.resources.player_display_name
+import retroui.shared.generated.resources.retreat_confirm_body
+import retroui.shared.generated.resources.retreat_confirm_title
 import retroui.shared.generated.resources.screen_battle_title
 
 /**
@@ -48,6 +59,8 @@ fun BattleScreen(
     onGoHome: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    var showRetreatDialog by remember { mutableStateOf(false) }
+
     RetroScreenStatic(modifier = modifier) {
         Column {
             Row(verticalAlignment = Alignment.CenterVertically) {
@@ -66,7 +79,7 @@ fun BattleScreen(
                 RetroButton(
                     text = stringResource(Res.string.btn_retreat),
                     variant = RetroButtonVariant.Outline,
-                    onClick = onGoHome,
+                    onClick = { showRetreatDialog = true },
                     small = true,
                 )
             }
@@ -123,6 +136,21 @@ fun BattleScreen(
             }
         }
     }
+
+    RetroDialog(
+        visible = showRetreatDialog,
+        onDismiss = { showRetreatDialog = false },
+        title = stringResource(Res.string.retreat_confirm_title),
+        message = stringResource(Res.string.retreat_confirm_body),
+        icon = Icons.Filled.Warning,
+        variant = RetroDialogVariant.Danger,
+        confirmText = stringResource(Res.string.btn_confirm_retreat),
+        onConfirm = {
+            showRetreatDialog = false
+            onGoHome()
+        },
+        dismissText = stringResource(Res.string.dialog_cancel),
+    )
 }
 
 @Composable

@@ -105,6 +105,7 @@ fun DeckBuilderScreen(
                 leadingIcon = Icons.Filled.Check,
                 onClick = onGoHome,
                 enabled = deck.size == DECK_SIZE,
+                small = true,
                 modifier = Modifier.fillMaxWidth(),
             )
             Spacer(modifier = Modifier.height(RetroTheme.spacing.md))
@@ -112,6 +113,7 @@ fun DeckBuilderScreen(
                 text = stringResource(Res.string.btn_browse_collection),
                 variant = RetroButtonVariant.Outline,
                 onClick = onGoCollection,
+                small = true,
                 modifier = Modifier.fillMaxWidth(),
             )
         }

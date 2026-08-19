@@ -197,6 +197,13 @@
     <string name="setting_version_title">VERSION</string>
     <string name="setting_version_value">1.0.0</string>
     <string name="btn_log_out">LOG OUT</string>
+    <string name="dialog_cancel">CANCEL</string>
+    <string name="log_out_confirm_title">LOG OUT?</string>
+    <string name="log_out_confirm_body">Your local session will be cleared. You can log back in anytime.</string>
+    <string name="btn_confirm_logout">LOG OUT</string>
+    <string name="retreat_confirm_title">RETREAT?</string>
+    <string name="retreat_confirm_body">Return to the main menu? Progress in this battle will be lost.</string>
+    <string name="btn_confirm_retreat">RETREAT</string>
 
     <!-- Design-system showcase -->
     <string name="showcase_title">Design System</string>

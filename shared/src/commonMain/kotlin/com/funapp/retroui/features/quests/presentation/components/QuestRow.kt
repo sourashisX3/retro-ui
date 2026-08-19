@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.unit.dp
 import com.funapp.retroui.core.design.components.controls.RetroChip
 import com.funapp.retroui.core.design.components.feedback.RetroProgressBar
 import com.funapp.retroui.core.design.components.feedback.RetroProgressColor
@@ -27,6 +28,8 @@ import retroui.shared.generated.resources.Res
 import retroui.shared.generated.resources.quest_reward_xp
 import retroui.shared.generated.resources.quests_claim
 import retroui.shared.generated.resources.quests_in_progress
+
+private val QuestActionLane = 116.dp
 
 /**
  * One quest card: icon, label, progress bar, reward and a CLAIM / IN
@@ -65,18 +68,23 @@ internal fun QuestRow(
                 )
             }
             Spacer(modifier = Modifier.width(RetroTheme.spacing.sm))
-            if (claimable) {
-                RetroChip(
-                    text = stringResource(Res.string.quests_claim),
-                    onClick = onClaim,
-                    selected = true,
-                )
-            } else {
-                RetroStatusLabel(
-                    text = stringResource(Res.string.quests_in_progress),
-                    dotColor = colors.textMuted,
-                    container = colors.surfaceVariant,
-                )
+            Box(
+                modifier = Modifier.width(QuestActionLane),
+                contentAlignment = Alignment.CenterEnd,
+            ) {
+                if (claimable) {
+                    RetroChip(
+                        text = stringResource(Res.string.quests_claim),
+                        onClick = onClaim,
+                        selected = true,
+                    )
+                } else {
+                    RetroStatusLabel(
+                        text = stringResource(Res.string.quests_in_progress),
+                        dotColor = colors.textMuted,
+                        container = colors.surfaceVariant,
+                    )
+                }
             }
         }
         Spacer(modifier = Modifier.height(RetroTheme.spacing.sm))
