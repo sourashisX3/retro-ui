@@ -35,7 +35,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
@@ -53,10 +52,9 @@ data class RetroBottomBarItem(
 /**
  * Arcade dock bottom navigation.
  *
- * A floating rounded "control deck" with a recessed cartridge slot and
- * corner pixel accents. The active tab is a cartridge that pops up out of
- * the dock on a spring, is filled with the brand color, and drops a diamond
- * cursor beneath its label. Inactive tabs sit flat and muted.
+ * A floating rounded "control deck". The active tab is a capsule pill that
+ * expands on a spring inside the dock, filled with the brand color, while
+ * inactive tabs sit flat and muted.
  */
 @Composable
 fun RetroBottomBar(
@@ -88,34 +86,12 @@ fun RetroBottomBar(
                 .clip(dockShape)
                 .background(colors.surface)
                 .border(BorderStroke(RetroTheme.borders.default, colors.outlineStrong), dockShape),
-        ) {
-            // Recessed cartridge slot at the top-center of the deck.
-            Box(
-                modifier = Modifier
-                    .align(Alignment.TopCenter)
-                    .padding(top = 3.dp)
-                    .size(width = 44.dp, height = 6.dp)
-                    .clip(RoundedCornerShape(2.dp))
-                    .background(colors.surfaceVariant)
-                    .border(BorderStroke(RetroTheme.borders.thin, colors.outline), RoundedCornerShape(2.dp)),
-            )
-            // Corner pixel accents.
-            CornerPixel(
-                modifier = Modifier
-                    .align(Alignment.TopStart)
-                    .padding(start = 12.dp, top = 8.dp),
-            )
-            CornerPixel(
-                modifier = Modifier
-                    .align(Alignment.TopEnd)
-                    .padding(end = 12.dp, top = 8.dp),
-            )
-        }
+        )
 
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 6.dp, vertical = 6.dp),
+                .padding(horizontal = 6.dp, vertical = 10.dp),
             horizontalArrangement = Arrangement.SpaceEvenly,
         ) {
             items.forEachIndexed { index, item ->
@@ -131,15 +107,6 @@ fun RetroBottomBar(
 }
 
 @Composable
-private fun CornerPixel(modifier: Modifier = Modifier) {
-    Box(
-        modifier = modifier
-            .size(5.dp)
-            .background(RetroTheme.colors.primary),
-    )
-}
-
-@Composable
 private fun RetroDockTab(
     item: RetroBottomBarItem,
     selected: Boolean,
@@ -147,18 +114,13 @@ private fun RetroDockTab(
     modifier: Modifier = Modifier,
 ) {
     val colors = RetroTheme.colors
-    val tileShape: CornerBasedShape = RetroTheme.shapeTokens.chip
+    val pillShape: CornerBasedShape = RetroTheme.shapeTokens.buttonPill
 
-    // Active tab pops up out of the dock on the arcade spring.
-    val lift by animateFloatAsState(
-        targetValue = if (selected) -1f else 0f,
+    // Active capsule springs open and lifts slightly inside the dock.
+    val active by animateFloatAsState(
+        targetValue = if (selected) 1f else 0f,
         animationSpec = RetroAnimation.pop,
-        label = "dockTabLift",
-    )
-    val scale by animateFloatAsState(
-        targetValue = if (selected) 1f else 0.8f,
-        animationSpec = RetroAnimation.pop,
-        label = "dockTabScale",
+        label = "dockTabActive",
     )
 
     Column(
@@ -173,14 +135,12 @@ private fun RetroDockTab(
         Box(
             modifier = Modifier
                 .graphicsLayer {
-                    translationY = lift * 7.dp.toPx()
-                    scaleX = scale
-                    scaleY = scale
+                    translationY = active * 3.dp.toPx()
                 }
-                .size(34.dp)
-                .clip(tileShape)
+                .size(width = 36.dp + 14.dp * active, height = 34.dp)
+                .clip(pillShape)
                 .background(if (selected) colors.primary else colors.surfaceMuted)
-                .border(BorderStroke(RetroTheme.borders.default, colors.outlineStrong), tileShape),
+                .border(BorderStroke(RetroTheme.borders.default, colors.outlineStrong), pillShape),
             contentAlignment = Alignment.Center,
         ) {
             Icon(
@@ -196,14 +156,6 @@ private fun RetroDockTab(
             style = RetroTheme.typography.caption,
             color = if (selected) colors.primary else colors.textMuted,
             maxLines = 1,
-        )
-        // Diamond cursor under the active tab.
-        Box(
-            modifier = Modifier
-                .padding(top = 2.dp)
-                .size(6.dp)
-                .graphicsLayer { rotationZ = 45f }
-                .background(if (selected) colors.primary else Color.Transparent),
         )
     }
 }
