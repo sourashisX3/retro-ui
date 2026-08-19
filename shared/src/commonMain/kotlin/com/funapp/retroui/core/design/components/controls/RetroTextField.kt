@@ -3,6 +3,8 @@ package com.funapp.retroui.core.design.components.controls
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -11,12 +13,14 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CornerBasedShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -25,6 +29,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import com.funapp.retroui.core.design.components.foundation.RetroText
 import com.funapp.retroui.core.design.components.foundation.retroHardShadow
@@ -32,6 +37,9 @@ import com.funapp.retroui.core.design.theme.RetroTheme
 
 /**
  * Retro outlined text field — ink border, cream fill, hard shadow.
+ *
+ * Supports an optional [trailing] slot (e.g. a SHOW/HIDE action for
+ * password fields) and a [visualTransformation] for masking.
  */
 @Composable
 fun RetroTextField(
@@ -41,6 +49,8 @@ fun RetroTextField(
     label: String? = null,
     placeholder: String? = null,
     leadingIcon: ImageVector? = null,
+    trailing: (@Composable () -> Unit)? = null,
+    visualTransformation: VisualTransformation = VisualTransformation.None,
     enabled: Boolean = true,
     singleLine: Boolean = true,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
@@ -79,6 +89,7 @@ fun RetroTextField(
                 enabled = enabled,
                 singleLine = singleLine,
                 keyboardOptions = keyboardOptions,
+                visualTransformation = visualTransformation,
                 textStyle = TextStyle(
                     color = contentColor,
                     fontFamily = RetroTheme.typography.body.fontFamily,
@@ -110,9 +121,38 @@ fun RetroTextField(
                             }
                             innerTextField()
                         }
+                        if (trailing != null) {
+                            Box(Modifier.padding(start = RetroTheme.spacing.sm)) {
+                                trailing()
+                            }
+                        }
                     }
                 },
             )
         }
     }
+}
+
+/**
+ * Small inline action rendered inside a [RetroTextField] trailing slot —
+ * e.g. SHOW/HIDE for password fields.
+ */
+@Composable
+fun RetroTextFieldTrailingAction(
+    text: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    RetroText(
+        text = text,
+        style = RetroTheme.typography.caption,
+        color = RetroTheme.colors.primary,
+        modifier = modifier
+            .clip(RetroTheme.shapeTokens.badge)
+            .clickable(
+                interactionSource = remember { MutableInteractionSource() },
+                indication = null,
+            ) { onClick() }
+            .padding(horizontal = RetroTheme.spacing.xs, vertical = RetroTheme.spacing.xxs),
+    )
 }

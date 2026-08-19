@@ -43,6 +43,17 @@
     <string name="screen_forgot_subtitle">We\'ll send you a recovery link.</string>
     <string name="btn_send_link">SEND LINK</string>
 
+    <!-- Auth fields -->
+    <string name="field_username">USERNAME</string>
+    <string name="field_email">EMAIL</string>
+    <string name="field_password">PASSWORD</string>
+    <string name="field_confirm_password">CONFIRM PASSWORD</string>
+    <string name="placeholder_username">player_name</string>
+    <string name="placeholder_email">player@arena.com</string>
+    <string name="placeholder_password">••••••••</string>
+    <string name="field_show">SHOW</string>
+    <string name="field_hide">HIDE</string>
+
     <!-- Home -->
     <string name="screen_home_title">MAIN MENU</string>
     <string name="screen_home_subtitle">Choose your next quest.</string>
