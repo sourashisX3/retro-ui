@@ -22,6 +22,7 @@ data class RetroDimensions(
 
     // Bars
     val topBarHeight: Dp = 56.dp,
+    val bottomBarHeight: Dp = 56.dp,
     val progressBarHeight: Dp = 14.dp,
     val progressBarThin: Dp = 8.dp,
 

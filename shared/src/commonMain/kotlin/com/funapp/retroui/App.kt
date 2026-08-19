@@ -7,8 +7,8 @@ import com.funapp.retroui.core.design.theme.RetroTheme
 
 /**
  * Root composable. Applies the retro design-system theme (system light/dark
- * by default) and hosts the typed navigation graph. The design-system
- * showcase is the current start destination until the splash screen lands.
+ * by default) and hosts the typed navigation graph (splash → onboarding →
+ * auth → main tabs with the retro bottom bar).
  */
 @Composable
 @Preview
