@@ -30,9 +30,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.funapp.retroui.core.design.components.controls.RetroButton
-import com.funapp.retroui.core.design.components.controls.RetroButtonVariant
 import com.funapp.retroui.core.design.components.controls.RetroChip
+import com.funapp.retroui.core.design.components.controls.RetroIconButton
 import com.funapp.retroui.core.design.components.feedback.RetroStatusLabel
 import com.funapp.retroui.core.design.components.foundation.RetroText
 import com.funapp.retroui.core.design.components.game.RetroCardRarity
@@ -105,7 +104,12 @@ fun CollectionScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .windowInsetsPadding(WindowInsets.safeDrawing),
-            contentPadding = PaddingValues(RetroTheme.spacing.lg),
+            contentPadding = PaddingValues(
+                start = RetroTheme.spacing.lg,
+                end = RetroTheme.spacing.lg,
+                top = RetroTheme.spacing.lg,
+                bottom = RetroTheme.dimensions.bottomBarClearance,
+            ),
             horizontalArrangement = Arrangement.spacedBy(RetroTheme.spacing.sm),
             verticalArrangement = Arrangement.spacedBy(RetroTheme.spacing.sm),
         ) {
@@ -231,12 +235,11 @@ private fun CollectionHeader(onGoDeckBuilder: () -> Unit) {
                 color = RetroTheme.colors.textMuted,
             )
         }
-        RetroButton(
-            text = stringResource(Res.string.btn_deck_builder),
-            leadingIcon = Icons.Filled.Edit,
-            variant = RetroButtonVariant.Secondary,
+        RetroIconButton(
+            imageVector = Icons.Filled.Edit,
+            contentDescription = stringResource(Res.string.btn_deck_builder),
             onClick = onGoDeckBuilder,
-            small = true,
+            containerColor = RetroTheme.colors.surfaceVariant,
         )
     }
 }

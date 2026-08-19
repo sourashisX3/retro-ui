@@ -34,7 +34,12 @@ import com.funapp.retroui.core.design.theme.RetroTheme
 fun RetroScreen(
     modifier: Modifier = Modifier,
     insets: WindowInsets = WindowInsets.safeDrawing,
-    contentPadding: PaddingValues = PaddingValues(RetroTheme.spacing.lg),
+    contentPadding: PaddingValues = PaddingValues(
+        start = RetroTheme.spacing.lg,
+        end = RetroTheme.spacing.lg,
+        top = RetroTheme.spacing.lg,
+        bottom = RetroTheme.dimensions.bottomBarClearance,
+    ),
     content: LazyListScope.() -> Unit,
 ) {
     Box(
@@ -61,7 +66,12 @@ fun RetroScreen(
 fun RetroScreenStatic(
     modifier: Modifier = Modifier,
     insets: WindowInsets = WindowInsets.safeDrawing,
-    contentPadding: PaddingValues = PaddingValues(RetroTheme.spacing.lg),
+    contentPadding: PaddingValues = PaddingValues(
+        start = RetroTheme.spacing.lg,
+        end = RetroTheme.spacing.lg,
+        top = RetroTheme.spacing.lg,
+        bottom = RetroTheme.dimensions.bottomBarClearance,
+    ),
     content: @Composable ColumnScope.() -> Unit,
 ) {
     Box(
