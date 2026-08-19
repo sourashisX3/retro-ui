@@ -22,7 +22,7 @@ import com.funapp.retroui.core.ui.theme.RetroTheme
 
 /**
  * Fighter HUD card used in the battle screen: avatar + name + level chip +
- * HP bar + optional shield bar. Reused for both player and opponent.
+ * HP bar. Reused for both player and opponent.
  */
 @Composable
 fun RetroCharacterCard(
@@ -32,7 +32,6 @@ fun RetroCharacterCard(
     avatarIcon: ImageVector? = null,
     avatarColor: Color = RetroTheme.colors.surfaceVariant,
     hp: Float = 1f,
-    shield: Float = 0f,
     hpText: String? = null,
 ) {
     val colors = RetroTheme.colors
@@ -72,14 +71,6 @@ fun RetroCharacterCard(
                     color = RetroProgressColor.Health,
                     valueText = hpText,
                 )
-                if (shield > 0f) {
-                    Spacer(modifier = Modifier.height(RetroTheme.spacing.xs))
-                    RetroProgressBar(
-                        progress = shield,
-                        color = RetroProgressColor.Info,
-                        height = RetroTheme.dimensions.progressBarThin,
-                    )
-                }
             }
         }
     }

@@ -99,7 +99,6 @@ fun BattleScreen(
                 avatarIcon = opponent.icon,
                 avatarColor = RetroTheme.colors.surfaceVariant,
                 hp = 0.82f,
-                shield = 0.4f,
                 hpText = "82",
                 modifier = Modifier.retroEntrance(delayMillis = 60, fromY = -12.dp),
             )

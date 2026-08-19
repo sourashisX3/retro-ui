@@ -616,7 +616,6 @@ fun DesignSystemScreen() {
                 avatarIcon = RetroIcons.Favorite,
                 avatarColor = colors.surfaceVariant,
                 hp = 0.66f,
-                shield = 0.3f,
                 hpText = "132/200",
                 modifier = Modifier.padding(horizontal = RetroTheme.spacing.lg),
             )
