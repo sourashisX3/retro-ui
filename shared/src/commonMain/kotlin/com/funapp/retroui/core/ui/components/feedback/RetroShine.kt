@@ -8,8 +8,8 @@ import androidx.compose.animation.core.keyframes
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CornerBasedShape
 import androidx.compose.runtime.Composable
@@ -42,12 +42,14 @@ import androidx.compose.ui.unit.dp
  * }
  * ```
  *
- * Reusable for any highlight need (CTAs, freshly-unlocked cards, active
- * slots). Tune [bandFraction] / [peakAlpha] for subtlety; disable with
- * [enabled].
+ * A [BoxScope] extension: it sizes itself to the enclosing [Box] via
+ * [matchParentSize], so it never participates in the parent's measurement
+ * and works inside lazy lists. Reusable for any highlight need (CTAs,
+ * freshly-unlocked cards, active slots). Tune [bandFraction] / [peakAlpha]
+ * for subtlety; disable with [enabled].
  */
 @Composable
-fun RetroShine(
+fun BoxScope.RetroShine(
     modifier: Modifier = Modifier,
     shape: CornerBasedShape,
     bandFraction: Float = 0.45f,
@@ -78,7 +80,7 @@ fun RetroShine(
 
     Box(
         modifier = modifier
-            .fillMaxSize()
+            .matchParentSize()
             .onSizeChanged { widthPx = it.width }
             .clip(shape),
     ) {
