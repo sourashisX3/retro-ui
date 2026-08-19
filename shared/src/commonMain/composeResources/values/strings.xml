@@ -220,6 +220,11 @@
     <string name="retreat_confirm_body">Return to the main menu? Progress in this battle will be lost.</string>
     <string name="btn_confirm_retreat">RETREAT</string>
 
+    <!-- Matchmaking -->
+    <string name="matchmaking_title">SEARCHING FOR OPPONENT</string>
+    <string name="matchmaking_subtitle">SCANNING THE ARENA</string>
+    <string name="btn_cancel_search">CANCEL SEARCH</string>
+
     <!-- Collection -->
     <string name="collection_search_hint">SEARCH CARDS…</string>
     <!-- Design-system showcase -->

@@ -34,6 +34,9 @@ sealed interface Route {
     data object Battle : Route
 
     @Serializable
+    data object Matchmaking : Route
+
+    @Serializable
     data object Collection : Route
 
     @Serializable

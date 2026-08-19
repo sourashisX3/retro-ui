@@ -30,6 +30,7 @@ import com.funapp.retroui.core.ui.components.surfaces.RetroDialogVariant
 import com.funapp.retroui.core.ui.components.surfaces.RetroScreenStatic
 import com.funapp.retroui.core.ui.theme.RetroTheme
 import com.funapp.retroui.core.utils.asString
+import com.funapp.retroui.core.data.mock.MockChampion
 import com.funapp.retroui.features.battle.data.getMockBattleLogEntries
 import com.funapp.retroui.features.battle.presentation.components.HandRow
 import com.funapp.retroui.features.battle.presentation.components.VsBadge
@@ -55,6 +56,7 @@ import retroui.shared.generated.resources.screen_battle_title
  */
 @Composable
 fun BattleScreen(
+    opponent: MockChampion,
     onGoHome: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -89,9 +91,9 @@ fun BattleScreen(
             }
             Spacer(modifier = Modifier.height(RetroTheme.spacing.lg))
             RetroCharacterCard(
-                name = stringResource(Res.string.battle_opponent_name),
+                name = opponent.name,
                 level = stringResource(Res.string.battle_opponent_level),
-                avatarIcon = RetroIcons.PlayArrow,
+                avatarIcon = opponent.icon,
                 avatarColor = RetroTheme.colors.surfaceVariant,
                 hp = 0.82f,
                 shield = 0.4f,

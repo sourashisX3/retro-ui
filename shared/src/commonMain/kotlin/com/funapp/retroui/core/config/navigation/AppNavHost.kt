@@ -14,6 +14,9 @@ import com.funapp.retroui.core.ui.icons.RetroIcons
 import com.funapp.retroui.core.ui.icons.Star
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavDestination.Companion.hasRoute
@@ -30,6 +33,7 @@ import com.funapp.retroui.features.auth.presentation.screens.ForgotPasswordScree
 import com.funapp.retroui.features.auth.presentation.screens.LoginScreen
 import com.funapp.retroui.features.auth.presentation.screens.RegisterScreen
 import com.funapp.retroui.features.battle.presentation.screens.BattleScreen
+import com.funapp.retroui.features.battle.presentation.screens.MatchmakingScreen
 import com.funapp.retroui.features.collection.presentation.screens.CollectionScreen
 import com.funapp.retroui.features.deck.presentation.screens.DeckBuilderScreen
 import com.funapp.retroui.features.home.presentation.screens.HomeScreen
@@ -38,6 +42,9 @@ import com.funapp.retroui.features.profile.presentation.screens.ProfileScreen
 import com.funapp.retroui.features.quests.presentation.screens.QuestsScreen
 import com.funapp.retroui.features.settings.presentation.screens.SettingsScreen
 import com.funapp.retroui.features.splash.presentation.SplashScreen
+import com.funapp.retroui.core.data.mock.MockChampion
+import com.funapp.retroui.core.data.mock.mockChampionRoster
+import com.funapp.retroui.features.battle.data.MockMatchmakingRepository
 import org.jetbrains.compose.resources.stringResource
 import retroui.shared.generated.resources.Res
 import retroui.shared.generated.resources.nav_cards
@@ -69,6 +76,10 @@ fun AppNavHost(
 ) {
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = backStackEntry?.destination
+
+    val matchmakingRoster = mockChampionRoster()
+    val matchmakingRepository = remember { MockMatchmakingRepository(matchmakingRoster) }
+    var matchedOpponent by remember { mutableStateOf<MockChampion?>(null) }
 
     val selectedTabIndex = bottomBarTabs().indexOfFirst { (_, route) ->
         currentDestination?.hasRoute(route::class) == true
@@ -158,7 +169,7 @@ fun AppNavHost(
 
                 composable<Route.Home> {
                     HomeScreen(
-                        onGoBattle = { navController.navigate(Route.Battle) },
+                        onGoBattle = { navController.navigate(Route.Matchmaking) },
                         onGoCollection = { navController.navigate(Route.Collection) },
                         onGoQuests = { navController.navigate(Route.Quests) },
                         onGoProfile = { navController.navigate(Route.Profile) },
@@ -167,8 +178,22 @@ fun AppNavHost(
                     )
                 }
 
+                composable<Route.Matchmaking> {
+                    MatchmakingScreen(
+                        repository = matchmakingRepository,
+                        onFound = { opponent ->
+                            matchedOpponent = opponent
+                            navController.navigate(Route.Battle) {
+                                popUpTo(Route.Matchmaking) { inclusive = true }
+                            }
+                        },
+                        onCancel = { navController.popBackStack() },
+                    )
+                }
+
                 composable<Route.Battle> {
                     BattleScreen(
+                        opponent = matchedOpponent ?: matchmakingRoster.first(),
                         onGoHome = { navController.popBackStack() },
                     )
                 }
