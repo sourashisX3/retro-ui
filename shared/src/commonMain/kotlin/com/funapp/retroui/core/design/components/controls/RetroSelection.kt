@@ -7,6 +7,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -40,7 +41,7 @@ fun RetroSwitch(
     val colors = RetroTheme.colors
     val trackColor = if (checked) colors.primary else colors.surfaceMuted
     val knobColor = if (checked) colors.onPrimary else colors.textMuted
-    val shape = RoundedCornerShape(4.dp)
+    val shape = RoundedCornerShape(100.dp)
 
     Box(
         modifier = modifier
@@ -53,17 +54,22 @@ fun RetroSwitch(
                 interactionSource = remember { MutableInteractionSource() },
                 indication = null,
             ) { onCheckedChange(!checked) }
-            .alpha(if (enabled) 1f else 0.5f)
-            .padding(2.dp),
+            .alpha(if (enabled) 1f else 0.5f),
     ) {
         Box(
             modifier = Modifier
-                .align(if (checked) Alignment.CenterEnd else Alignment.CenterStart)
-                .size(18.dp)
-                .clip(CircleShape)
-                .background(knobColor)
-                .border(RetroTheme.borders.default, colors.outlineStrong, CircleShape),
-        )
+                .fillMaxSize()
+                .padding(start = 5.dp, end = 5.dp, top = 4.dp, bottom = 4.dp),
+            contentAlignment = if (checked) Alignment.CenterEnd else Alignment.CenterStart,
+        ) {
+            Box(
+                modifier = Modifier
+                    .size(18.dp)
+                    .clip(CircleShape)
+                    .background(knobColor)
+                    .border(RetroTheme.borders.default, colors.outlineStrong, CircleShape),
+            )
+        }
     }
 }
 

@@ -8,13 +8,11 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -77,6 +75,7 @@ import com.funapp.retroui.core.design.components.surfaces.RetroCardHeader
 import com.funapp.retroui.core.design.components.surfaces.RetroCharacterCard
 import com.funapp.retroui.core.design.components.surfaces.RetroDashedGroup
 import com.funapp.retroui.core.design.components.surfaces.RetroPanel
+import com.funapp.retroui.core.design.components.surfaces.RetroScreen
 import com.funapp.retroui.core.design.components.surfaces.RetroSection
 import com.funapp.retroui.core.design.components.surfaces.RetroStatCard
 import com.funapp.retroui.core.design.theme.RetroTheme
@@ -97,10 +96,7 @@ fun DesignSystemScreen() {
     var chipSelected by remember { mutableIntStateOf(0) }
     var health by remember { mutableFloatStateOf(0.66f) }
 
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(colors.background),
+    RetroScreen(
         contentPadding = PaddingValues(bottom = RetroTheme.spacing.xxl),
     ) {
         item { Header() }
