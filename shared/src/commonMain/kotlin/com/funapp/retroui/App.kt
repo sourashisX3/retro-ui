@@ -13,6 +13,9 @@ import com.funapp.retroui.core.ui.theme.rememberPlatformSettingsStorage
 import com.funapp.retroui.core.config.navigation.AppNavHost
 import com.funapp.retroui.core.di.AppContainer
 import com.funapp.retroui.core.di.LocalAppContainer
+import com.funapp.retroui.core.data.mock.mockChampionRoster
+import com.funapp.retroui.features.battle.data.MockMatchmakingRepository
+import com.funapp.retroui.features.leaderboard.data.MockLeaderboardRepository
 import com.funapp.retroui.core.ui.theme.RetroTheme
 
 /**
@@ -24,8 +27,13 @@ import com.funapp.retroui.core.ui.theme.RetroTheme
 @Preview
 fun App() {
     val storage = rememberPlatformSettingsStorage()
+    val matchmakingRoster = mockChampionRoster()
     val container = remember {
-        AppContainer(settingsRepository = SettingsRepository(storage))
+        AppContainer(
+            settingsRepository = SettingsRepository(storage),
+            matchmakingRepository = MockMatchmakingRepository(matchmakingRoster),
+            leaderboardRepository = MockLeaderboardRepository(),
+        )
     }
     val themeMode by container.settingsRepository.themeMode.collectAsState()
     val darkTheme = when (themeMode) {

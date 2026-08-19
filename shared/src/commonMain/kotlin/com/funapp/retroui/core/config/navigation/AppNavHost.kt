@@ -43,10 +43,10 @@ import com.funapp.retroui.features.onboarding.presentation.OnboardingScreen
 import com.funapp.retroui.features.profile.presentation.screens.ProfileScreen
 import com.funapp.retroui.features.quests.presentation.screens.QuestsScreen
 import com.funapp.retroui.features.settings.presentation.screens.SettingsScreen
-import com.funapp.retroui.features.splash.presentation.SplashScreen
+import com.funapp.retroui.core.di.LocalAppContainer
 import com.funapp.retroui.core.data.mock.MockChampion
 import com.funapp.retroui.core.data.mock.mockChampionRoster
-import com.funapp.retroui.features.battle.data.MockMatchmakingRepository
+import com.funapp.retroui.features.splash.presentation.SplashScreen
 import org.jetbrains.compose.resources.stringResource
 import retroui.shared.generated.resources.Res
 import retroui.shared.generated.resources.nav_cards
@@ -81,8 +81,8 @@ fun AppNavHost(
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = backStackEntry?.destination
 
-    val matchmakingRoster = mockChampionRoster()
-    val matchmakingRepository = remember { MockMatchmakingRepository(matchmakingRoster) }
+    val matchmakingRepository = LocalAppContainer.current.matchmakingRepository
+    val fallbackOpponent = mockChampionRoster().first()
     var matchedOpponent by remember { mutableStateOf<MockChampion?>(null) }
 
     val selectedTabIndex = bottomBarTabs().indexOfFirst { (_, route) ->
@@ -197,7 +197,7 @@ fun AppNavHost(
 
                 composable<Route.Battle> {
                     BattleScreen(
-                        opponent = matchedOpponent ?: matchmakingRoster.first(),
+                        opponent = matchedOpponent ?: fallbackOpponent,
                         onGoHome = { navController.popBackStack() },
                     )
                 }

@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import com.funapp.retroui.core.ui.icons.ExitToApp
 import com.funapp.retroui.core.ui.icons.PlayArrow
 import com.funapp.retroui.core.ui.icons.Warning
 import androidx.compose.runtime.Composable
@@ -20,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import com.funapp.retroui.core.ui.animation.RetroEntranceStyle
 import com.funapp.retroui.core.ui.animation.retroEntrance
 import com.funapp.retroui.core.ui.components.controls.RetroButton
+import com.funapp.retroui.core.ui.components.controls.RetroIconButton
 import com.funapp.retroui.core.ui.components.controls.RetroButtonVariant
 import com.funapp.retroui.core.ui.components.foundation.RetroText
 import com.funapp.retroui.core.ui.components.game.RetroBattleLog
@@ -82,11 +84,12 @@ fun BattleScreen(
                         color = RetroTheme.colors.textMuted,
                     )
                 }
-                RetroButton(
-                    text = stringResource(Res.string.btn_retreat),
-                    variant = RetroButtonVariant.Outline,
+                RetroIconButton(
+                    imageVector = RetroIcons.ExitToApp,
+                    contentDescription = stringResource(Res.string.btn_retreat),
                     onClick = { showRetreatDialog = true },
-                    small = true,
+                    containerColor = RetroTheme.colors.error,
+                    tint = RetroTheme.colors.onError,
                 )
             }
             Spacer(modifier = Modifier.height(RetroTheme.spacing.lg))

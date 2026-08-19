@@ -14,7 +14,11 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -27,10 +31,11 @@ import com.funapp.retroui.core.ui.components.foundation.retroHardShadow
 import com.funapp.retroui.core.ui.components.surfaces.RetroScreen
 import com.funapp.retroui.core.ui.icons.RetroIcons
 import com.funapp.retroui.core.ui.icons.Trophy
+import com.funapp.retroui.core.di.LocalAppContainer
 import com.funapp.retroui.core.ui.theme.RetroTheme
 import com.funapp.retroui.core.utils.asString
 import com.funapp.retroui.features.leaderboard.data.LeaderboardEntry
-import com.funapp.retroui.features.leaderboard.data.getMockLeaderboard
+import com.funapp.retroui.features.leaderboard.data.LeaderboardRepository
 import org.jetbrains.compose.resources.stringResource
 import retroui.shared.generated.resources.Res
 import retroui.shared.generated.resources.lb_you
@@ -44,8 +49,12 @@ import retroui.shared.generated.resources.screen_leaderboard_title
 @Composable
 fun LeaderboardScreen(
     modifier: Modifier = Modifier,
+    repository: LeaderboardRepository = LocalAppContainer.current.leaderboardRepository,
 ) {
-    val entries = remember { getMockLeaderboard() }
+    var entries by remember { mutableStateOf<List<LeaderboardEntry>>(emptyList()) }
+    LaunchedEffect(repository) {
+        entries = repository.getLeaderboard()
+    }
 
     RetroScreen(modifier = modifier) {
         item {
