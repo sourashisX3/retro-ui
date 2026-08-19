@@ -1,5 +1,10 @@
      package com.funapp.retroui.core.config.navigation
 
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -68,6 +73,16 @@ fun AppNavHost(
             NavHost(
                 navController = navController,
                 startDestination = Route.Splash,
+                enterTransition = {
+                    fadeIn(tween(300)) + slideInHorizontally(tween(300)) { it / 8 }
+                },
+                exitTransition = {
+                    fadeOut(tween(200)) + slideOutHorizontally(tween(200)) { -it / 8 }
+                },
+                popEnterTransition = { fadeIn(tween(300)) },
+                popExitTransition = {
+                    fadeOut(tween(200)) + slideOutHorizontally(tween(200)) { it / 8 }
+                },
                 modifier = Modifier
                     .fillMaxSize()
                     .weight(1f),
