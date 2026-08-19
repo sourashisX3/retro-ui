@@ -17,6 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
+import com.funapp.retroui.core.ui.components.feedback.RetroShine
 import com.funapp.retroui.core.ui.components.foundation.RetroText
 import com.funapp.retroui.core.ui.components.foundation.retroHardShadow
 import com.funapp.retroui.core.ui.icons.Lock
@@ -67,26 +68,31 @@ private fun BadgeCell(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Box(
-            modifier = Modifier
-                .size(48.dp)
-                .retroHardShadow(
-                    offsetX = 2.dp,
-                    offsetY = 3.dp,
-                    color = colors.outline,
-                    shape = CircleShape,
+        Box(modifier = Modifier.size(48.dp)) {
+            Box(
+                modifier = Modifier
+                    .matchParentSize()
+                    .retroHardShadow(
+                        offsetX = 2.dp,
+                        offsetY = 3.dp,
+                        color = colors.outline,
+                        shape = CircleShape,
+                    )
+                    .clip(CircleShape)
+                    .background(if (badge.earned) colors.accentContainer else colors.surfaceMuted)
+                    .border(RetroTheme.borders.default, colors.outlineStrong, CircleShape),
+                contentAlignment = Alignment.Center,
+            ) {
+                Icon(
+                    imageVector = if (badge.earned) badge.icon else RetroIcons.Lock,
+                    contentDescription = null,
+                    tint = if (badge.earned) colors.onAccentContainer else colors.textMuted,
+                    modifier = Modifier.size(26.dp),
                 )
-                .clip(CircleShape)
-                .background(if (badge.earned) colors.accentContainer else colors.surfaceMuted)
-                .border(RetroTheme.borders.default, colors.outlineStrong, CircleShape),
-            contentAlignment = Alignment.Center,
-        ) {
-            Icon(
-                imageVector = if (badge.earned) badge.icon else RetroIcons.Lock,
-                contentDescription = null,
-                tint = if (badge.earned) colors.onAccentContainer else colors.textMuted,
-                modifier = Modifier.size(26.dp),
-            )
+            }
+            if (badge.earned) {
+                RetroShine(shape = CircleShape)
+            }
         }
         Spacer(modifier = Modifier.height(RetroTheme.spacing.xxs))
         RetroText(
