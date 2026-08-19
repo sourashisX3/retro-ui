@@ -15,6 +15,7 @@ object RetroPrimitiveColors {
     val Paper = Color(0xFFF8F0DA)
     val PaperBright = Color(0xFFFFF8E8)
     val PaperTint = Color(0xFFEFE1C0)
+    val PaperRaised = Color(0xFFE9DCB8)
     val PaperMuted = Color(0xFFE6D3C0)
     val PaperDeep = Color(0xFFD9C49F)
 
@@ -43,6 +44,7 @@ object RetroPrimitiveColors {
     val Night = Color(0xFF14140F)
     val NightSurface = Color(0xFF1E1C16)
     val NightTint = Color(0xFF2A261D)
+    val NightRaised = Color(0xFF2E2A1F)
     val NightMuted = Color(0xFF3A352A)
     val NightInk = Color(0xFFF8F0DA)
     val NightInkSoft = Color(0xFFCBC3B0)

@@ -35,6 +35,7 @@ data class RetroColors(
     val surfaceVariant: Color,
     val onSurfaceVariant: Color,
     val surfaceMuted: Color,
+    val surfaceRaised: Color,
 
     // Text
     val textPrimary: Color,
@@ -90,6 +91,7 @@ val LightRetroColors = RetroColors(
     surfaceVariant = Prim.PaperTint,
     onSurfaceVariant = Prim.InkSoft,
     surfaceMuted = Prim.PaperMuted,
+    surfaceRaised = Prim.PaperRaised,
 
     textPrimary = Prim.Ink,
     textSecondary = Prim.InkSoft,
@@ -141,6 +143,7 @@ val DarkRetroColors = RetroColors(
     surfaceVariant = Prim.NightTint,
     onSurfaceVariant = Prim.NightInkSoft,
     surfaceMuted = Prim.NightMuted,
+    surfaceRaised = Prim.NightRaised,
 
     textPrimary = Prim.NightInk,
     textSecondary = Prim.NightInkSoft,

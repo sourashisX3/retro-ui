@@ -139,10 +139,10 @@ private fun RetroColors.toMaterial3ColorScheme(darkTheme: Boolean): ColorScheme 
         surfaceDim = if (darkTheme) background else surfaceMuted,
         surfaceBright = surface,
         surfaceContainerLowest = surface,
-        surfaceContainerLow = surfaceVariant,
+        surfaceContainerLow = surface,
         surfaceContainer = surfaceVariant,
         surfaceContainerHigh = surfaceVariant,
-        surfaceContainerHighest = surfaceVariant,
+        surfaceContainerHighest = surfaceRaised,
     )
 }
 

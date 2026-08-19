@@ -85,7 +85,7 @@ fun RetroBottomBar(
             modifier = Modifier
                 .matchParentSize()
                 .clip(dockShape)
-                .background(colors.surface)
+                .background(colors.surfaceRaised)
                 .border(BorderStroke(RetroTheme.borders.default, colors.outlineStrong), dockShape),
         )
 
