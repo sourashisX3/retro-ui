@@ -84,12 +84,12 @@ fun AppNavHost(
 
                 composable<Route.Onboarding> {
                     OnboardingScreen(
-                        onGoHome = {
-                            navController.navigate(Route.Login) {
+                        onStart = {
+                            navController.navigate(Route.Register) {
                                 popUpTo(Route.Onboarding) { inclusive = true }
                             }
                         },
-                        onGoLogin = {
+                        onLogin = {
                             navController.navigate(Route.Login) {
                                 popUpTo(Route.Onboarding) { inclusive = true }
                             }

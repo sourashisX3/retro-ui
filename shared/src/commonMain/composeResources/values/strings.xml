@@ -22,8 +22,13 @@
     <string name="splash_press_start">PRESS START</string>
 
     <!-- Onboarding -->
-    <string name="screen_onboarding_title">ONBOARDING</string>
-    <string name="screen_onboarding_subtitle">Welcome, player. Your quest awaits.</string>
+    <string name="btn_skip">SKIP</string>
+    <string name="onboarding_page_1_title">BUILD YOUR DECK</string>
+    <string name="onboarding_page_1_body">Collect champions and assemble a deck of 5 fighters.</string>
+    <string name="onboarding_page_2_title">CHALLENGE RIVALS</string>
+    <string name="onboarding_page_2_body">Battle in fast, arcade-style duels.</string>
+    <string name="onboarding_page_3_title">BECOME CHAMPION</string>
+    <string name="onboarding_page_3_body">Climb the arena ranks and claim legendary rewards.</string>
     <string name="btn_start_playing">START PLAYING</string>
     <string name="btn_already_player">ALREADY PLAYER</string>
 
