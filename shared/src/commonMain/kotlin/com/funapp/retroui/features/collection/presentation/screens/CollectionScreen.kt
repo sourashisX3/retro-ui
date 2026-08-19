@@ -22,6 +22,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.rememberScrollState
 import com.funapp.retroui.core.ui.icons.Edit
+import com.funapp.retroui.core.ui.icons.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -37,6 +38,8 @@ import com.funapp.retroui.core.ui.components.controls.RetroButton
 import com.funapp.retroui.core.ui.components.controls.RetroButtonVariant
 import com.funapp.retroui.core.ui.components.controls.RetroChip
 import com.funapp.retroui.core.ui.components.controls.RetroIconButton
+import com.funapp.retroui.core.ui.components.controls.RetroTextField
+import com.funapp.retroui.core.ui.components.controls.RetroTextFieldTrailingAction
 import com.funapp.retroui.core.ui.components.feedback.RetroStatusLabel
 import com.funapp.retroui.core.ui.components.foundation.RetroText
 import com.funapp.retroui.core.ui.components.game.RetroCardRarity
@@ -51,6 +54,8 @@ import retroui.shared.generated.resources.Res
 import retroui.shared.generated.resources.btn_deck_builder
 import retroui.shared.generated.resources.card_owned
 import retroui.shared.generated.resources.collection_count
+import retroui.shared.generated.resources.collection_search_hint
+import retroui.shared.generated.resources.common_clear
 import retroui.shared.generated.resources.common_close
 import retroui.shared.generated.resources.rarity_all
 import retroui.shared.generated.resources.rarity_common
@@ -96,9 +101,13 @@ fun CollectionScreen(
 ) {
     val cards = mockChampionRoster()
     var filter by remember { mutableStateOf<RetroCardRarity?>(null) }
+    var query by remember { mutableStateOf("") }
     var detailsCard by remember { mutableStateOf<MockChampion?>(null) }
     var previewCard by remember { mutableStateOf<MockChampion?>(null) }
-    val filtered = if (filter == null) cards else cards.filter { it.rarity == filter }
+    val filtered = cards.filter { card ->
+        (filter == null || card.rarity == filter) &&
+            (query.isBlank() || card.name.contains(query.trim(), ignoreCase = true))
+    }
 
     Box(
         modifier = modifier
@@ -133,6 +142,24 @@ fun CollectionScreen(
                     filter = filter,
                     onSelect = { filter = it },
                     modifier = Modifier.retroEntrance(delayMillis = 60),
+                )
+            }
+            item(span = { GridItemSpan(maxLineSpan) }) {
+                Spacer(modifier = Modifier.height(RetroTheme.spacing.md))
+                RetroTextField(
+                    value = query,
+                    onValueChange = { query = it },
+                    placeholder = stringResource(Res.string.collection_search_hint),
+                    leadingIcon = RetroIcons.Search,
+                    trailing = if (query.isNotBlank()) {
+                        {
+                            RetroTextFieldTrailingAction(
+                                text = stringResource(Res.string.common_clear),
+                                onClick = { query = "" },
+                            )
+                        }
+                    } else null,
+                    modifier = Modifier.retroEntrance(delayMillis = 80),
                 )
             }
             item(span = { GridItemSpan(maxLineSpan) }) {

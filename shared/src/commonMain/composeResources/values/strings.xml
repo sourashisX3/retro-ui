@@ -24,6 +24,7 @@
     <string name="common_back_to_login">BACK TO LOGIN</string>
     <string name="common_forgot_password">FORGOT PASSWORD</string>
     <string name="common_new_player">NEW PLAYER</string>
+    <string name="common_clear">CLEAR</string>
 
     <!-- Splash -->
     <string name="splash_press_start">PRESS START</string>
@@ -219,6 +220,8 @@
     <string name="retreat_confirm_body">Return to the main menu? Progress in this battle will be lost.</string>
     <string name="btn_confirm_retreat">RETREAT</string>
 
+    <!-- Collection -->
+    <string name="collection_search_hint">SEARCH CARDS…</string>
     <!-- Design-system showcase -->
     <string name="showcase_title">Design System</string>
     <string name="showcase_subtitle">Retro UI kit</string>
