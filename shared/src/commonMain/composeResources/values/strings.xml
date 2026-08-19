@@ -1,0 +1,20 @@
+<resources>
+    <!-- App / brand -->
+    <string name="app_name">DOODLE DUEL</string>
+    <string name="app_tagline">Build. Battle. Become the Champion.</string>
+
+    <!-- Generic UI -->
+    <string name="common_ok">OK</string>
+    <string name="common_cancel">CANCEL</string>
+    <string name="common_continue">CONTINUE</string>
+    <string name="common_back">BACK</string>
+    <string name="common_next">NEXT</string>
+    <string name="common_retry">RETRY</string>
+    <string name="common_close">CLOSE</string>
+    <string name="common_save">SAVE</string>
+    <string name="common_loading">LOADING…</string>
+
+    <!-- Design-system showcase -->
+    <string name="showcase_title">Design System</string>
+    <string name="showcase_subtitle">Retro / Doodle Duel kit</string>
+</resources>
