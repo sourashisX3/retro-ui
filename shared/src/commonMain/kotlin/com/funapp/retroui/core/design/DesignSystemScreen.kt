@@ -18,9 +18,13 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.Build
+import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.runtime.Composable
@@ -426,10 +430,10 @@ fun DesignSystemScreen() {
                 horizontalArrangement = Arrangement.spacedBy(RetroTheme.spacing.md),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                RetroAvatar(label = "🎮", size = RetroTheme.dimensions.avatarLG)
-                RetroAvatar(label = "⚔", size = RetroTheme.dimensions.avatarMD, borderColor = colors.error)
-                RetroAvatar(label = "🛡", size = RetroTheme.dimensions.avatarMD, circle = true)
-                RetroAvatar(label = "?", size = RetroTheme.dimensions.avatarSM, backgroundColor = colors.surfaceMuted)
+                RetroAvatar(icon = Icons.Filled.Star, size = RetroTheme.dimensions.avatarLG)
+                RetroAvatar(icon = Icons.Filled.PlayArrow, size = RetroTheme.dimensions.avatarMD, borderColor = colors.error)
+                RetroAvatar(icon = Icons.Filled.Favorite, size = RetroTheme.dimensions.avatarMD, circle = true)
+                RetroAvatar(icon = null, size = RetroTheme.dimensions.avatarSM, backgroundColor = colors.surfaceMuted)
             }
         }
 
@@ -444,7 +448,12 @@ fun DesignSystemScreen() {
                         title = listOf("FIRE PUNCH", "IRON GUARD", "MEGA BOLT", "PHOENIX RISE")[index],
                         cost = "${index + 1}",
                         type = listOf("ATTACK", "DEFENSE", "ATTACK", "HEAL")[index],
-                        artwork = listOf("🔥", "🛡", "⚡", "🐦")[index],
+                        artworkIcon = listOf(
+                            Icons.Filled.Favorite,
+                            Icons.Filled.Star,
+                            Icons.Filled.PlayArrow,
+                            Icons.Filled.Face,
+                        )[index],
                         description = "Strike with 25 damage.",
                         footer = listOf("DMG 25", "+30 SHIELD", "DMG 40", "+50 HP")[index],
                         rarity = listOf(
@@ -506,7 +515,7 @@ fun DesignSystemScreen() {
             RetroCharacterCard(
                 name = "Sir Pixel",
                 level = "12",
-                avatarLabel = "🛡",
+                avatarIcon = Icons.Filled.Favorite,
                 avatarColor = colors.surfaceVariant,
                 hp = 0.66f,
                 shield = 0.3f,
@@ -563,10 +572,26 @@ fun DesignSystemScreen() {
                 modifier = Modifier.padding(horizontal = RetroTheme.spacing.lg),
                 height = 140.dp,
                 entries = listOf(
-                    RetroBattleLogEntry("Fire Punch — 25 damage", RetroBattleLogType.Damage, "⚔"),
-                    RetroBattleLogEntry("Iron Guard — +30 shield", RetroBattleLogType.Shield, "🛡"),
-                    RetroBattleLogEntry("Healing Potion — +50 HP", RetroBattleLogType.Heal, "🧪"),
-                    RetroBattleLogEntry("Turn 3 — Player ready", RetroBattleLogType.System, "▶"),
+                    RetroBattleLogEntry(
+                        text = "Fire Punch — 25 damage",
+                        type = RetroBattleLogType.Damage,
+                        icon = Icons.Filled.PlayArrow,
+                    ),
+                    RetroBattleLogEntry(
+                        text = "Iron Guard — +30 shield",
+                        type = RetroBattleLogType.Shield,
+                        icon = Icons.Filled.Star,
+                    ),
+                    RetroBattleLogEntry(
+                        text = "Healing Potion — +50 HP",
+                        type = RetroBattleLogType.Heal,
+                        icon = Icons.Filled.Favorite,
+                    ),
+                    RetroBattleLogEntry(
+                        text = "Turn 3 — Player ready",
+                        type = RetroBattleLogType.System,
+                        icon = Icons.Filled.Info,
+                    ),
                 ),
             )
         }

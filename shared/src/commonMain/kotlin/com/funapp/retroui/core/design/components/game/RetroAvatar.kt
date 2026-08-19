@@ -6,14 +6,15 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CornerBasedShape
+import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.funapp.retroui.core.design.components.foundation.RetroText
 import com.funapp.retroui.core.design.components.foundation.retroHardShadow
 import com.funapp.retroui.core.design.theme.RetroTheme
 
@@ -21,14 +22,15 @@ import com.funapp.retroui.core.design.theme.RetroTheme
  * Player / character avatar.
  *
  * A compact squared (or circular) tile with an ink outline and hard shadow.
- * [label] is usually an emoji or a single initial rendered inside. Set
- * [borderColor] to a feedback color to build a status/rarity ring.
+ * [icon] is rendered inside (tinted [RetroTheme.colors.textPrimary]); pass
+ * null for an empty slot. Set [borderColor] to a feedback color to build a
+ * status/rarity ring.
  */
 @Composable
 fun RetroAvatar(
     modifier: Modifier = Modifier,
     size: Dp = RetroTheme.dimensions.avatarMD,
-    label: String = "?",
+    icon: ImageVector? = null,
     backgroundColor: Color = RetroTheme.colors.surfaceVariant,
     borderColor: Color = RetroTheme.colors.outlineStrong,
     circle: Boolean = false,
@@ -48,10 +50,13 @@ fun RetroAvatar(
             .border(RetroTheme.borders.default, borderColor, shape),
         contentAlignment = Alignment.Center,
     ) {
-        RetroText(
-            text = label,
-            style = RetroTheme.typography.title,
-            color = RetroTheme.colors.textPrimary,
-        )
+        if (icon != null) {
+            Icon(
+                imageVector = icon,
+                contentDescription = null,
+                tint = RetroTheme.colors.textPrimary,
+                modifier = Modifier.size(size * 0.55f),
+            )
+        }
     }
 }

@@ -12,8 +12,10 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CornerBasedShape
+import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -21,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
@@ -45,7 +48,7 @@ private fun RetroCardRarity.rarityColor(colors: RetroColors): Color = when (this
  *
  * Thick ink outline + hard shadow + rarity accent + pixel title + artwork
  * slot + cost badge + type chip + optional stat footer. All visuals come from
- * tokens; only the [artwork] emoji placeholder is content.
+ * tokens; only the [artworkIcon] is content.
  */
 @Composable
 fun RetroGameCard(
@@ -55,7 +58,7 @@ fun RetroGameCard(
     modifier: Modifier = Modifier,
     width: Dp = RetroTheme.dimensions.gameCardWidth,
     height: Dp = RetroTheme.dimensions.gameCardHeight,
-    artwork: String = "?",
+    artworkIcon: ImageVector? = null,
     description: String? = null,
     rarity: RetroCardRarity = RetroCardRarity.Common,
     footer: String? = null,
@@ -127,11 +130,14 @@ fun RetroGameCard(
                     ),
                 contentAlignment = Alignment.Center,
             ) {
-                RetroText(
-                    text = artwork,
-                    style = RetroTheme.typography.heading,
-                    textAlign = TextAlign.Center,
-                )
+                if (artworkIcon != null) {
+                    Icon(
+                        imageVector = artworkIcon,
+                        contentDescription = null,
+                        tint = colors.textSecondary,
+                        modifier = Modifier.size(RetroTheme.dimensions.iconXL),
+                    )
+                }
             }
 
             Spacer(modifier = Modifier.height(RetroTheme.spacing.sm))

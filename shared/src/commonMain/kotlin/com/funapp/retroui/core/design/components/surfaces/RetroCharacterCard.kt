@@ -13,6 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import com.funapp.retroui.core.design.components.feedback.RetroProgressBar
 import com.funapp.retroui.core.design.components.feedback.RetroProgressColor
 import com.funapp.retroui.core.design.components.foundation.RetroText
@@ -28,7 +29,7 @@ fun RetroCharacterCard(
     name: String,
     level: String,
     modifier: Modifier = Modifier,
-    avatarLabel: String = "?",
+    avatarIcon: ImageVector? = null,
     avatarColor: Color = RetroTheme.colors.surfaceVariant,
     hp: Float = 1f,
     shield: Float = 0f,
@@ -38,7 +39,7 @@ fun RetroCharacterCard(
     RetroCard(modifier = modifier, contentPadding = RetroTheme.spacing.md) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             RetroAvatar(
-                label = avatarLabel,
+                icon = avatarIcon,
                 size = RetroTheme.dimensions.avatarMD,
                 backgroundColor = avatarColor,
             )

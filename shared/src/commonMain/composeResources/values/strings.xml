@@ -13,6 +13,66 @@
     <string name="common_close">CLOSE</string>
     <string name="common_save">SAVE</string>
     <string name="common_loading">LOADING…</string>
+    <string name="common_back_to_menu">BACK TO MENU</string>
+    <string name="common_back_to_login">BACK TO LOGIN</string>
+    <string name="common_forgot_password">FORGOT PASSWORD</string>
+    <string name="common_new_player">NEW PLAYER</string>
+
+    <!-- Splash -->
+    <string name="splash_press_start">PRESS START</string>
+
+    <!-- Onboarding -->
+    <string name="screen_onboarding_title">ONBOARDING</string>
+    <string name="screen_onboarding_subtitle">Welcome, player. Your quest awaits.</string>
+    <string name="btn_start_playing">START PLAYING</string>
+    <string name="btn_already_player">ALREADY PLAYER</string>
+
+    <!-- Auth -->
+    <string name="screen_login_title">LOGIN</string>
+    <string name="screen_login_subtitle">Sign in to continue your quest.</string>
+    <string name="btn_enter_arena">ENTER THE ARENA</string>
+    <string name="screen_register_title">CREATE PLAYER</string>
+    <string name="screen_register_subtitle">Forge your hero and join the arena.</string>
+    <string name="btn_start_quest">START QUEST</string>
+    <string name="screen_forgot_title">RECOVER ACCOUNT</string>
+    <string name="screen_forgot_subtitle">We\'ll send you a recovery link.</string>
+    <string name="btn_send_link">SEND LINK</string>
+
+    <!-- Home -->
+    <string name="screen_home_title">MAIN MENU</string>
+    <string name="screen_home_subtitle">Choose your next quest.</string>
+    <string name="btn_start_battle">START BATTLE</string>
+    <string name="btn_collection">COLLECTION</string>
+    <string name="btn_quests">QUESTS</string>
+    <string name="btn_profile">PROFILE</string>
+    <string name="btn_settings">SETTINGS</string>
+
+    <!-- Battle -->
+    <string name="screen_battle_title">BATTLE ARENA</string>
+    <string name="screen_battle_subtitle">VS — prepare for the showdown.</string>
+    <string name="btn_retreat">RETREAT TO MENU</string>
+
+    <!-- Collection -->
+    <string name="screen_collection_title">COLLECTION</string>
+    <string name="screen_collection_subtitle">Browse every card you\'ve earned.</string>
+    <string name="btn_deck_builder">DECK BUILDER</string>
+
+    <!-- Deck builder -->
+    <string name="screen_deck_title">DECK BUILDER</string>
+    <string name="screen_deck_subtitle">Assemble your deck of 5 champions.</string>
+    <string name="btn_browse_collection">BROWSE COLLECTION</string>
+
+    <!-- Quests -->
+    <string name="screen_quests_title">QUESTS</string>
+    <string name="screen_quests_subtitle">Complete quests to earn rewards.</string>
+
+    <!-- Profile -->
+    <string name="screen_profile_title">PROFILE</string>
+    <string name="screen_profile_subtitle">Player stats, badges and records.</string>
+
+    <!-- Settings -->
+    <string name="screen_settings_title">SETTINGS</string>
+    <string name="screen_settings_subtitle">Tweak your retro experience.</string>
 
     <!-- Design-system showcase -->
     <string name="showcase_title">Design System</string>

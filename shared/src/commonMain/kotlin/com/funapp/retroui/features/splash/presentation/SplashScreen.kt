@@ -35,6 +35,7 @@ import kotlinx.coroutines.delay
 import org.jetbrains.compose.resources.stringResource
 import retroui.shared.generated.resources.Res
 import retroui.shared.generated.resources.app_tagline
+import retroui.shared.generated.resources.splash_press_start
 
 private const val SplashScreenDurationMs = 2600L
 
@@ -50,6 +51,7 @@ fun SplashScreen(
 ) {
     val colors = RetroTheme.colors
     val spacing = RetroTheme.spacing
+    val pressStart = stringResource(Res.string.splash_press_start)
 
     var started by remember { mutableStateOf(false) }
     LaunchedEffect(Unit) { started = true }
@@ -120,7 +122,7 @@ fun SplashScreen(
             )
             Spacer(Modifier.height(spacing.xxl))
             RetroText(
-                text = "PRESS START",
+                text = pressStart,
                 style = RetroTheme.typography.label,
                 color = colors.accent,
                 textAlign = TextAlign.Center,
