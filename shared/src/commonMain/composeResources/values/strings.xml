@@ -174,6 +174,24 @@
     <!-- Settings -->
     <string name="screen_settings_title">SETTINGS</string>
     <string name="screen_settings_subtitle">Tweak your retro experience.</string>
+    <string name="settings_audio_title">AUDIO</string>
+    <string name="settings_gameplay_title">GAMEPLAY</string>
+    <string name="settings_account_title">ACCOUNT</string>
+    <string name="setting_sound_title">SOUND EFFECTS</string>
+    <string name="setting_sound_subtitle">Retro blips and hits</string>
+    <string name="setting_haptics_title">HAPTICS</string>
+    <string name="setting_haptics_subtitle">Vibration on every tap</string>
+    <string name="setting_music_title">MUSIC</string>
+    <string name="setting_music_subtitle">Arcade soundtrack</string>
+    <string name="setting_enemy_hp_title">SHOW ENEMY HP</string>
+    <string name="setting_enemy_hp_subtitle">Display rival health bars</string>
+    <string name="setting_quick_title">QUICK BATTLE</string>
+    <string name="setting_quick_subtitle">Skip the intro sequence</string>
+    <string name="setting_language_title">LANGUAGE</string>
+    <string name="setting_language_value">ENGLISH</string>
+    <string name="setting_version_title">VERSION</string>
+    <string name="setting_version_value">1.0.0</string>
+    <string name="btn_log_out">LOG OUT</string>
 
     <!-- Design-system showcase -->
     <string name="showcase_title">Design System</string>
