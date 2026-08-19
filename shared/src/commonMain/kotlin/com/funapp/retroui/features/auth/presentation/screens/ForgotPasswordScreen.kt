@@ -24,6 +24,7 @@ import retroui.shared.generated.resources.screen_forgot_title
 @Composable
 fun ForgotPasswordScreen(
     onGoLogin: () -> Unit,
+    onGoHome: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     RetroPlaceholderScreen(
@@ -39,7 +40,7 @@ fun ForgotPasswordScreen(
                 RetroButton(
                     text = stringResource(Res.string.btn_send_link),
                     variant = RetroButtonVariant.Secondary,
-                    onClick = onGoLogin,
+                    onClick = onGoHome,
                 )
                 RetroButton(
                     text = stringResource(Res.string.common_back_to_login),

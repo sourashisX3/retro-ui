@@ -46,9 +46,10 @@ private val bottomBarTabs: List<Pair<RetroBottomBarItem, Route>> = listOf(
  * App-wide typed NavHost. Every destination is a [Route] `@Serializable`
  * type — no string routes.
  *
- * Flow: Splash → Onboarding → Login → main tabs. The retro bottom bar
- * appears on the main sections (Home, Collection, Quests, Profile) and is
- * hidden on auth/battle/detail screens.
+ * Flow: Splash → Onboarding → Login (auth: Register / ForgotPassword) →
+ * main tabs. Every screen is reachable after onboarding; the retro bottom
+ * bar appears on the main sections (Home, Collection, Quests, Profile) and
+ * is hidden on auth/battle/detail screens.
  */
 @Composable
 fun AppNavHost(
@@ -84,7 +85,7 @@ fun AppNavHost(
                 composable<Route.Onboarding> {
                     OnboardingScreen(
                         onGoHome = {
-                            navController.navigate(Route.Home) {
+                            navController.navigate(Route.Login) {
                                 popUpTo(Route.Onboarding) { inclusive = true }
                             }
                         },
@@ -122,6 +123,12 @@ fun AppNavHost(
                 composable<Route.ForgotPassword> {
                     ForgotPasswordScreen(
                         onGoLogin = { navController.popBackStack() },
+                        onGoHome = {
+                            navController.navigate(Route.Home) {
+                                popUpTo(Route.Login) { inclusive = true }
+                                launchSingleTop = true
+                            }
+                        },
                     )
                 }
 
