@@ -239,7 +239,7 @@ fun CollectionScreen(
                 Spacer(modifier = Modifier.height(RetroTheme.spacing.md))
                 RetroButton(
                     text = stringResource(Res.string.common_close),
-                    variant = RetroButtonVariant.Outline,
+                    variant = RetroButtonVariant.Danger,
                     onClick = { previewCard = null },
                     small = true,
                     modifier = Modifier.fillMaxWidth(),

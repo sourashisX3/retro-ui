@@ -31,6 +31,10 @@ import com.funapp.retroui.core.ui.token.RetroMotion
  *
  * Must be applied BEFORE `.background(...)` / `.border(...)` in the chain so
  * the shadow draws behind the fill.
+ *
+ * Default [color] is the ink-equivalent of `RetroTheme.colors.shadow`
+ * (near-black in both light and dark) — composable callers may pass the
+ * semantic shadow color explicitly.
  */
 fun Modifier.retroHardShadow(
     offsetX: Dp = 3.dp,

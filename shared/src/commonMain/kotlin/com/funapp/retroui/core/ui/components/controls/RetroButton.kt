@@ -63,7 +63,7 @@ fun RetroButton(
         RetroButtonVariant.Secondary -> colors.secondary
         RetroButtonVariant.Accent -> colors.accent
         RetroButtonVariant.Danger -> colors.error
-        RetroButtonVariant.Outline -> colors.surface
+        RetroButtonVariant.Outline -> colors.surfaceVariant
     }
     val contentColor = when (variant) {
         RetroButtonVariant.Primary -> colors.onPrimary

@@ -6,11 +6,13 @@ import com.funapp.retroui.core.ui.token.RetroPrimitiveColors as Prim
 /**
  * Semantic color scheme.
  *
- * Application and component code reference ONLY these semantic colors —
+ * Application and component code references ONLY these semantic colors —
  * never the primitive palette directly.
  *
- * Light ("paper") and dark ("arcade night") schemes are deliberately
- * designed — not mechanically inverted.
+ * Light ("paper arcade") and dark ("arcade navy") schemes are deliberately
+ * designed — not mechanically inverted. Surfaces climb in a clear hierarchy:
+ * background -> surface -> surfaceVariant -> surfaceRaised, so dialogs,
+ * sheets and the nav dock always lift off the page.
  */
 data class RetroColors(
     // Brand / action

@@ -53,23 +53,28 @@ fun SpeechBubble(
             content()
         }
         if (showPointer) {
-            Pointer(color = colors.surface)
+            Pointer(color = colors.surface, borderColor = colors.outlineStrong)
         }
     }
 }
 
 @Composable
-private fun Pointer(color: androidx.compose.ui.graphics.Color) {
+private fun Pointer(color: androidx.compose.ui.graphics.Color, borderColor: androidx.compose.ui.graphics.Color) {
     Canvas(
         modifier = Modifier
             .padding(top = 0.dp)
             .size(width = 28.dp, height = 12.dp),
     ) {
-        drawPointer(size.width, size.height, color)
+        drawPointer(size.width, size.height, color, borderColor)
     }
 }
 
-private fun DrawScope.drawPointer(width: Float, height: Float, color: androidx.compose.ui.graphics.Color) {
+private fun DrawScope.drawPointer(
+    width: Float,
+    height: Float,
+    color: androidx.compose.ui.graphics.Color,
+    borderColor: androidx.compose.ui.graphics.Color,
+) {
     val path = Path().apply {
         moveTo(0f, 0f)
         lineTo(width, 0f)
@@ -81,7 +86,7 @@ private fun DrawScope.drawPointer(width: Float, height: Float, color: androidx.c
     }
     drawPath(
         path = path,
-        color = androidx.compose.ui.graphics.Color(0xFF171717),
+        color = borderColor,
         style = androidx.compose.ui.graphics.drawscope.Stroke(width = 2.dp.toPx()),
     )
 }
