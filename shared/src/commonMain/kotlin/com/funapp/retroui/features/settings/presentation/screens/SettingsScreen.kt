@@ -1,11 +1,14 @@
 package com.funapp.retroui.features.settings.presentation.screens
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -13,11 +16,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.funapp.retroui.core.config.theme.ThemeMode
 import com.funapp.retroui.core.design.components.controls.RetroButton
 import com.funapp.retroui.core.design.components.controls.RetroButtonVariant
 import com.funapp.retroui.core.design.components.controls.RetroChip
+import com.funapp.retroui.core.design.components.controls.RetroIconButton
 import com.funapp.retroui.core.design.components.controls.RetroSwitch
 import com.funapp.retroui.core.design.components.feedback.RetroStatusLabel
 import com.funapp.retroui.core.design.components.foundation.RetroText
@@ -32,6 +37,7 @@ import org.jetbrains.compose.resources.stringResource
 import retroui.shared.generated.resources.Res
 import retroui.shared.generated.resources.btn_confirm_logout
 import retroui.shared.generated.resources.btn_log_out
+import retroui.shared.generated.resources.common_back
 import retroui.shared.generated.resources.dialog_cancel
 import retroui.shared.generated.resources.log_out_confirm_body
 import retroui.shared.generated.resources.log_out_confirm_title
@@ -68,6 +74,7 @@ private val themeOptions: List<ThemeMode> = ThemeMode.entries
 @Composable
 fun SettingsScreen(
     onGoHome: () -> Unit,
+    onBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     var sound by remember { mutableStateOf(true) }
@@ -81,16 +88,27 @@ fun SettingsScreen(
 
     RetroScreen(modifier = modifier) {
         item {
-            RetroText(
-                text = stringResource(Res.string.screen_settings_title),
-                style = RetroTheme.typography.heading,
-                color = RetroTheme.colors.textPrimary,
-            )
-            RetroText(
-                text = stringResource(Res.string.screen_settings_subtitle),
-                style = RetroTheme.typography.caption,
-                color = RetroTheme.colors.textMuted,
-            )
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                RetroIconButton(
+                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                    contentDescription = stringResource(Res.string.common_back),
+                    onClick = onBack,
+                    containerColor = RetroTheme.colors.surfaceVariant,
+                )
+                Spacer(modifier = Modifier.width(RetroTheme.spacing.sm))
+                Column(modifier = Modifier.weight(1f)) {
+                    RetroText(
+                        text = stringResource(Res.string.screen_settings_title),
+                        style = RetroTheme.typography.heading,
+                        color = RetroTheme.colors.textPrimary,
+                    )
+                    RetroText(
+                        text = stringResource(Res.string.screen_settings_subtitle),
+                        style = RetroTheme.typography.caption,
+                        color = RetroTheme.colors.textMuted,
+                    )
+                }
+            }
         }
         item {
             Spacer(modifier = Modifier.height(RetroTheme.spacing.lg))

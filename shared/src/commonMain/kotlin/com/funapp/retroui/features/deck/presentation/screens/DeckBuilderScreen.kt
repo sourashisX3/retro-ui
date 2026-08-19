@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Icon
@@ -27,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import com.funapp.retroui.core.design.components.controls.RetroButton
 import com.funapp.retroui.core.design.components.controls.RetroButtonVariant
 import com.funapp.retroui.core.design.components.controls.RetroChip
+import com.funapp.retroui.core.design.components.controls.RetroIconButton
 import com.funapp.retroui.core.design.components.foundation.RetroText
 import com.funapp.retroui.core.design.components.game.RetroCardRarity
 import com.funapp.retroui.core.design.components.game.RetroCardSlot
@@ -44,6 +46,7 @@ import retroui.shared.generated.resources.deck_add
 import retroui.shared.generated.resources.deck_available_title
 import retroui.shared.generated.resources.deck_empty_hint
 import retroui.shared.generated.resources.deck_slots_ready
+import retroui.shared.generated.resources.common_back
 import retroui.shared.generated.resources.screen_deck_subtitle
 import retroui.shared.generated.resources.screen_deck_title
 
@@ -57,6 +60,7 @@ private const val DECK_SIZE = 5
 fun DeckBuilderScreen(
     onGoCollection: () -> Unit,
     onGoHome: () -> Unit,
+    onBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val pool = mockChampionRoster()
@@ -64,16 +68,27 @@ fun DeckBuilderScreen(
 
     RetroScreen(modifier = modifier) {
         item {
-            RetroText(
-                text = stringResource(Res.string.screen_deck_title),
-                style = RetroTheme.typography.heading,
-                color = RetroTheme.colors.textPrimary,
-            )
-            RetroText(
-                text = stringResource(Res.string.screen_deck_subtitle),
-                style = RetroTheme.typography.caption,
-                color = RetroTheme.colors.textMuted,
-            )
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                RetroIconButton(
+                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                    contentDescription = stringResource(Res.string.common_back),
+                    onClick = onBack,
+                    containerColor = RetroTheme.colors.surfaceVariant,
+                )
+                Spacer(modifier = Modifier.width(RetroTheme.spacing.sm))
+                Column(modifier = Modifier.weight(1f)) {
+                    RetroText(
+                        text = stringResource(Res.string.screen_deck_title),
+                        style = RetroTheme.typography.heading,
+                        color = RetroTheme.colors.textPrimary,
+                    )
+                    RetroText(
+                        text = stringResource(Res.string.screen_deck_subtitle),
+                        style = RetroTheme.typography.caption,
+                        color = RetroTheme.colors.textMuted,
+                    )
+                }
+            }
         }
         item {
             Spacer(modifier = Modifier.height(RetroTheme.spacing.lg))

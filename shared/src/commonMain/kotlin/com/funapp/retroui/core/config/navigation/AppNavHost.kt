@@ -174,6 +174,7 @@ fun AppNavHost(
                 composable<Route.DeckBuilder> {
                     DeckBuilderScreen(
                         onGoCollection = { navController.popBackStack() },
+                        onBack = { navController.popBackStack() },
                         onGoHome = {
                             navController.navigate(Route.Home) {
                                 popUpTo(Route.Home) { inclusive = false }
@@ -199,6 +200,7 @@ fun AppNavHost(
                 composable<Route.Settings> {
                     SettingsScreen(
                         onGoHome = { navController.popBackStack() },
+                        onBack = { navController.popBackStack() },
                     )
                 }
             }
