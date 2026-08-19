@@ -30,7 +30,7 @@ RetroUI/
 │           │   │   │                             # Shapes, Elevation, Motion, Typography
 │           │   │   ├── theme/                    # RetroColors (light+dark), RetroTheme,
 │           │   │   │                             # ThemeMode, SettingsRepository, SettingsStorage
-│           │   │   ├── animation/                # RetroEntrance, retroPopPress (motion primitives)
+│           │   │   ├── animation/                # retroEntrance styles (Rise/Pop/Coin/SlideLeft/Stomp), retroCascade, retroPopPress
 │           │   │   ├── icons/                    # RetroIcons (Pixelarticons, generated)
 │           │   │   ├── components/
 │           │   │   │   ├── foundation/           # RetroText, RetroDivider, retroHardShadow,
@@ -71,6 +71,7 @@ Components consume tokens only — feature code never uses raw colors/values.
 - `RetroTheme` bridges tokens into Material3 (`MaterialTheme`) so stock Material widgets adapt.
 - Custom components (`Retro*`) render the signature retro look: ink outlines, hard offset shadows, tactile press.
 - **Press feedback is two-tier**: hard-shadow surfaces collapse the shadow + sink via `retroTactilePress` (RetroButton behavior); shadowless compact controls pop via `retroPopPress`. Both share the component's `clickable` `InteractionSource` with `indication = null`.
+- **Motion is arcade-styled**: `retroEntrance(style = Rise|Pop|Coin|SlideLeft|Stomp)` drives all screen/component entrances on `graphicsLayer` only (alpha/translation/scale — no layout reflow); cascades use `retroCascade(index)`. Screen transitions in `AppNavHost` use `RetroAnimation.arcadeOffset` (⅓-screen push) + `RetroAnimation.fade`, reversed on pop. All specs come from `RetroMotion`/`RetroAnimation` tokens.
 
 ## Fonts (shared resources)
 

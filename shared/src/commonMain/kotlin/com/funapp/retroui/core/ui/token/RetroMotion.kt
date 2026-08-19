@@ -9,6 +9,7 @@ import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.keyframes
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
+import androidx.compose.ui.unit.IntOffset
 
 /**
  * Motion system.
@@ -82,7 +83,7 @@ object RetroAnimation {
 
     val slide: DurationBasedAnimationSpec<Float> = tween(RetroMotion.NormalMs, easing = RetroMotion.DecelerateEasing)
 
-    val fade: DurationBasedAnimationSpec<Float> = tween(RetroMotion.NormalMs, easing = RetroMotion.AccelerateEasing)
+    val fade: DurationBasedAnimationSpec<Float> = tween(RetroMotion.NormalMs, easing = RetroMotion.DecelerateEasing)
 
     val flip: DurationBasedAnimationSpec<Float> = tween(RetroMotion.SlowMs, easing = RetroMotion.EmphasizedEasing)
 
@@ -94,6 +95,16 @@ object RetroAnimation {
     val liquid: FiniteAnimationSpec<Float> = spring(
         dampingRatio = 0.72f,
         stiffness = 380f,
+    )
+
+    val arcade: FiniteAnimationSpec<Float> = spring(
+        dampingRatio = 0.5f,
+        stiffness = 950f,
+    )
+
+    val arcadeOffset: FiniteAnimationSpec<IntOffset> = spring(
+        dampingRatio = 0.5f,
+        stiffness = 950f,
     )
 
     val draw: DurationBasedAnimationSpec<Float> = tween(RetroMotion.NormalMs, easing = RetroMotion.EmphasizedEasing)

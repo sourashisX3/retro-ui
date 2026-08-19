@@ -1,6 +1,5 @@
-     package com.funapp.retroui.core.config.navigation
+package com.funapp.retroui.core.config.navigation
 
-import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
@@ -26,6 +25,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.funapp.retroui.core.ui.components.navigation.RetroBottomBar
 import com.funapp.retroui.core.ui.components.navigation.RetroBottomBarItem
+import com.funapp.retroui.core.ui.token.RetroAnimation
 import com.funapp.retroui.features.auth.presentation.screens.ForgotPasswordScreen
 import com.funapp.retroui.features.auth.presentation.screens.LoginScreen
 import com.funapp.retroui.features.auth.presentation.screens.RegisterScreen
@@ -74,14 +74,16 @@ fun AppNavHost(
                 navController = navController,
                 startDestination = Route.Splash,
                 enterTransition = {
-                    fadeIn(tween(300)) + slideInHorizontally(tween(300)) { it / 8 }
+                    slideInHorizontally(RetroAnimation.arcadeOffset) { it / 3 } + fadeIn(RetroAnimation.fade)
                 },
                 exitTransition = {
-                    fadeOut(tween(200)) + slideOutHorizontally(tween(200)) { -it / 8 }
+                    slideOutHorizontally(RetroAnimation.arcadeOffset) { -it / 3 } + fadeOut(RetroAnimation.fade)
                 },
-                popEnterTransition = { fadeIn(tween(300)) },
+                popEnterTransition = {
+                    slideInHorizontally(RetroAnimation.arcadeOffset) { -it / 3 } + fadeIn(RetroAnimation.fade)
+                },
                 popExitTransition = {
-                    fadeOut(tween(200)) + slideOutHorizontally(tween(200)) { it / 8 }
+                    slideOutHorizontally(RetroAnimation.arcadeOffset) { it / 3 } + fadeOut(RetroAnimation.fade)
                 },
                 modifier = Modifier
                     .fillMaxSize()

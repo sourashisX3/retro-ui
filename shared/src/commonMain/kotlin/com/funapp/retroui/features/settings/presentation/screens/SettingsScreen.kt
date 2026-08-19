@@ -19,6 +19,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.funapp.retroui.core.ui.theme.ThemeMode
+import com.funapp.retroui.core.ui.animation.RetroEntranceStyle
 import com.funapp.retroui.core.ui.animation.retroEntrance
 import com.funapp.retroui.core.ui.components.controls.RetroButton
 import com.funapp.retroui.core.ui.components.controls.RetroButtonVariant
@@ -119,8 +120,7 @@ fun SettingsScreen(
         }
         item {
             RetroSection(
-                title = stringResource(Res.string.settings_theme_title),
-                modifier = Modifier.retroEntrance(delayMillis = 60),
+                title = stringResource(Res.string.settings_theme_title), modifier = Modifier.retroEntrance(style = RetroEntranceStyle.Pop, delayMillis = 60),
             ) {
                 RetroText(
                     text = stringResource(Res.string.settings_theme_subtitle),

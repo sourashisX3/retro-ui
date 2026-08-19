@@ -13,6 +13,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
+import com.funapp.retroui.core.ui.animation.RetroEntranceStyle
+import com.funapp.retroui.core.ui.animation.retroCascade
 import com.funapp.retroui.core.ui.animation.retroEntrance
 import com.funapp.retroui.core.ui.components.game.RetroCardSlot
 import com.funapp.retroui.core.ui.components.game.rarityColor
@@ -42,7 +44,7 @@ internal fun HandRow(modifier: Modifier = Modifier) {
             hand.forEachIndexed { index, card ->
                 HandCardCell(
                     card = card,
-                    modifier = Modifier.retroEntrance(delayMillis = 40 * index),
+                    modifier = Modifier.retroEntrance(style = RetroEntranceStyle.Pop, delayMillis = retroCascade(index, stepMs = 40)),
                 )
             }
         }

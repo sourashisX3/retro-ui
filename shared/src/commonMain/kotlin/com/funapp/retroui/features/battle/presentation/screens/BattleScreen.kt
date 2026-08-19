@@ -17,6 +17,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.funapp.retroui.core.ui.animation.RetroEntranceStyle
 import com.funapp.retroui.core.ui.animation.retroEntrance
 import com.funapp.retroui.core.ui.components.controls.RetroButton
 import com.funapp.retroui.core.ui.components.controls.RetroButtonVariant
@@ -101,7 +102,7 @@ fun BattleScreen(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .retroEntrance(delayMillis = 140),
+                    .retroEntrance(style = RetroEntranceStyle.Coin, delayMillis = 140),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 VsBadge()
@@ -125,10 +126,10 @@ fun BattleScreen(
                     .fillMaxWidth()
                     .weight(1f)
                     .height(120.dp)
-                    .retroEntrance(delayMillis = 260),
+                    .retroEntrance(style = RetroEntranceStyle.Coin, delayMillis = 260),
             )
             Spacer(modifier = Modifier.height(RetroTheme.spacing.lg))
-            HandRow(modifier = Modifier.retroEntrance(delayMillis = 320))
+            HandRow(modifier = Modifier.retroEntrance(style = RetroEntranceStyle.Pop, delayMillis = 320))
             Spacer(modifier = Modifier.height(RetroTheme.spacing.lg))
             Row(
                 modifier = Modifier.retroEntrance(delayMillis = 380),

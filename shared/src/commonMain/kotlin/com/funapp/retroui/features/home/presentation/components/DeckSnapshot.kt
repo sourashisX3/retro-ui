@@ -14,6 +14,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
+import com.funapp.retroui.core.ui.animation.RetroEntranceStyle
+import com.funapp.retroui.core.ui.animation.retroCascade
 import com.funapp.retroui.core.ui.animation.retroEntrance
 import com.funapp.retroui.core.ui.components.controls.RetroChip
 import com.funapp.retroui.core.ui.components.controls.RetroChipVariant
@@ -55,7 +57,7 @@ internal fun DeckSnapshot(onDeckBuilder: () -> Unit, modifier: Modifier = Modifi
                 DeckChampionCell(
                     champion = champion,
                     onClick = onDeckBuilder,
-                    modifier = Modifier.retroEntrance(delayMillis = 20 * index),
+                    modifier = Modifier.retroEntrance(style = RetroEntranceStyle.Pop, delayMillis = retroCascade(index, stepMs = 40)),
                 )
             }
         }

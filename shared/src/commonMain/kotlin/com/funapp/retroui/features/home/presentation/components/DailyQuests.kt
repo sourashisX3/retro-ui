@@ -26,6 +26,8 @@ import com.funapp.retroui.core.ui.components.feedback.RetroProgressColor
 import com.funapp.retroui.core.ui.components.foundation.RetroText
 import com.funapp.retroui.core.ui.components.surfaces.RetroPanel
 import com.funapp.retroui.core.ui.theme.RetroTheme
+import com.funapp.retroui.core.ui.animation.RetroEntranceStyle
+import com.funapp.retroui.core.ui.animation.retroCascade
 import com.funapp.retroui.core.ui.animation.retroEntrance
 import org.jetbrains.compose.resources.stringResource
 import retroui.shared.generated.resources.Res
@@ -60,7 +62,7 @@ internal fun DailyQuests(onViewAll: () -> Unit, modifier: Modifier = Modifier) {
             label = stringResource(Res.string.quest_win_battles),
             reward = 50,
             progress = 0.67f,
-            modifier = Modifier.retroEntrance(delayMillis = 40),
+            modifier = Modifier.retroEntrance(style = RetroEntranceStyle.Pop, delayMillis = retroCascade(0, stepMs = 40)),
         )
         Spacer(modifier = Modifier.height(RetroTheme.spacing.md))
         QuestRow(
@@ -68,7 +70,7 @@ internal fun DailyQuests(onViewAll: () -> Unit, modifier: Modifier = Modifier) {
             label = stringResource(Res.string.quest_play_rounds),
             reward = 30,
             progress = 0.60f,
-            modifier = Modifier.retroEntrance(delayMillis = 80),
+            modifier = Modifier.retroEntrance(style = RetroEntranceStyle.Pop, delayMillis = retroCascade(1, stepMs = 40)),
         )
         Spacer(modifier = Modifier.height(RetroTheme.spacing.md))
         QuestRow(
@@ -76,7 +78,7 @@ internal fun DailyQuests(onViewAll: () -> Unit, modifier: Modifier = Modifier) {
             label = stringResource(Res.string.quest_login_today),
             reward = 20,
             progress = 1f,
-            modifier = Modifier.retroEntrance(delayMillis = 120),
+            modifier = Modifier.retroEntrance(style = RetroEntranceStyle.Pop, delayMillis = retroCascade(2, stepMs = 40)),
         )
     }
 }

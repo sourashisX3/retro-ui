@@ -120,6 +120,29 @@ RetroDivider()                          // 2dp ink line
 Modifier.retroHardShadow(offsetX = 3.dp, offsetY = 4.dp, shape = RetroTheme.shapeTokens.card)
 ```
 
+## Motion
+
+Every entrance uses the arcade motion personality. Pick the style by element type — never invent raw tweens.
+
+```kotlin
+Modifier.retroEntrance(style = RetroEntranceStyle.Pop, delayMillis = 0)
+Modifier.retroEntrance(style = RetroEntranceStyle.Coin, delayMillis = 60)
+Modifier.retroEntrance(delayMillis = retroCascade(index))   // default Rise, 60ms step
+```
+
+| Style | Motion | Use for |
+|---|---|---|
+| `Rise` | fade + rise 24dp (arcade spring) | panels, banners, sections, headers, forms |
+| `Pop` | fade + scale 0.84→1 + rise 10dp | game cards, stat cards, card slots, chips, quest rows |
+| `Coin` | fade + scale 0.6→1 blip + rise 6dp | icons, badges, HUD, VS badge, battle log, counts |
+| `SlideLeft` | fade + slide 32dp from the left | rows and side elements |
+| `Stomp` | scale 1.06→1 slam, no fade | section titles |
+
+- All entrances animate only `graphicsLayer` properties (alpha / translation / scale) — never `width`/`height`/`offset`, which re-layout every frame.
+- Screen transitions in `AppNavHost` use `RetroAnimation.arcadeOffset` (⅓-screen push) + `RetroAnimation.fade`; pops reverse the direction.
+- Cascade cadence is uniform: `retroCascade(index, stepMs = 60)` — 60ms per list row, 40ms for tight grids/slots.
+- All specs come from `RetroAnimation` (press / pop / arcade / bounce / shake / slide / fade / flip / cardReveal / liquid / draw).
+
 ## Golden rules
 
 - Never create `GreenButton` / `PurpleButton` — use `RetroButtonVariant`.

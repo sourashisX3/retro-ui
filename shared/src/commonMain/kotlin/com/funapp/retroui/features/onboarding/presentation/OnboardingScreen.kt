@@ -1,7 +1,8 @@
 package com.funapp.retroui.features.onboarding.presentation
 import com.funapp.retroui.core.ui.icons.RetroIcons
 
-import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -28,8 +29,11 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
+import com.funapp.retroui.core.ui.animation.RetroEntranceStyle
+import com.funapp.retroui.core.ui.animation.retroEntrance
 import com.funapp.retroui.core.ui.components.controls.RetroButton
 import com.funapp.retroui.core.ui.components.controls.RetroButtonVariant
+import com.funapp.retroui.core.ui.token.RetroAnimation
 import com.funapp.retroui.core.ui.components.feedback.RetroEmptyState
 import com.funapp.retroui.core.ui.components.surfaces.RetroScreenStatic
 import com.funapp.retroui.core.ui.theme.RetroTheme
@@ -123,8 +127,7 @@ fun OnboardingScreen(
                     RetroEmptyState(
                         title = pages[page].title,
                         subtitle = pages[page].body,
-                        icon = pages[page].icon,
-                    )
+                        icon = pages[page].icon, modifier = Modifier.retroEntrance(style = RetroEntranceStyle.Coin),)
                 }
             }
 
@@ -172,11 +175,16 @@ private fun OnboardingDots(
     ) {
         repeat(count) { index ->
             val active = index == selected
-            val width by animateDpAsState(if (active) 18.dp else 8.dp, label = "onboardingDotWidth")
+            val scaleX by animateFloatAsState(
+                targetValue = if (active) 2.25f else 1f,
+                animationSpec = if (active) RetroAnimation.pop else RetroAnimation.press,
+                label = "onboardingDotScaleX",
+            )
             Box(
                 modifier = Modifier
                     .padding(top = 12.dp)
-                    .size(width = width, height = 8.dp)
+                    .size(width = 8.dp, height = 8.dp)
+                    .graphicsLayer { this.scaleX = scaleX }
                     .clip(RetroTheme.shapeTokens.chip)
                     .background(if (active) colors.primary else colors.surfaceMuted)
                     .border(RetroTheme.borders.thin, colors.outlineStrong, RetroTheme.shapeTokens.chip),

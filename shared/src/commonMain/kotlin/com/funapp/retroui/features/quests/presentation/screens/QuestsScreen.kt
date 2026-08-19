@@ -10,6 +10,8 @@ import com.funapp.retroui.core.ui.icons.ThumbUp
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import com.funapp.retroui.core.ui.animation.RetroEntranceStyle
+import com.funapp.retroui.core.ui.animation.retroCascade
 import com.funapp.retroui.core.ui.animation.retroEntrance
 import com.funapp.retroui.core.ui.components.foundation.RetroText
 import com.funapp.retroui.core.ui.components.surfaces.RetroScreen
@@ -64,14 +66,7 @@ fun QuestsScreen(
                     if (index > 0) {
                         Spacer(modifier = Modifier.height(RetroTheme.spacing.sm))
                     }
-                    QuestRow(
-                        icon = quest.icon,
-                        label = quest.label.asString(),
-                        reward = quest.reward,
-                        progress = quest.progress,
-                        claimable = quest.claimable,
-                        onClaim = {},
-                    )
+                    QuestRow(icon = quest.icon,label = quest.label.asString(),reward = quest.reward,progress = quest.progress,claimable = quest.claimable,onClaim = {},modifier = Modifier.retroEntrance(style = RetroEntranceStyle.Pop, delayMillis = 60 + retroCascade(index, stepMs = 40)),)
                 }
             }
         }
@@ -87,14 +82,7 @@ fun QuestsScreen(
                     if (index > 0) {
                         Spacer(modifier = Modifier.height(RetroTheme.spacing.sm))
                     }
-                    QuestRow(
-                        icon = quest.icon,
-                        label = quest.label.asString(),
-                        reward = quest.reward,
-                        progress = quest.progress,
-                        claimable = quest.claimable,
-                        onClaim = {},
-                    )
+                    QuestRow(icon = quest.icon,label = quest.label.asString(),reward = quest.reward,progress = quest.progress,claimable = quest.claimable,onClaim = {},modifier = Modifier.retroEntrance(style = RetroEntranceStyle.Pop, delayMillis = 120 + retroCascade(index, stepMs = 40)),)
                 }
             }
         }

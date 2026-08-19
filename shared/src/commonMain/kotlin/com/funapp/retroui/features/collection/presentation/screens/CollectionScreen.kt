@@ -19,7 +19,7 @@ import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.rememberScrollState
 import com.funapp.retroui.core.ui.icons.Edit
 import androidx.compose.runtime.Composable
@@ -30,6 +30,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.funapp.retroui.core.ui.animation.RetroEntranceStyle
+import com.funapp.retroui.core.ui.animation.retroCascade
 import com.funapp.retroui.core.ui.animation.retroEntrance
 import com.funapp.retroui.core.ui.components.controls.RetroChip
 import com.funapp.retroui.core.ui.components.controls.RetroIconButton
@@ -136,15 +138,15 @@ fun CollectionScreen(
                     text = stringResource(Res.string.collection_count, filtered.size),
                     style = RetroTheme.typography.caption,
                     color = RetroTheme.colors.textSecondary,
-                    modifier = Modifier.retroEntrance(delayMillis = 100),
+                    modifier = Modifier.retroEntrance(style = RetroEntranceStyle.Coin, delayMillis = 100),
                 )
                 Spacer(modifier = Modifier.height(RetroTheme.spacing.sm))
             }
-            items(filtered) { card ->
+            itemsIndexed(filtered) { index, card ->
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .retroEntrance(delayMillis = 140),
+                        .retroEntrance(style = RetroEntranceStyle.Pop, delayMillis = 140 + retroCascade(index, stepMs = 40)),
                     contentAlignment = Alignment.Center,
                 ) {
                     RetroGameCard(

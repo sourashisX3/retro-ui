@@ -26,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.funapp.retroui.core.ui.animation.RetroEntranceStyle
 import com.funapp.retroui.core.ui.animation.retroEntrance
 import com.funapp.retroui.core.ui.components.controls.RetroButton
 import com.funapp.retroui.core.ui.components.controls.RetroButtonVariant
@@ -102,11 +103,8 @@ fun DeckBuilderScreen(
             DeckPanel(
                 deck = deck,
                 onRemoveAt = { deck.removeAt(it) },
-                modifier = Modifier.retroEntrance(delayMillis = 60),
+                modifier = Modifier.retroEntrance(style = RetroEntranceStyle.Pop, delayMillis = 60),
             )
-        }
-        item {
-            Spacer(modifier = Modifier.height(RetroTheme.spacing.md))
         }
         item {
             Column(modifier = Modifier.retroEntrance(delayMillis = 120)) {
@@ -146,7 +144,7 @@ fun DeckBuilderScreen(
             Spacer(modifier = Modifier.height(RetroTheme.spacing.lg))
         }
         item {
-            Column(modifier = Modifier.retroEntrance(delayMillis = 200)) {
+            Column(modifier = Modifier.retroEntrance(style = RetroEntranceStyle.Stomp, delayMillis = 200)) {
                 RetroText(
                     text = stringResource(Res.string.deck_available_title),
                     style = RetroTheme.typography.title,
@@ -207,7 +205,7 @@ private fun DeckPanel(
                         key(card.name) {
                             ChampionTile(
                                 card = card,
-                                modifier = Modifier.retroEntrance(delayMillis = 0, fromY = 8.dp),
+                                modifier = Modifier.retroEntrance(style = RetroEntranceStyle.Pop, delayMillis = 0, fromY = 8.dp),
                             )
                         }
                     }

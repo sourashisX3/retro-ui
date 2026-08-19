@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import com.funapp.retroui.core.ui.animation.retroEntrance
 import com.funapp.retroui.core.ui.components.feedback.RetroEmptyState
 import com.funapp.retroui.core.ui.components.surfaces.RetroScreen
 import com.funapp.retroui.core.ui.theme.RetroTheme
@@ -36,6 +37,7 @@ fun AuthScreenLayout(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .retroEntrance(delayMillis = 0)
                     .padding(horizontal = RetroTheme.spacing.lg),
             ) {
                 RetroEmptyState(

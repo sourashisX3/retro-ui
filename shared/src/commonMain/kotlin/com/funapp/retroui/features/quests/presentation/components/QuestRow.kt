@@ -43,9 +43,10 @@ internal fun QuestRow(
     progress: Float,
     claimable: Boolean,
     onClaim: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val colors = RetroTheme.colors
-    RetroCard(contentPadding = RetroTheme.spacing.md) {
+    RetroCard(modifier = modifier, contentPadding = RetroTheme.spacing.md) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Icon(
                 imageVector = icon,

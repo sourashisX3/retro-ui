@@ -15,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.funapp.retroui.core.ui.animation.RetroEntranceStyle
 import com.funapp.retroui.core.ui.animation.retroEntrance
 import com.funapp.retroui.core.ui.components.feedback.RetroProgressColor
 import com.funapp.retroui.core.ui.components.foundation.RetroText
@@ -80,7 +81,7 @@ fun ProfileScreen(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .retroEntrance(delayMillis = 120),
+                    .retroEntrance(style = RetroEntranceStyle.Pop, delayMillis = 120),
                 horizontalArrangement = Arrangement.SpaceBetween,
             ) {
                 RetroStatCard(
@@ -115,7 +116,7 @@ fun ProfileScreen(
         item {
             RetroSection(
                 title = stringResource(Res.string.profile_badges_title),
-                modifier = Modifier.retroEntrance(delayMillis = 180),
+                modifier = Modifier.retroEntrance(style = RetroEntranceStyle.Stomp, delayMillis = 180),
             ) {
                 BadgeGrid()
             }

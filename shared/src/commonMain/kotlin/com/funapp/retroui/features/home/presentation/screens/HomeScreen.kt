@@ -9,6 +9,7 @@ import com.funapp.retroui.core.ui.icons.PlayArrow
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
+import com.funapp.retroui.core.ui.animation.RetroEntranceStyle
 import com.funapp.retroui.core.ui.animation.retroEntrance
 import com.funapp.retroui.core.ui.components.controls.RetroButton
 import com.funapp.retroui.core.ui.components.foundation.RetroText
@@ -57,7 +58,7 @@ fun HomeScreen(
             Spacer(modifier = Modifier.height(RetroTheme.spacing.lg))
         }
         item {
-            Column(modifier = Modifier.retroEntrance(delayMillis = 120)) {
+            Column(modifier = Modifier.retroEntrance(style = RetroEntranceStyle.Pop, delayMillis = 120)) {
                 RetroButton(
                     text = stringResource(Res.string.btn_start_battle),
                     leadingIcon = RetroIcons.PlayArrow,
