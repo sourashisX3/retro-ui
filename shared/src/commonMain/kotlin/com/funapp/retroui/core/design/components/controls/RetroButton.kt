@@ -32,6 +32,7 @@ import com.funapp.retroui.core.design.components.foundation.RetroText
 import com.funapp.retroui.core.design.components.foundation.retroHardShadow
 import com.funapp.retroui.core.design.theme.RetroTheme
 import com.funapp.retroui.core.design.token.RetroMotion
+import com.funapp.retroui.core.feedback.rememberRetroTapFeedback
 
 enum class RetroButtonVariant { Primary, Secondary, Accent, Danger, Outline }
 
@@ -60,6 +61,7 @@ fun RetroButton(
     val shape: CornerBasedShape = RetroTheme.shapeTokens.button
     val interactionSource = remember { MutableInteractionSource() }
     val pressed by interactionSource.collectIsPressedAsState()
+    val tap = rememberRetroTapFeedback()
 
     val disabled = !enabled || loading
 
@@ -120,7 +122,10 @@ fun RetroButton(
                 enabled = enabled && !loading,
                 interactionSource = interactionSource,
                 indication = null,
-            ) { onClick() }
+            ) {
+                tap.play()
+                onClick()
+            }
             .alpha(if (disabled) 0.6f else 1f)
             .padding(horizontal = if (small) RetroTheme.spacing.md else RetroTheme.spacing.xl),
         contentAlignment = Alignment.Center,

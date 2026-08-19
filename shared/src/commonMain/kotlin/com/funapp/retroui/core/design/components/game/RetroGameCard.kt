@@ -32,6 +32,7 @@ import com.funapp.retroui.core.design.components.foundation.RetroText
 import com.funapp.retroui.core.design.components.foundation.retroHardShadow
 import com.funapp.retroui.core.design.theme.RetroColors
 import com.funapp.retroui.core.design.theme.RetroTheme
+import com.funapp.retroui.core.feedback.rememberRetroTapFeedback
 
 /** Collectible-card rarity tiers. Colors come from the semantic palette. */
 enum class RetroCardRarity { Common, Rare, Epic, Legendary }
@@ -69,11 +70,15 @@ fun RetroGameCard(
     val colors = RetroTheme.colors
     val shape: CornerBasedShape = RetroTheme.shapeTokens.card
     val accent = rarity.rarityColor(colors)
+    val tap = rememberRetroTapFeedback()
     val clickModifier = if (onClick != null) {
         Modifier.clickable(
             interactionSource = remember { MutableInteractionSource() },
             indication = null,
-        ) { onClick() }
+        ) {
+            tap.play()
+            onClick()
+        }
     } else Modifier
 
     Box(

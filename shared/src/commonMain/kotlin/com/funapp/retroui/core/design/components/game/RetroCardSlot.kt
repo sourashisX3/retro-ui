@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import com.funapp.retroui.core.design.components.foundation.RetroText
 import com.funapp.retroui.core.design.components.foundation.retroHardShadow
 import com.funapp.retroui.core.design.theme.RetroTheme
+import com.funapp.retroui.core.feedback.rememberRetroTapFeedback
 
 /**
  * Empty / occupied deck slot — a square cell used to visualize a card in a
@@ -36,11 +37,15 @@ fun RetroCardSlot(
 ) {
     val colors = RetroTheme.colors
     val shape: CornerBasedShape = RetroTheme.shapeTokens.card
+    val tap = rememberRetroTapFeedback()
     val clickModifier = if (onClick != null) {
         Modifier.clickable(
             interactionSource = remember { MutableInteractionSource() },
             indication = null,
-        ) { onClick() }
+        ) {
+            tap.play()
+            onClick()
+        }
     } else Modifier
 
     Box(

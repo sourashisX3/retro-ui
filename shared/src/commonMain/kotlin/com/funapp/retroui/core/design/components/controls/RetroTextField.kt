@@ -34,6 +34,7 @@ import androidx.compose.ui.unit.dp
 import com.funapp.retroui.core.design.components.foundation.RetroText
 import com.funapp.retroui.core.design.components.foundation.retroHardShadow
 import com.funapp.retroui.core.design.theme.RetroTheme
+import com.funapp.retroui.core.feedback.rememberRetroTapFeedback
 
 /**
  * Retro outlined text field — ink border, cream fill, hard shadow.
@@ -143,6 +144,7 @@ fun RetroTextFieldTrailingAction(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val tap = rememberRetroTapFeedback()
     RetroText(
         text = text,
         style = RetroTheme.typography.caption,
@@ -152,7 +154,10 @@ fun RetroTextFieldTrailingAction(
             .clickable(
                 interactionSource = remember { MutableInteractionSource() },
                 indication = null,
-            ) { onClick() }
+            ) {
+                tap.play()
+                onClick()
+            }
             .padding(horizontal = RetroTheme.spacing.xs, vertical = RetroTheme.spacing.xxs),
     )
 }

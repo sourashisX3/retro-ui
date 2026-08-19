@@ -26,6 +26,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.funapp.retroui.core.design.components.foundation.RetroText
 import com.funapp.retroui.core.design.theme.RetroTheme
+import com.funapp.retroui.core.feedback.rememberRetroTapFeedback
 
 /**
  * Retro selection controls: hard-inked, square-ish, flat fills.
@@ -42,6 +43,7 @@ fun RetroSwitch(
     val trackColor = if (checked) colors.primary else colors.surfaceMuted
     val knobColor = if (checked) colors.onPrimary else colors.textMuted
     val shape = RoundedCornerShape(100.dp)
+    val tap = rememberRetroTapFeedback()
 
     Box(
         modifier = modifier
@@ -53,7 +55,10 @@ fun RetroSwitch(
                 enabled = enabled,
                 interactionSource = remember { MutableInteractionSource() },
                 indication = null,
-            ) { onCheckedChange(!checked) }
+            ) {
+                tap.play()
+                onCheckedChange(!checked)
+            }
             .alpha(if (enabled) 1f else 0.5f),
     ) {
         Box(
@@ -83,12 +88,16 @@ fun RetroCheckbox(
 ) {
     val colors = RetroTheme.colors
     val shape: CornerBasedShape = RoundedCornerShape(3.dp)
+    val tap = rememberRetroTapFeedback()
     Row(
         modifier = modifier.clickable(
             enabled = enabled,
             interactionSource = remember { MutableInteractionSource() },
             indication = null,
-        ) { onCheckedChange(!checked) },
+        ) {
+            tap.play()
+            onCheckedChange(!checked)
+        },
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Box(
@@ -128,12 +137,16 @@ fun RetroRadio(
     enabled: Boolean = true,
 ) {
     val colors = RetroTheme.colors
+    val tap = rememberRetroTapFeedback()
     Row(
         modifier = modifier.clickable(
             enabled = enabled,
             interactionSource = remember { MutableInteractionSource() },
             indication = null,
-        ) { onSelect() },
+        ) {
+            tap.play()
+            onSelect()
+        },
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Box(

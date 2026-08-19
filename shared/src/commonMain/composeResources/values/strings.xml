@@ -62,6 +62,23 @@
     <string name="btn_quests">QUESTS</string>
     <string name="btn_profile">PROFILE</string>
     <string name="btn_settings">SETTINGS</string>
+    <string name="home_greeting">BUILD. BATTLE. BECOME THE CHAMPION.</string>
+    <string name="player_display_name">PLAYER_NAME</string>
+    <string name="home_rank_label">RANK</string>
+    <string name="home_rank_value">BRONZE V</string>
+    <string name="home_xp_label">XP</string>
+    <string name="home_xp_value">720 / 1000</string>
+    <string name="home_battle_hint">CHALLENGE A RIVAL IN THE ARENA</string>
+    <string name="home_deck_title">YOUR DECK</string>
+    <string name="home_deck_subtitle">5 champions ready</string>
+    <string name="home_deck_builder">DECK BUILDER</string>
+    <string name="home_daily_title">DAILY QUESTS</string>
+    <string name="home_daily_subtitle">New quests every day</string>
+    <string name="home_view_all">VIEW ALL</string>
+    <string name="quest_win_battles">WIN 3 BATTLES</string>
+    <string name="quest_play_rounds">PLAY 5 ROUNDS</string>
+    <string name="quest_login_today">LOG IN TODAY</string>
+    <string name="home_reward_xp">+%1$d XP</string>
 
     <!-- Battle -->
     <string name="screen_battle_title">BATTLE ARENA</string>

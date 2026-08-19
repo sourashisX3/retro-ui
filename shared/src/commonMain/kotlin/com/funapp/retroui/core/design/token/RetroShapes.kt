@@ -22,15 +22,15 @@ data class RetroShapes(
 )
 
 data class RetroShapeTokens(
-    val button: CornerBasedShape = RoundedCornerShape(6.dp),
+    val button: CornerBasedShape = RoundedCornerShape(2.dp),
     val buttonPill: CornerBasedShape = RoundedCornerShape(100.dp),
-    val card: CornerBasedShape = RoundedCornerShape(8.dp),
-    val cardLarge: CornerBasedShape = RoundedCornerShape(10.dp),
-    val chip: CornerBasedShape = RoundedCornerShape(4.dp),
-    val input: CornerBasedShape = RoundedCornerShape(6.dp),
-    val dialog: CornerBasedShape = RoundedCornerShape(10.dp),
-    val sheet: CornerBasedShape = RoundedCornerShape(12.dp),
-    val badge: CornerBasedShape = RoundedCornerShape(4.dp),
+    val card: CornerBasedShape = RoundedCornerShape(4.dp),
+    val cardLarge: CornerBasedShape = RoundedCornerShape(4.dp),
+    val chip: CornerBasedShape = RoundedCornerShape(2.dp),
+    val input: CornerBasedShape = RoundedCornerShape(2.dp),
+    val dialog: CornerBasedShape = RoundedCornerShape(6.dp),
+    val sheet: CornerBasedShape = RoundedCornerShape(6.dp),
+    val badge: CornerBasedShape = RoundedCornerShape(2.dp),
 )
 
 val DefaultRetroShapes = RetroShapes()

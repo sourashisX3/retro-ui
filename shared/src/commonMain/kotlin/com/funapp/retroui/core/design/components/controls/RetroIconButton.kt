@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.funapp.retroui.core.design.components.foundation.retroHardShadow
 import com.funapp.retroui.core.design.theme.RetroTheme
+import com.funapp.retroui.core.feedback.rememberRetroTapFeedback
 
 /**
  * Square-ish icon button with ink outline and hard shadow.
@@ -37,6 +38,7 @@ fun RetroIconButton(
     enabled: Boolean = true,
 ) {
     val shape: CornerBasedShape = RetroTheme.shapeTokens.input
+    val tap = rememberRetroTapFeedback()
     Box(
         modifier = modifier
             .size(size)
@@ -56,7 +58,10 @@ fun RetroIconButton(
                 enabled = enabled,
                 interactionSource = remember { MutableInteractionSource() },
                 indication = null,
-            ) { onClick() }
+            ) {
+                tap.play()
+                onClick()
+            }
             .alpha(if (enabled) 1f else 0.5f),
         contentAlignment = Alignment.Center,
     ) {

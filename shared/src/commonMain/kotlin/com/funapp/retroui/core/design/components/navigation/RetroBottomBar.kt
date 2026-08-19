@@ -42,6 +42,7 @@ import com.funapp.retroui.core.design.components.foundation.RetroText
 import com.funapp.retroui.core.design.components.foundation.retroHardShadow
 import com.funapp.retroui.core.design.theme.RetroTheme
 import com.funapp.retroui.core.design.token.RetroAnimation
+import com.funapp.retroui.core.feedback.rememberRetroTapFeedback
 
 /** A single bottom-navigation tab: label + pixel icon. */
 data class RetroBottomBarItem(
@@ -64,7 +65,7 @@ fun RetroBottomBar(
     modifier: Modifier = Modifier,
 ) {
     val colors = RetroTheme.colors
-    val dockShape: CornerBasedShape = RoundedCornerShape(14.dp)
+    val dockShape: CornerBasedShape = RoundedCornerShape(6.dp)
 
     Box(
         modifier = modifier
@@ -115,6 +116,7 @@ private fun RetroDockTab(
 ) {
     val colors = RetroTheme.colors
     val pillShape: CornerBasedShape = RetroTheme.shapeTokens.buttonPill
+    val tap = rememberRetroTapFeedback()
 
     // Active capsule springs open and lifts slightly inside the dock.
     val active by animateFloatAsState(
@@ -128,7 +130,10 @@ private fun RetroDockTab(
             .clickable(
                 interactionSource = remember { MutableInteractionSource() },
                 indication = null,
-            ) { onClick() }
+            ) {
+                tap.play()
+                onClick()
+            }
             .padding(vertical = 2.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
