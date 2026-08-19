@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.funapp.retroui.core.design.animation.retroEntrance
 import com.funapp.retroui.core.design.components.foundation.RetroDivider
 import com.funapp.retroui.core.design.components.foundation.RetroText
 import com.funapp.retroui.core.design.theme.RetroTheme
@@ -57,7 +58,8 @@ fun RetroBottomSheet(
             color = colors.textPrimary,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = RetroTheme.spacing.lg),
+                .padding(horizontal = RetroTheme.spacing.lg)
+                .retroEntrance(delayMillis = 0),
         )
         Spacer(modifier = Modifier.height(RetroTheme.spacing.md))
         RetroDivider(
@@ -67,7 +69,8 @@ fun RetroBottomSheet(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = RetroTheme.spacing.lg),
+                .padding(horizontal = RetroTheme.spacing.lg)
+                .retroEntrance(delayMillis = 60),
             content = content,
         )
         Spacer(modifier = Modifier.height(RetroTheme.spacing.lg))

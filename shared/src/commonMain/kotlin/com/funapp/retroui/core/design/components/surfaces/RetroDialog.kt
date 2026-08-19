@@ -1,5 +1,6 @@
 package com.funapp.retroui.core.design.components.surfaces
 
+import androidx.compose.animation.core.Animatable
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -17,9 +18,12 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CornerBasedShape
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
@@ -29,6 +33,8 @@ import com.funapp.retroui.core.design.components.controls.RetroButtonVariant
 import com.funapp.retroui.core.design.components.foundation.RetroText
 import com.funapp.retroui.core.design.components.foundation.retroHardShadow
 import com.funapp.retroui.core.design.theme.RetroTheme
+import com.funapp.retroui.core.design.token.RetroAnimation
+import kotlinx.coroutines.launch
 
 /** Visual intent of a [RetroDialog]. Drives icon color + confirm button. */
 enum class RetroDialogVariant { Info, Danger }
@@ -55,6 +61,13 @@ fun RetroDialog(
 
     val colors = RetroTheme.colors
     val shape: CornerBasedShape = RetroTheme.shapeTokens.dialog
+    val dialogAlpha = remember { Animatable(0f) }
+    val dialogScale = remember { Animatable(0.85f) }
+
+    LaunchedEffect(Unit) {
+        launch { dialogAlpha.animateTo(1f, animationSpec = RetroAnimation.fade) }
+        dialogScale.animateTo(1f, animationSpec = RetroAnimation.pop)
+    }
 
     val iconContainer = if (variant == RetroDialogVariant.Danger) colors.errorContainer else colors.infoContainer
     val iconTint = if (variant == RetroDialogVariant.Danger) colors.error else colors.info
@@ -81,7 +94,12 @@ fun RetroDialog(
                     .clip(shape)
                     .background(colors.surfaceRaised)
                     .border(BorderStroke(RetroTheme.borders.default, colors.outlineStrong), shape)
-                    .padding(RetroTheme.spacing.lg),
+                    .padding(RetroTheme.spacing.lg)
+                    .graphicsLayer {
+                        alpha = dialogAlpha.value
+                        scaleX = dialogScale.value
+                        scaleY = dialogScale.value
+                    },
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 if (icon != null) {
