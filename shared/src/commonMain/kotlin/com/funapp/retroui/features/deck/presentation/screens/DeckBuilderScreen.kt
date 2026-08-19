@@ -107,7 +107,7 @@ fun DeckBuilderScreen(
                 enabled = deck.size == DECK_SIZE,
                 modifier = Modifier.fillMaxWidth(),
             )
-            Spacer(modifier = Modifier.height(RetroTheme.spacing.xs))
+            Spacer(modifier = Modifier.height(RetroTheme.spacing.md))
             RetroButton(
                 text = stringResource(Res.string.btn_browse_collection),
                 variant = RetroButtonVariant.Outline,
