@@ -55,10 +55,13 @@ jobs:
         include:
           - os: ubuntu-latest
             format: Deb
+            package: desktopApp/build/compose/binaries/main/deb/com.funapp.retroui_1.0.0_amd64.deb
           - os: windows-latest
             format: Msi
+            package: desktopApp/build/compose/binaries/main/msi/com.funapp.retroui-1.0.0.msi
           - os: macos-latest
             format: Dmg
+            package: desktopApp/build/compose/binaries/main/dmg/com.funapp.retroui-1.0.0.dmg
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
@@ -71,7 +74,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: desktop-${{ matrix.format }}
-          path: desktopApp/build/compose/binaries/main/*/
+          path: ${{ matrix.package }}
 
   web:
     name: Web production build
