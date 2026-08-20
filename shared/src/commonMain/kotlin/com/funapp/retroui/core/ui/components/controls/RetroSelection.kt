@@ -23,8 +23,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.role
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.unit.dp
 import com.funapp.retroui.core.ui.components.foundation.RetroText
+import com.funapp.retroui.core.ui.components.foundation.retroFocusRing
 import com.funapp.retroui.core.ui.theme.RetroTheme
 import com.funapp.retroui.core.utils.rememberRetroTapFeedback
 import com.funapp.retroui.core.ui.animation.retroPopPress
@@ -62,7 +67,12 @@ fun RetroSwitch(
                 tap.play()
                 onCheckedChange(!checked)
             }
-            .alpha(if (enabled) 1f else 0.5f),
+            .semantics {
+                role = Role.Switch
+                stateDescription = if (checked) "On" else "Off"
+            }
+            .alpha(if (enabled) 1f else 0.5f)
+            .retroFocusRing(offset = 3.dp),
     ) {
         Box(
             modifier = Modifier
@@ -101,7 +111,12 @@ fun RetroCheckbox(
         ) {
             tap.play()
             onCheckedChange(!checked)
-        },
+        }
+            .semantics {
+                role = Role.Checkbox
+                stateDescription = if (checked) "Checked" else "Unchecked"
+            }
+            .retroFocusRing(offset = 3.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Box(
@@ -152,7 +167,12 @@ fun RetroRadio(
         ) {
             tap.play()
             onSelect()
-        },
+        }
+            .semantics {
+                role = Role.RadioButton
+                stateDescription = if (selected) "Selected" else "Not selected"
+            }
+            .retroFocusRing(offset = 3.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Box(

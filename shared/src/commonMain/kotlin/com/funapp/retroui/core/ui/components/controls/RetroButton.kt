@@ -24,6 +24,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.funapp.retroui.core.ui.components.foundation.RetroText
+import com.funapp.retroui.core.ui.components.foundation.retroFocusRing
 import com.funapp.retroui.core.ui.components.foundation.retroTactilePress
 import com.funapp.retroui.core.ui.theme.RetroTheme
 import com.funapp.retroui.core.utils.rememberRetroTapFeedback
@@ -104,6 +105,7 @@ fun RetroButton(
                 onClick()
             }
             .alpha(if (disabled) 0.6f else 1f)
+            .retroFocusRing()
             .padding(horizontal = if (small) RetroTheme.spacing.md else RetroTheme.spacing.xl),
         contentAlignment = Alignment.Center,
     ) {

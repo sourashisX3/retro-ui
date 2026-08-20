@@ -42,7 +42,7 @@ actual fun rememberRetroTapFeedback(): RetroTapFeedback {
                 contentsOfURL = NSURL.fileURLWithPath(path),
                 error = null,
             )
-            audioPlayer?.prepareToPlay()
+            audioPlayer.prepareToPlay()
             player = audioPlayer
         } catch (_: Throwable) {
             // Feedback is best-effort; never crash a tap.
