@@ -61,7 +61,7 @@ android {
         }
     }
     val keystorePath = System.getenv("KEYSTORE_PATH")?.takeIf { it.isNotBlank() }
-    if (keystorePath != null) {
+    if (keystorePath != null && file(keystorePath).exists()) {
         signingConfigs {
             create("release") {
                 storeFile = file(keystorePath)

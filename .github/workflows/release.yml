@@ -83,7 +83,7 @@ jobs:
           distribution: temurin
           java-version: 21
       - uses: gradle/actions/setup-gradle@v4
-      - run: ./gradlew :webApp:jsBrowserProductionExecutable :webApp:wasmJsBrowserProductionExecutable
+      - run: ./gradlew :webApp:jsBrowserDistribution :webApp:wasmJsBrowserDistribution
       - uses: actions/upload-artifact@v4
         with:
           name: web
