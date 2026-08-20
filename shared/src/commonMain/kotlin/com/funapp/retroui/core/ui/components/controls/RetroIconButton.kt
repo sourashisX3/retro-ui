@@ -48,7 +48,7 @@ fun RetroIconButton(
                     .retroTactilePress(
                         interactionSource = interactionSource,
                         shape = shape,
-                        shadowColor = RetroTheme.colors.outline,
+                        shadowColor = RetroTheme.colors.shadow,
                         shadowX = 2.dp,
                         shadowY = 3.dp,
                     )

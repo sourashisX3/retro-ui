@@ -41,7 +41,7 @@ fun SpeechBubble(
                 .retroHardShadow(
                     offsetX = 3.dp,
                     offsetY = 4.dp,
-                    color = colors.outline,
+                    color = colors.shadow,
                     shape = shape,
                 )
                 .clip(shape)

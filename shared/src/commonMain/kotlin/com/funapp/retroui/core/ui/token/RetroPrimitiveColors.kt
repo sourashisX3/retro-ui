@@ -49,4 +49,11 @@ object RetroPrimitiveColors {
     val NightInk = Color(0xFFF4F6FB)
     val NightInkSoft = Color(0xFFB9C2D4)
     val NightInkMuted = Color(0xFF7E879C)
+
+    // Dark-mode chrome ("inverted ink"): the border is a light navy ink — clearly
+    // lighter than every surface and the page — and the hard drop shadow is
+    // slightly darker than the border (but still lighter than the page), so
+    // elements read as outlined blocks with real shadows, never glowing.
+    val NightOutline = Color(0xFF54639A)
+    val NightShadow = Color(0xFF3A4670)
 }

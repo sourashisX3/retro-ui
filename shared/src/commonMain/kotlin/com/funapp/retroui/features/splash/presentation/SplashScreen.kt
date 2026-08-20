@@ -4,6 +4,7 @@ import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.keyframes
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
@@ -40,10 +41,11 @@ import retroui.shared.generated.resources.splash_wordmark_top
 private const val SplashScreenDurationMs = 2600L
 
 /**
- * Splash screen: the DECKRON wordmark drops in like a slot-machine reel
- * (per-line arcade spring with a crisp solid shadow from the first frame),
- * the tagline slides up, and a "PRESS START" hint blinks arcade-style.
- * Auto-advances to [onFinished] after [SplashScreenDurationMs].
+ * Splash screen: the DECKRON wordmark drops in like a slot-machine reel (a
+ * keyframed drop with a settle, not a stiff spring — smooth on every target),
+ * the tagline rises on a soft [RetroAnimation.liquid] spring, and a
+ * "PRESS START" hint blinks arcade-style. Auto-advances to [onFinished]
+ * after [SplashScreenDurationMs].
  */
 @Composable
 fun SplashScreen(
@@ -54,22 +56,40 @@ fun SplashScreen(
     val spacing = RetroTheme.spacing
     val pressStart = stringResource(Res.string.splash_press_start)
 
-    val dropTop = remember { androidx.compose.animation.core.Animatable(-260f) }
-    val dropBottom = remember { androidx.compose.animation.core.Animatable(-300f) }
+    val dropTop = remember { androidx.compose.animation.core.Animatable(-160f) }
+    val dropBottom = remember { androidx.compose.animation.core.Animatable(-190f) }
     val taglineY = remember { androidx.compose.animation.core.Animatable(24f) }
     val taglineAlpha = remember { androidx.compose.animation.core.Animatable(0f) }
     val columnAlpha = remember { androidx.compose.animation.core.Animatable(0f) }
 
     LaunchedEffect(Unit) {
-        launch { columnAlpha.animateTo(1f, tween(durationMillis = 80)) }
+        launch { columnAlpha.animateTo(1f, tween(durationMillis = RetroMotion.NormalMs, easing = RetroMotion.DecelerateEasing)) }
         launch {
-            dropTop.animateTo(0f, RetroAnimation.arcade)
-            dropBottom.animateTo(0f, RetroAnimation.arcade)
+            dropTop.animateTo(
+                targetValue = 0f,
+                animationSpec = keyframes {
+                    durationMillis = 720
+                    -160f at 0
+                    0f at 560 with RetroMotion.DecelerateEasing
+                    -8f at 640
+                    0f at 720
+                },
+            )
+            dropBottom.animateTo(
+                targetValue = 0f,
+                animationSpec = keyframes {
+                    durationMillis = 780
+                    -190f at 0
+                    0f at 610 with RetroMotion.DecelerateEasing
+                    -10f at 700
+                    0f at 780
+                },
+            )
         }
         launch {
             delay(RetroMotion.ExpressiveMs.toLong())
             taglineAlpha.animateTo(1f, tween(durationMillis = RetroMotion.NormalMs))
-            taglineY.animateTo(0f, RetroAnimation.slide)
+            taglineY.animateTo(0f, RetroAnimation.liquid)
         }
     }
 

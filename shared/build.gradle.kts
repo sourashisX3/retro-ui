@@ -100,6 +100,7 @@ svgToCompose {
                         "play" -> "PlayArrow"
                         "user" -> "Person"
                         "check" -> "Check"
+                        "close" -> "Close"
                         "heart" -> "Favorite"
                         "robot-face" -> "Face"
                         "thumbs-up" -> "ThumbUp"

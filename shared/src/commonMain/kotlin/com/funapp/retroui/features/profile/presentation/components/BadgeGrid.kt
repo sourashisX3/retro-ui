@@ -73,7 +73,7 @@ private fun BadgeCell(
                 .retroHardShadow(
                     offsetX = 2.dp,
                     offsetY = 3.dp,
-                    color = colors.outline,
+                    color = colors.shadow,
                     shape = CircleShape,
                 )
                 .clip(CircleShape)

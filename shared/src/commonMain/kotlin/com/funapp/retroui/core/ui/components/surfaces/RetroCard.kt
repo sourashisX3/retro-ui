@@ -62,12 +62,12 @@ fun RetroCard(
         modifier = modifier
             .then(
                 if (onClick != null) {
-                    Modifier.retroTactilePress(interactionSource, shape, colors.outline)
+                    Modifier.retroTactilePress(interactionSource, shape, colors.shadow)
                 } else {
                     Modifier.retroHardShadow(
                         offsetX = 3.dp,
                         offsetY = 4.dp,
-                        color = colors.outline,
+                        color = colors.shadow,
                         shape = shape,
                     )
                 },

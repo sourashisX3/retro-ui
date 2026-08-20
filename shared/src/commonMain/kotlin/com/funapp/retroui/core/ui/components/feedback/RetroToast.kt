@@ -4,6 +4,8 @@ import androidx.compose.animation.core.Animatable
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -15,12 +17,12 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.windowInsetsPadding
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
@@ -30,7 +32,9 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
 import com.funapp.retroui.core.ui.components.foundation.RetroText
 import com.funapp.retroui.core.ui.components.foundation.retroHardShadow
+import com.funapp.retroui.core.ui.components.foundation.retroTactilePress
 import com.funapp.retroui.core.ui.icons.Check
+import com.funapp.retroui.core.ui.icons.Close
 import com.funapp.retroui.core.ui.icons.Info
 import com.funapp.retroui.core.ui.icons.RetroIcons
 import com.funapp.retroui.core.ui.icons.Warning
@@ -40,6 +44,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.stringResource
+import retroui.shared.generated.resources.Res
+import retroui.shared.generated.resources.common_close
 
 /**
  * Retro top toast — the arcade-flavoured equivalent of a Snackbar.
@@ -136,19 +143,20 @@ fun RetroToastHost(
     val toast = controller.current
     if (toast != null) {
         val colors = RetroTheme.colors
-        val iconPlate = when (toast.type) {
-            RetroToastType.Success -> colors.successContainer to RetroIcons.Check
-            RetroToastType.Error -> colors.errorContainer to RetroIcons.Warning
-            RetroToastType.Warning -> colors.warningContainer to RetroIcons.Warning
-            RetroToastType.Info -> colors.infoContainer to RetroIcons.Info
+        val (icon, plateColor, onPlate) = when (toast.type) {
+            RetroToastType.Success -> Triple(RetroIcons.Check, colors.success, colors.onSuccess)
+            RetroToastType.Error -> Triple(RetroIcons.Warning, colors.error, colors.onError)
+            RetroToastType.Warning -> Triple(RetroIcons.Warning, colors.warning, colors.onWarning)
+            RetroToastType.Info -> Triple(RetroIcons.Info, colors.info, colors.onInfo)
         }
-        val plateColor = iconPlate.first
-        val icon = iconPlate.second
 
         val scale = androidx.compose.runtime.remember { Animatable(0.6f) }
         androidx.compose.runtime.LaunchedEffect(toast) {
             scale.animateTo(1f, animationSpec = RetroAnimation.liquid)
         }
+
+        val dismissInteraction = remember { MutableInteractionSource() }
+        val dismissLabel = stringResource(Res.string.common_close)
 
         Box(
             modifier = modifier
@@ -170,9 +178,9 @@ fun RetroToastHost(
                     .retroHardShadow(
                         offsetX = 3.dp,
                         offsetY = 3.dp,
-                        color = colors.outline,
+                        color = colors.shadow,
                     )
-                    .background(colors.surfaceRaised)
+                    .background(plateColor)
                     .border(BorderStroke(RetroTheme.borders.default, colors.outlineStrong))
                     .padding(
                         horizontal = RetroTheme.spacing.md,
@@ -180,33 +188,48 @@ fun RetroToastHost(
                     ),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                Box(
-                    modifier = Modifier
-                        .size(28.dp)
-                        .clip(CircleShape)
-                        .background(plateColor)
-                        .border(BorderStroke(RetroTheme.borders.thin, colors.outlineStrong), CircleShape),
-                    contentAlignment = Alignment.Center,
-                ) {
-                    Icon(
-                        imageVector = icon,
-                        contentDescription = null,
-                        tint = when (toast.type) {
-                            RetroToastType.Success -> colors.onSuccessContainer
-                            RetroToastType.Error -> colors.onErrorContainer
-                            RetroToastType.Warning -> colors.onWarningContainer
-                            RetroToastType.Info -> colors.onInfoContainer
-                        },
-                        modifier = Modifier.size(16.dp),
-                    )
-                }
+                val tileShape = RetroTheme.shapeTokens.input
+                Icon(
+                    imageVector = icon,
+                    contentDescription = null,
+                    tint = onPlate,
+                    modifier = Modifier.size(20.dp),
+                )
                 Spacer(modifier = Modifier.width(RetroTheme.spacing.sm))
                 RetroText(
                     text = toast.message,
                     style = RetroTheme.typography.bodySmall,
-                    color = colors.textPrimary,
+                    color = onPlate,
                     modifier = Modifier.weight(1f),
                 )
+                Spacer(modifier = Modifier.width(RetroTheme.spacing.xs))
+                Box(
+                    modifier = Modifier
+                        .size(26.dp)
+                        .retroTactilePress(
+                            interactionSource = dismissInteraction,
+                            shape = tileShape,
+                            shadowColor = colors.shadow,
+                            shadowX = 2.dp,
+                            shadowY = 2.dp,
+                        )
+                        .clip(tileShape)
+                        .background(colors.surfaceRaised)
+                        .border(BorderStroke(RetroTheme.borders.default, colors.outlineStrong), tileShape)
+                        .clickable(
+                            interactionSource = dismissInteraction,
+                            indication = null,
+                            onClick = controller::dismiss,
+                        ),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    Icon(
+                        imageVector = RetroIcons.Close,
+                        contentDescription = dismissLabel,
+                        tint = colors.textMuted,
+                        modifier = Modifier.size(12.dp),
+                    )
+                }
             }
         }
     }

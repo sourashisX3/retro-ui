@@ -63,6 +63,7 @@ import retroui.shared.generated.resources.rarity_epic
 import retroui.shared.generated.resources.rarity_legendary
 import retroui.shared.generated.resources.rarity_rare
 import retroui.shared.generated.resources.screen_collection_title
+import retroui.shared.generated.resources.screen_collection_subtitle
 import retroui.shared.generated.resources.sheet_card_cost
 import retroui.shared.generated.resources.sheet_card_owned_no
 import retroui.shared.generated.resources.sheet_card_owned_yes
@@ -136,16 +137,6 @@ fun CollectionScreen(
             }
             item(span = { GridItemSpan(maxLineSpan) }) {
                 Spacer(modifier = Modifier.height(RetroTheme.spacing.md))
-            }
-            item(span = { GridItemSpan(maxLineSpan) }) {
-                RarityFilters(
-                    filter = filter,
-                    onSelect = { filter = it },
-                    modifier = Modifier.retroEntrance(delayMillis = 60),
-                )
-            }
-            item(span = { GridItemSpan(maxLineSpan) }) {
-                Spacer(modifier = Modifier.height(RetroTheme.spacing.md))
                 RetroTextField(
                     value = query,
                     onValueChange = { query = it },
@@ -159,6 +150,14 @@ fun CollectionScreen(
                             )
                         }
                     } else null,
+                    modifier = Modifier.retroEntrance(delayMillis = 60),
+                )
+            }
+            item(span = { GridItemSpan(maxLineSpan) }) {
+                Spacer(modifier = Modifier.height(RetroTheme.spacing.md))
+                RarityFilters(
+                    filter = filter,
+                    onSelect = { filter = it },
                     modifier = Modifier.retroEntrance(delayMillis = 80),
                 )
             }
@@ -312,6 +311,11 @@ private fun CollectionHeader(onGoDeckBuilder: () -> Unit, modifier: Modifier = M
                 text = stringResource(Res.string.screen_collection_title),
                 style = RetroTheme.typography.heading,
                 color = RetroTheme.colors.textPrimary,
+            )
+            RetroText(
+                text = stringResource(Res.string.screen_collection_subtitle),
+                style = RetroTheme.typography.caption,
+                color = RetroTheme.colors.textMuted,
             )
         }
         RetroIconButton(

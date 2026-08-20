@@ -87,7 +87,7 @@ fun RetroButton(
                     .retroTactilePress(
                         interactionSource = interactionSource,
                         shape = shape,
-                        shadowColor = colors.outline,
+                        shadowColor = colors.shadow,
                         shadowX = 3.dp,
                         shadowY = 4.dp,
                     )

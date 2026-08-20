@@ -61,7 +61,7 @@ fun RetroChip(
             .retroTactilePress(
                 interactionSource = interactionSource,
                 shape = shape,
-                shadowColor = colors.outline,
+                shadowColor = colors.shadow,
                 shadowX = if (selected) 1.dp else 2.dp,
                 shadowY = if (selected) 1.dp else 2.dp,
             )

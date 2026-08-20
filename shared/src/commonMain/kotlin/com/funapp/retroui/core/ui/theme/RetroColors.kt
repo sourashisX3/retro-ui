@@ -155,9 +155,14 @@ val DarkRetroColors = RetroColors(
     textSecondary = Prim.NightInkSoft,
     textMuted = Prim.NightInkMuted,
 
-    outline = Prim.NightInk,
-    outlineStrong = Prim.NightInk,
-    shadow = Color(0xFF04060C),
+    // Dark-mode chrome ("inverted ink") — never white: the border is a light
+    // navy (#54639A) clearly lighter than every surface and the page, and the
+    // hard offset shadow is slightly darker than the border (#3A4670) but
+    // still lighter than the page, so chrome reads as outlined blocks with
+    // real shadows instead of glowing.
+    outline = Prim.NightOutline,
+    outlineStrong = Prim.NightOutline,
+    shadow = Prim.NightShadow,
 
     error = Prim.Red,
     onError = Prim.Night,

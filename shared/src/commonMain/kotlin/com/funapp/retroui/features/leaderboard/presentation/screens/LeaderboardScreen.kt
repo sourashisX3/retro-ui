@@ -197,7 +197,7 @@ private fun PodiumColumn(
                 .retroHardShadow(
                     offsetX = 2.dp,
                     offsetY = 3.dp,
-                    color = colors.outline,
+                    color = colors.shadow,
                     shape = CircleShape,
                 )
                 .clip(CircleShape)
@@ -220,7 +220,7 @@ private fun PodiumColumn(
                 .retroHardShadow(
                     offsetX = 2.dp,
                     offsetY = 3.dp,
-                    color = colors.outline,
+                    color = colors.shadow,
                 )
                 .background(podiumColor)
                 .border(RetroTheme.borders.default, colors.outlineStrong),
@@ -251,7 +251,7 @@ private fun CompactRankRow(
                 .retroHardShadow(
                     offsetX = 2.dp,
                     offsetY = 2.dp,
-                    color = colors.outline,
+                    color = colors.shadow,
                     shape = RetroTheme.shapeTokens.chip,
                 )
                 .background(rowColor)
@@ -280,7 +280,7 @@ private fun CompactRankRow(
                 .retroHardShadow(
                     offsetX = 1.dp,
                     offsetY = 2.dp,
-                    color = colors.outline,
+                    color = colors.shadow,
                     shape = CircleShape,
                 )
                 .clip(CircleShape)

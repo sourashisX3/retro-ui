@@ -27,7 +27,7 @@ internal fun VsBadge(modifier: Modifier = Modifier) {
             .retroHardShadow(
                 offsetX = 2.dp,
                 offsetY = 2.dp,
-                color = RetroTheme.colors.outline,
+                color = RetroTheme.colors.shadow,
                 shape = shape,
             )
             .clip(shape)

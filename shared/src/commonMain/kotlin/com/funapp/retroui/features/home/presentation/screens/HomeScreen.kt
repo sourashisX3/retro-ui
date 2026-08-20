@@ -38,11 +38,13 @@ fun HomeScreen(
     onGoProfile: () -> Unit,
     onGoSettings: () -> Unit,
     onGoDeckBuilder: () -> Unit,
+    onGoNotifications: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     RetroScreen(modifier = modifier) {
         item {
             HomeHeader(
+                onGoNotifications = onGoNotifications,
                 onGoSettings = onGoSettings,
                 modifier = Modifier.retroEntrance(delayMillis = 0),
             )

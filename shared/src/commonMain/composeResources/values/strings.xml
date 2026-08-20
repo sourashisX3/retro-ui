@@ -71,7 +71,9 @@
     <string name="btn_quests">QUESTS</string>
     <string name="btn_profile">PROFILE</string>
     <string name="btn_settings">SETTINGS</string>
-    <string name="home_greeting">BUILD. BATTLE. BECOME THE CHAMPION.</string>
+    <string name="btn_notifications">NOTIFICATIONS</string>
+    <string name="toast_no_notifications">No new notifications.</string>
+    <string name="home_greeting">Build. Battle. Become the champion.</string>
     <string name="player_display_name">PLAYER_NAME</string>
     <string name="home_rank_label">RANK</string>
     <string name="home_rank_value">BRONZE V</string>
@@ -111,6 +113,7 @@
     <string name="screen_collection_subtitle">Browse every card you’ve earned.</string>
     <string name="btn_deck_builder">DECK BUILDER</string>
     <string name="collection_count">%1$d CARDS</string>
+    <string name="collection_no_results">No cards match your search.</string>
     <string name="rarity_all">ALL</string>
     <string name="rarity_common">COMMON</string>
     <string name="rarity_rare">RARE</string>
@@ -221,7 +224,7 @@
 
     <!-- Leaderboard -->
     <string name="screen_leaderboard_title">ARENA RANKS</string>
-    <string name="screen_leaderboard_subtitle">TOP FIGHTERS THIS SEASON</string>
+    <string name="screen_leaderboard_subtitle">Top fighters this season</string>
     <string name="lb_you">YOU</string>
     <string name="lb_name_01">BLADE MASTER</string>
     <string name="lb_name_02">NOVA QUEEN</string>
@@ -243,7 +246,7 @@
 
     <!-- Matchmaking -->
     <string name="matchmaking_title">SEARCHING FOR OPPONENT</string>
-    <string name="matchmaking_subtitle">SCANNING THE ARENA</string>
+    <string name="matchmaking_subtitle">Scanning the arena</string>
     <string name="btn_cancel_search">CANCEL SEARCH</string>
 
     <!-- Collection -->

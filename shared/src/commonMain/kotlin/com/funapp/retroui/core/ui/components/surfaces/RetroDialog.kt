@@ -93,7 +93,7 @@ fun RetroDialog(
                     .retroHardShadow(
                         offsetX = 3.dp,
                         offsetY = 5.dp,
-                        color = colors.outline,
+                        color = colors.shadow,
                         shape = shape,
                     )
                     .clip(shape)

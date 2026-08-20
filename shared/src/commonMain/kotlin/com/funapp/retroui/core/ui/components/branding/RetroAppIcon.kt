@@ -32,7 +32,7 @@ fun RetroAppIcon(
             .retroHardShadow(
                 offsetX = 4.dp,
                 offsetY = 5.dp,
-                color = RetroTheme.colors.outline,
+                color = RetroTheme.colors.shadow,
                 shape = shape,
             )
             .clip(shape)

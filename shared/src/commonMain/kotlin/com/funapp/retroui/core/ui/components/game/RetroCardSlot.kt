@@ -58,7 +58,7 @@ fun RetroCardSlot(
                     Modifier.retroTactilePress(
                         interactionSource = interactionSource,
                         shape = shape,
-                        shadowColor = colors.outline,
+                        shadowColor = colors.shadow,
                         shadowX = 2.dp,
                         shadowY = 2.dp,
                     )
@@ -66,7 +66,7 @@ fun RetroCardSlot(
                     Modifier.retroHardShadow(
                         offsetX = 2.dp,
                         offsetY = 2.dp,
-                        color = colors.outline,
+                        color = colors.shadow,
                         shape = shape,
                     )
                 },

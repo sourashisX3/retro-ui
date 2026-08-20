@@ -49,6 +49,19 @@ internal fun RetroCardRarity.rarityColor(colors: RetroColors): Color = when (thi
 }
 
 /**
+ * Semantic text color for each rarity chip background. Pairs with
+ * [rarityColor] so labels stay readable on cream (Common), blue (Rare),
+ * purple (Epic) and yellow (Legendary) in BOTH themes — never near-white
+ * on a light plate.
+ */
+internal fun RetroCardRarity.rarityOnColor(colors: RetroColors): Color = when (this) {
+    RetroCardRarity.Common -> colors.textPrimary
+    RetroCardRarity.Rare -> colors.onInfo
+    RetroCardRarity.Epic -> colors.onAccent
+    RetroCardRarity.Legendary -> colors.onSecondary
+}
+
+/**
  * The collectible game card — the hero element of the design system.
  *
  * Thick ink outline + hard shadow + rarity accent + pixel title + artwork
@@ -113,12 +126,12 @@ fun RetroGameCard(
             .height(height)
             .then(
                 if (interactive) {
-                    Modifier.retroTactilePress(interactionSource, shape, colors.outline)
+                    Modifier.retroTactilePress(interactionSource, shape, colors.shadow)
                 } else {
                     Modifier.retroHardShadow(
                         offsetX = 3.dp,
                         offsetY = 4.dp,
-                        color = colors.outline,
+                        color = colors.shadow,
                         shape = shape,
                     )
                 },
@@ -146,7 +159,12 @@ fun RetroGameCard(
             ) {
                 CostBadge(cost = cost, accent = accent)
                 Spacer(modifier = Modifier.width(RetroTheme.spacing.xs))
-                TypeChip(type = type, accent = accent, modifier = Modifier.weight(1f))
+                TypeChip(
+                    type = type,
+                    accent = accent,
+                    textColor = rarity.rarityOnColor(colors),
+                    modifier = Modifier.weight(1f),
+                )
             }
             Spacer(modifier = Modifier.height(RetroTheme.spacing.sm))
 
@@ -237,11 +255,11 @@ private fun CostBadge(cost: String, accent: Color) {
 }
 
 @Composable
-private fun TypeChip(type: String, accent: Color, modifier: Modifier = Modifier) {
+private fun TypeChip(type: String, accent: Color, textColor: Color, modifier: Modifier = Modifier) {
     RetroText(
         text = type,
         style = RetroTheme.typography.caption,
-        color = RetroTheme.colors.onAccent,
+        color = textColor,
         textAlign = TextAlign.Center,
         maxLines = 1,
         overflow = TextOverflow.Ellipsis,

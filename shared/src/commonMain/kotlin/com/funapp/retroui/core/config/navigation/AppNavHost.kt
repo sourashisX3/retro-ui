@@ -32,6 +32,7 @@ import androidx.navigation.compose.rememberNavController
 import com.funapp.retroui.core.ui.components.feedback.LocalRetroToastController
 import com.funapp.retroui.core.ui.components.feedback.RetroToastController
 import com.funapp.retroui.core.ui.components.feedback.RetroToastHost
+import com.funapp.retroui.core.ui.components.feedback.RetroToastType
 import com.funapp.retroui.core.ui.components.navigation.RetroBottomBar
 import com.funapp.retroui.core.ui.components.navigation.RetroBottomBarItem
 import com.funapp.retroui.core.ui.token.RetroAnimation
@@ -59,6 +60,7 @@ import retroui.shared.generated.resources.nav_home
 import retroui.shared.generated.resources.nav_leaderboard
 import retroui.shared.generated.resources.nav_profile
 import retroui.shared.generated.resources.nav_quests
+import retroui.shared.generated.resources.toast_no_notifications
 
 /** Tabs shown in the retro bottom bar, mapped to their [Route] types. */
 @Composable
@@ -92,6 +94,7 @@ fun AppNavHost(
     val toastScope = rememberCoroutineScope()
     val toastController = remember(toastScope) { RetroToastController(toastScope) }
     var matchedOpponent by remember { mutableStateOf<MockChampion?>(null) }
+    val noNotificationsMessage = stringResource(Res.string.toast_no_notifications)
 
     val selectedTabIndex = bottomBarTabs().indexOfFirst { (_, route) ->
         currentDestination?.hasRoute(route::class) == true
@@ -188,6 +191,12 @@ fun AppNavHost(
                         onGoProfile = { navController.navigate(Route.Profile) },
                         onGoSettings = { navController.navigate(Route.Settings) },
                         onGoDeckBuilder = { navController.navigate(Route.DeckBuilder) },
+                        onGoNotifications = {
+                            toastController.show(
+                                message = noNotificationsMessage,
+                                type = RetroToastType.Info,
+                            )
+                        },
                     )
                 }
 
