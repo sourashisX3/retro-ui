@@ -87,7 +87,6 @@ jobs:
   ios-beta:
     name: iOS TestFlight (fastlane)
     runs-on: macos-latest
-    if: ${{ secrets.MATCH_GIT_URL != '' }}
     env:
       MATCH_GIT_URL: ${{ secrets.MATCH_GIT_URL }}
       MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
@@ -98,16 +97,20 @@ jobs:
       APP_STORE_CONNECT_API_KEY_BASE64: ${{ secrets.APP_STORE_CONNECT_API_KEY_BASE64 }}
     steps:
       - uses: actions/checkout@v4
+        if: ${{ env.MATCH_GIT_URL != '' }}
       - uses: actions/setup-java@v4
+        if: ${{ env.MATCH_GIT_URL != '' }}
         with:
           distribution: temurin
           java-version: 21
       - uses: ruby/setup-ruby@v1
+        if: ${{ env.MATCH_GIT_URL != '' }}
         with:
           ruby-version: "3.3"
           bundler-cache: true
           working-directory: fastlane
       - name: Upload to TestFlight
+        if: ${{ env.MATCH_GIT_URL != '' }}
         shell: bash
         run: |
           cd fastlane
