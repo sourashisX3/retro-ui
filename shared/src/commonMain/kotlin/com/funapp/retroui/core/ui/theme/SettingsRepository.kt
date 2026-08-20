@@ -28,6 +28,9 @@ class SettingsRepository(private val storage: SettingsStorage) {
     private val _quickBattle = MutableStateFlow(readBoolean(KEY_QUICK_BATTLE, false))
     val quickBattle: StateFlow<Boolean> = _quickBattle.asStateFlow()
 
+    private val _gyroTiltEnabled = MutableStateFlow(readBoolean(KEY_GYRO_TILT_ENABLED, true))
+    val gyroTiltEnabled: StateFlow<Boolean> = _gyroTiltEnabled.asStateFlow()
+
     fun setThemeMode(mode: ThemeMode) {
         _themeMode.value = mode
         storage.write(KEY_THEME_MODE, mode.name)
@@ -58,10 +61,15 @@ class SettingsRepository(private val storage: SettingsStorage) {
         storage.write(KEY_QUICK_BATTLE, enabled.toString())
     }
 
+    fun setGyroTiltEnabled(enabled: Boolean) {
+        _gyroTiltEnabled.value = enabled
+        storage.write(KEY_GYRO_TILT_ENABLED, enabled.toString())
+    }
+
     private fun readBoolean(key: String, default: Boolean): Boolean =
         storage.read(key)?.toBooleanStrictOrNull() ?: default
 
     private fun readThemeMode(): ThemeMode = storage.read(KEY_THEME_MODE)
         ?.let { stored -> ThemeMode.entries.firstOrNull { it.name == stored } }
-        ?: ThemeMode.System
+        ?: ThemeMode.Light
 }

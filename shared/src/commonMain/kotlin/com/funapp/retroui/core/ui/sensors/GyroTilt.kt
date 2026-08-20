@@ -30,9 +30,12 @@ class GyroTiltState(
     }
 }
 
-/** Resolves the platform tilt source. No-op (flat) on targets without a gyro. */
+/**
+ * Resolves the platform tilt source. No-op (flat) on targets without a gyro
+ * or when [enabled] is false (the sensor is not even registered).
+ */
 @Composable
-expect fun rememberGyroTilt(): GyroTiltState
+expect fun rememberGyroTilt(enabled: Boolean = true): GyroTiltState
 
 /**
  * Tilts the content like a card held in hand against the device tilt.
@@ -43,7 +46,7 @@ fun Modifier.gyroTilt(state: GyroTiltState): Modifier =
         graphicsLayer {
             rotationX = -state.tiltX.value
             rotationY = -state.tiltY.value
-            cameraDistance = 16f * density
+            cameraDistance = 20f * density
         }
     } else {
         this

@@ -57,6 +57,8 @@ import retroui.shared.generated.resources.setting_enemy_hp_subtitle
 import retroui.shared.generated.resources.setting_enemy_hp_title
 import retroui.shared.generated.resources.setting_haptics_subtitle
 import retroui.shared.generated.resources.setting_haptics_title
+import retroui.shared.generated.resources.setting_gyro_tilt_subtitle
+import retroui.shared.generated.resources.setting_gyro_tilt_title
 import retroui.shared.generated.resources.setting_language_title
 import retroui.shared.generated.resources.setting_language_value
 import retroui.shared.generated.resources.setting_music_subtitle
@@ -86,6 +88,7 @@ fun SettingsScreen(
     val musicEnabled by settingsRepository.musicEnabled.collectAsState()
     val showEnemyHp by settingsRepository.showEnemyHp.collectAsState()
     val quickBattle by settingsRepository.quickBattle.collectAsState()
+    val gyroTiltEnabled by settingsRepository.gyroTiltEnabled.collectAsState()
     var showLogoutDialog by remember { mutableStateOf(false) }
 
     RetroScreen(modifier = modifier) {
@@ -215,6 +218,17 @@ fun SettingsScreen(
                         RetroSwitch(
                             checked = quickBattle,
                             onCheckedChange = { settingsRepository.setQuickBattle(it) },
+                        )
+                    },
+                )
+                Spacer(modifier = Modifier.height(RetroTheme.spacing.md))
+                SettingRow(
+                    title = stringResource(Res.string.setting_gyro_tilt_title),
+                    subtitle = stringResource(Res.string.setting_gyro_tilt_subtitle),
+                    trailing = {
+                        RetroSwitch(
+                            checked = gyroTiltEnabled,
+                            onCheckedChange = { settingsRepository.setGyroTiltEnabled(it) },
                         )
                     },
                 )

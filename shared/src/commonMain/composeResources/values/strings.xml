@@ -209,6 +209,8 @@
     <string name="setting_enemy_hp_subtitle">Display rival health bars</string>
     <string name="setting_quick_title">QUICK BATTLE</string>
     <string name="setting_quick_subtitle">Skip the intro sequence</string>
+    <string name="setting_gyro_tilt_title">CARD TILT EFFECT</string>
+    <string name="setting_gyro_tilt_subtitle">Tilt cards with the device gyroscope</string>
     <string name="setting_language_title">LANGUAGE</string>
     <string name="setting_language_value">ENGLISH</string>
     <string name="setting_version_title">VERSION</string>

@@ -9,6 +9,7 @@ const val KEY_HAPTICS_ENABLED = "haptics_enabled"
 const val KEY_MUSIC_ENABLED = "music_enabled"
 const val KEY_SHOW_ENEMY_HP = "show_enemy_hp"
 const val KEY_QUICK_BATTLE = "quick_battle"
+const val KEY_GYRO_TILT_ENABLED = "gyro_tilt_enabled"
 
 /**
  * Minimal platform key-value persistence for app settings.

@@ -12,10 +12,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 
 /** Maximum card tilt in degrees - medium lean, never a 90-degree flip. */
-private const val MAX_TILT_DEGREES = 12f
+private const val MAX_TILT_DEGREES = 20f
 
 /** Low-pass factor applied to the raw angular velocity for smooth motion. */
-private const val FILTER_ALPHA = 0.15f
+private const val FILTER_ALPHA = 0.3f
 
 /** Leaky-integration decay: slowly returns to flat when the device is still. */
 private const val DRIFT_DECAY = 0.995f
@@ -23,7 +23,7 @@ private const val DRIFT_DECAY = 0.995f
 private const val RAD_TO_DEG = 180f / kotlin.math.PI.toFloat()
 
 @Composable
-actual fun rememberGyroTilt(): GyroTiltState {
+actual fun rememberGyroTilt(enabled: Boolean): GyroTiltState {
     val context = LocalContext.current
     val sensorManager = remember(context) {
         context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
@@ -31,7 +31,7 @@ actual fun rememberGyroTilt(): GyroTiltState {
     val sensor = remember(sensorManager) {
         sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE)
     }
-    if (sensor == null) return GyroTiltState.Disabled
+    if (!enabled || sensor == null) return GyroTiltState.Disabled
 
     val tiltX = remember { mutableFloatStateOf(0f) }
     val tiltY = remember { mutableFloatStateOf(0f) }
