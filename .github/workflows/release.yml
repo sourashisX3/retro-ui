@@ -1,0 +1,130 @@
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+jobs:
+  android:
+    name: Android AAB + Play Console
+    runs-on: ubuntu-latest
+    env:
+      KEYSTORE_PATH: ${{ runner.temp }}/deckron-release.jks
+      KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+      KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+      KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Decode release keystore
+        if: ${{ secrets.KEYSTORE_BASE64 != '' }}
+        shell: bash
+        run: echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > "$KEYSTORE_PATH"
+      - name: Build signed prod AAB
+        run: ./gradlew :androidApp:bundleProdRelease
+      - uses: actions/upload-artifact@v4
+        with:
+          name: android-aab
+          path: androidApp/build/outputs/bundle/prodRelease/androidApp-prod-release.aab
+      - name: Upload to Play Console internal track (fastlane)
+        if: ${{ secrets.PLAY_STORE_SERVICE_ACCOUNT_JSON != '' }}
+        shell: bash
+        run: |
+          gem install bundler -v 2.5.23 --no-document
+          BUNDLE_GEMFILE=fastlane/Gemfile bundle install
+          echo "${{ secrets.PLAY_STORE_SERVICE_ACCOUNT_JSON }}" > service-account.json
+          BUNDLE_GEMFILE=fastlane/Gemfile bundle exec fastlane android internal
+
+  desktop:
+    name: Desktop (${{ matrix.format }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-latest
+            format: Deb
+          - os: windows-latest
+            format: Msi
+          - os: macos-latest
+            format: Dmg
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Package ${{ matrix.format }}
+        run: ./gradlew :desktopApp:package${{ matrix.format }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: desktop-${{ matrix.format }}
+          path: desktopApp/build/compose/binaries/main/*/
+
+  web:
+    name: Web production build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+      - uses: gradle/actions/setup-gradle@v4
+      - run: ./gradlew :webApp:jsBrowserProductionExecutable :webApp:wasmJsBrowserProductionExecutable
+      - uses: actions/upload-artifact@v4
+        with:
+          name: web
+          path: |
+            webApp/build/dist/js/productionExecutable
+            webApp/build/dist/wasmJs/productionExecutable
+
+  ios-beta:
+    name: iOS TestFlight (fastlane)
+    runs-on: macos-latest
+    if: ${{ secrets.MATCH_GIT_URL != '' }}
+    env:
+      MATCH_GIT_URL: ${{ secrets.MATCH_GIT_URL }}
+      MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+      APPLE_ID: ${{ secrets.APPLE_ID }}
+      APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+      APP_STORE_CONNECT_API_KEY_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_KEY_ID }}
+      APP_STORE_CONNECT_API_KEY_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ISSUER_ID }}
+      APP_STORE_CONNECT_API_KEY_BASE64: ${{ secrets.APP_STORE_CONNECT_API_KEY_BASE64 }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.3"
+          bundler-cache: true
+          working-directory: fastlane
+      - name: Upload to TestFlight
+        shell: bash
+        run: |
+          cd fastlane
+          bundle exec fastlane ios beta
+
+  github-release:
+    name: GitHub Release
+    needs: [android, desktop, web]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+          merge-multiple: true
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: artifacts/**/*
+          generate_release_notes: true

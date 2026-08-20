@@ -16,7 +16,7 @@ This is a Kotlin Multiplatform project targeting Android, iOS, Web, Desktop (JVM
 
 Use the run configurations provided by the run widget in your IDE's toolbar. You can also use these commands and options:
 
-- Android app: `./gradlew :androidApp:assembleDebug`
+- Android app: `./gradlew :androidApp:assembleProdDebug`
 - Desktop app:
   - Hot reload: `./gradlew :desktopApp:hotRun --auto`
   - Standard run: `./gradlew :desktopApp:run`
@@ -24,6 +24,30 @@ Use the run configurations provided by the run widget in your IDE's toolbar. You
   - Wasm target (faster, modern browsers): `./gradlew :webApp:wasmJsBrowserDevelopmentRun`
   - JS target (slower, supports older browsers): `./gradlew :webApp:jsBrowserDevelopmentRun`
 - iOS app: open the [/iosApp](./iosApp) directory in Xcode and run it from there.
+
+Android flavors: `dev` (`com.funapp.retroui.dev`), `staging` (`com.funapp.retroui.staging`), `prod` (`com.funapp.retroui`).
+
+### CI/CD
+
+GitHub Actions workflows:
+
+- [CI](.github/workflows/ci.yml) - builds Android (prod), JVM/Desktop, Web (JS + WASM) and links iOS frameworks on every PR/push.
+- [Release](.github/workflows/release.yml) - on a `v*` tag (or manual dispatch): builds the signed prod AAB, desktop packages (Deb/Msi/Dmg), web production build, uploads the AAB to the Play Console internal track and the iOS app to TestFlight (both via fastlane), then creates a GitHub release with the artifacts.
+
+Fastlane lanes (run from the repo root): `fastlane android build`, `fastlane android internal`, `fastlane android staging`, `fastlane ios beta`.
+
+Required repository secrets for releases:
+
+| Secret | Purpose |
+|--------|---------|
+| `KEYSTORE_BASE64` | Base64-encoded Android release keystore (`.jks`) |
+| `KEYSTORE_PASSWORD`, `KEY_ALIAS`, `KEY_PASSWORD` | Android keystore credentials |
+| `PLAY_STORE_SERVICE_ACCOUNT_JSON` | GCP service account JSON for Play Console uploads |
+| `MATCH_GIT_URL`, `MATCH_PASSWORD` | Private repo + passphrase for iOS certs/profiles (fastlane match) |
+| `APPLE_ID`, `APPLE_TEAM_ID` | Apple Developer account |
+| `APP_STORE_CONNECT_API_KEY_KEY_ID` / `_ISSUER_ID` / `_BASE64` | App Store Connect API key for TestFlight |
+
+Releases without these secrets still build and upload artifacts to GitHub; store deploys are skipped.
 
 ### Running tests
 
