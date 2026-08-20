@@ -25,7 +25,9 @@ Access semantic colors via `RetroTheme.colors`. Never use primitive colors direc
 
 ### Dark (arcade night)
 
-Dark scheme is deliberately designed, not inverted. `background #14140F`, `surface #1E1C16`, ink text `#F8F0DA`. Accents stay bright flat arcade colors.
+Dark scheme is deliberately designed, not inverted. `background #0E1220`, `surface #1A2032`, ink text `#F4F6FB`. Accents stay bright flat arcade colors.
+
+Dark-mode chrome is **never white** ("inverted ink"): `outline` / `outlineStrong` are `#54639A` (a light navy ink, clearly lighter than every surface and the page, so borders read as outlined blocks) and hard offset shadows use the `shadow` token `#3A4670` (slightly darker than the border but still lighter than the page — real shadows, no glow). Components render hard shadows through `RetroTheme.colors.shadow`, never the outline tokens.
 
 ## Typography
 

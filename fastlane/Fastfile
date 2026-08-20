@@ -1,0 +1,39 @@
+default_platform(:android)
+
+platform :android do
+  desc "Build the prod release AAB"
+  lane :build do
+    gradle(task: "bundleProdRelease")
+  end
+
+  desc "Build + upload the prod AAB to the Play Console internal track"
+  lane :internal do
+    build
+    upload_to_play_store(
+      track: "internal",
+      aab: "androidApp/build/outputs/bundle/prodRelease/androidApp-prod-release.aab"
+    )
+  end
+
+  desc "Build + upload the staging AAB to the Play Console internal track"
+  lane :staging do
+    gradle(task: "bundleStagingRelease")
+    upload_to_play_store(
+      track: "internal",
+      aab: "androidApp/build/outputs/bundle/stagingRelease/androidApp-staging-release.aab"
+    )
+  end
+end
+
+platform :ios do
+  desc "Build the app and upload it to TestFlight"
+  lane :beta do
+    match(type: "appstore", readonly: true)
+    build_app(
+      project: "iosApp/iosApp.xcodeproj",
+      scheme: "iosApp",
+      export_method: "app-store"
+    )
+    upload_to_testflight
+  end
+end

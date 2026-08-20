@@ -1,0 +1,6 @@
+git_url(ENV["MATCH_GIT_URL"])
+app_identifier("com.funapp.retroui.RetroUI")
+type("appstore")
+readonly(true)
+username(ENV["APPLE_ID"])
+team_id(ENV["APPLE_TEAM_ID"])

@@ -1,0 +1,6 @@
+package_name ENV["PACKAGE_NAME"] || "com.funapp.retroui"
+json_key_file ENV["PLAY_STORE_SERVICE_ACCOUNT_JSON_PATH"] || "service-account.json"
+
+apple_id ENV["APPLE_ID"]
+team_id ENV["APPLE_TEAM_ID"]
+itc_team_id ENV["APPLE_TEAM_ID"]

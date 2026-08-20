@@ -1,7 +1,15 @@
 <resources>
     <!-- App / brand -->
-    <string name="app_name">DOODLE DUEL</string>
+    <string name="app_name">DECKRON</string>
     <string name="app_tagline">Build. Battle. Become the Champion.</string>
+    <string name="brand_wordmark">DECKRON</string>
+
+    <!-- Bottom bar navigation -->
+    <string name="nav_home">HOME</string>
+    <string name="nav_cards">CARDS</string>
+    <string name="nav_quests">QUESTS</string>
+    <string name="nav_profile">PROFILE</string>
+    <string name="nav_leaderboard">RANK</string>
 
     <!-- Generic UI -->
     <string name="common_ok">OK</string>
@@ -13,8 +21,237 @@
     <string name="common_close">CLOSE</string>
     <string name="common_save">SAVE</string>
     <string name="common_loading">LOADING…</string>
+    <string name="common_back_to_menu">BACK TO MENU</string>
+    <string name="common_back_to_login">BACK TO LOGIN</string>
+    <string name="common_forgot_password">FORGOT PASSWORD</string>
+    <string name="common_new_player">NEW PLAYER</string>
+    <string name="common_clear">CLEAR</string>
 
+    <!-- Splash -->
+    <string name="splash_press_start">PRESS START</string>
+    <string name="splash_wordmark_top">DECK</string>
+    <string name="splash_wordmark_bottom">RON</string>
+
+    <!-- Onboarding -->
+    <string name="btn_skip">SKIP</string>
+    <string name="onboarding_page_1_title">BUILD YOUR DECK</string>
+    <string name="onboarding_page_1_body">Collect champions and assemble a deck of 5 fighters.</string>
+    <string name="onboarding_page_2_title">BECOME CHAMPION</string>
+    <string name="onboarding_page_2_body">Climb the arena ranks and claim legendary rewards.</string>
+    <string name="btn_start_playing">START PLAYING</string>
+    <string name="btn_already_player">ALREADY PLAYER</string>
+
+    <!-- Auth -->
+    <string name="screen_login_title">LOGIN</string>
+    <string name="screen_login_subtitle">Sign in to continue your quest.</string>
+    <string name="btn_enter_arena">ENTER THE ARENA</string>
+    <string name="screen_register_title">CREATE PLAYER</string>
+    <string name="screen_register_subtitle">Forge your hero and join the arena.</string>
+    <string name="btn_start_quest">START QUEST</string>
+    <string name="screen_forgot_title">RECOVER ACCOUNT</string>
+    <string name="screen_forgot_subtitle">We’ll send you a recovery link.</string>
+    <string name="btn_send_link">SEND LINK</string>
+
+    <!-- Auth fields -->
+    <string name="field_username">USERNAME</string>
+    <string name="field_email">EMAIL</string>
+    <string name="field_password">PASSWORD</string>
+    <string name="field_confirm_password">CONFIRM PASSWORD</string>
+    <string name="placeholder_username">player_name</string>
+    <string name="placeholder_email">player@arena.com</string>
+    <string name="placeholder_password">••••••••</string>
+    <string name="field_show">SHOW</string>
+    <string name="field_hide">HIDE</string>
+
+    <!-- Home -->
+    <string name="screen_home_title">MAIN MENU</string>
+    <string name="screen_home_subtitle">Choose your next quest.</string>
+    <string name="btn_start_battle">START BATTLE</string>
+    <string name="btn_collection">COLLECTION</string>
+    <string name="btn_quests">QUESTS</string>
+    <string name="btn_profile">PROFILE</string>
+    <string name="btn_settings">SETTINGS</string>
+    <string name="btn_notifications">NOTIFICATIONS</string>
+    <string name="toast_no_notifications">No new notifications.</string>
+    <string name="home_greeting">Build. Battle. Become the champion.</string>
+    <string name="player_display_name">PLAYER_NAME</string>
+    <string name="home_rank_label">RANK</string>
+    <string name="home_rank_value">BRONZE V</string>
+    <string name="home_xp_label">XP</string>
+    <string name="home_xp_value">720 / 1000</string>
+    <string name="home_battle_hint">CHALLENGE A RIVAL IN THE ARENA</string>
+    <string name="home_deck_title">YOUR DECK</string>
+    <string name="home_deck_subtitle">5 champions ready</string>
+    <string name="home_deck_builder">DECK BUILDER</string>
+    <string name="home_daily_title">DAILY QUESTS</string>
+    <string name="home_daily_subtitle">New quests every day</string>
+    <string name="home_view_all">VIEW ALL</string>
+    <string name="quest_win_battles">WIN 3 BATTLES</string>
+    <string name="quest_play_rounds">PLAY 5 ROUNDS</string>
+    <string name="quest_login_today">LOG IN TODAY</string>
+    <string name="home_reward_xp">+%1$d XP</string>
+
+    <!-- Battle -->
+    <string name="screen_battle_title">BATTLE ARENA</string>
+    <string name="screen_battle_subtitle">VS — prepare for the showdown.</string>
+    <string name="btn_retreat">RETREAT TO MENU</string>
+    <string name="battle_vs">VS</string>
+    <string name="battle_round">ROUND %1$d</string>
+    <string name="battle_attack">ATTACK</string>
+    <string name="battle_defend">DEFEND</string>
+    <string name="battle_opponent_name">RIVAL_FROST</string>
+    <string name="battle_opponent_level">3</string>
+    <string name="battle_player_level">2</string>
+    <string name="battle_hand_title">YOUR HAND</string>
+    <string name="battle_log_start">Battle begins — draw your hand.</string>
+    <string name="battle_log_damage">BLAZE strikes for 12 damage!</string>
+    <string name="battle_log_heal">FROST heals 8 HP.</string>
+    <string name="battle_log_shield">TERRA raises a shield.</string>
+
+    <!-- Collection -->
+    <string name="screen_collection_title">COLLECTION</string>
+    <string name="screen_collection_subtitle">Browse every card you’ve earned.</string>
+    <string name="btn_deck_builder">DECK BUILDER</string>
+    <string name="collection_count">%1$d CARDS</string>
+    <string name="collection_no_results">No cards match your search.</string>
+    <string name="rarity_all">ALL</string>
+    <string name="rarity_common">COMMON</string>
+    <string name="rarity_rare">RARE</string>
+    <string name="rarity_epic">EPIC</string>
+    <string name="rarity_legendary">LEGENDARY</string>
+    <string name="card_owned">x%1$d</string>
+    <string name="sheet_card_type">TYPE</string>
+    <string name="sheet_card_cost">COST</string>
+    <string name="sheet_card_owned_yes">OWNED</string>
+    <string name="sheet_card_owned_no">LOCKED</string>
+    <string name="card_blaze">BLAZE</string>
+    <string name="card_frost">FROST</string>
+    <string name="card_volt">VOLT</string>
+    <string name="card_terra">TERRA</string>
+    <string name="card_shade">SHADE</string>
+    <string name="card_nova">NOVA</string>
+    <string name="card_rock">ROCK</string>
+    <string name="card_gale">GALE</string>
+    <string name="card_ember">EMBER</string>
+    <string name="card_sage">SAGE</string>
+    <string name="type_warrior">WARRIOR</string>
+    <string name="type_mage">MAGE</string>
+    <string name="type_rogue">ROGUE</string>
+    <string name="type_guardian">GUARDIAN</string>
+    <string name="type_assassin">ASSASSIN</string>
+    <string name="type_sage">SAGE</string>
+
+    <!-- Deck builder -->
+    <string name="screen_deck_title">DECK BUILDER</string>
+    <string name="screen_deck_subtitle">Assemble your deck of 5 champions.</string>
+    <string name="btn_browse_collection">BROWSE COLLECTION</string>
+    <string name="deck_slots_ready">%1$d / %2$d READY</string>
+    <string name="deck_available_title">AVAILABLE CHAMPIONS</string>
+    <string name="deck_empty_hint">DECK EMPTY — TAP A CHAMPION TO ADD</string>
+    <string name="btn_save_deck">SAVE DECK</string>
+    <string name="deck_add">ADD</string>
+
+    <!-- Quests -->
+    <string name="screen_quests_title">QUESTS</string>
+    <string name="screen_quests_subtitle">Complete quests to earn rewards.</string>
+    <string name="quests_daily_title">DAILY QUESTS</string>
+    <string name="quests_weekly_title">WEEKLY QUESTS</string>
+    <string name="quests_claim">CLAIM</string>
+    <string name="quests_in_progress">IN PROGRESS</string>
+    <string name="quest_win_10">WIN 10 BATTLES</string>
+    <string name="quest_reach_rank">REACH BRONZE III</string>
+    <string name="quest_collect_cards">COLLECT 20 CARDS</string>
+    <string name="quest_reward_xp">+%1$d XP</string>
+
+    <!-- Profile -->
+    <string name="screen_profile_title">PROFILE</string>
+    <string name="screen_profile_subtitle">Player stats, badges and records.</string>
+    <string name="profile_stat_wins">WINS</string>
+    <string name="profile_stat_losses">LOSSES</string>
+    <string name="profile_stat_winrate">WIN RATE</string>
+    <string name="profile_badges_title">BADGES</string>
+    <string name="profile_records_title">RECORDS</string>
+    <string name="profile_record_streak">LONGEST STREAK</string>
+    <string name="profile_record_damage">TOTAL DAMAGE</string>
+    <string name="profile_record_favorite">FAVORITE FIGHTER</string>
+    <string name="profile_value_wins">24</string>
+    <string name="profile_value_losses">11</string>
+    <string name="profile_value_winrate">69%</string>
+    <string name="profile_value_streak">8</string>
+    <string name="profile_value_damage">12,480</string>
+    <string name="profile_value_favorite">BLAZE</string>
+    <string name="badge_first_blood">FIRST BLOOD</string>
+    <string name="badge_win_streak">STREAK 5</string>
+    <string name="badge_collector">COLLECTOR</string>
+    <string name="badge_veteran">VETERAN</string>
+    <string name="badge_champion">CHAMPION</string>
+    <string name="badge_hunter">HUNTER</string>
+<string name="badge_locked">???</string>
+
+    <!-- Settings -->
+    <string name="screen_settings_title">SETTINGS</string>
+    <string name="screen_settings_subtitle">Tweak your retro experience.</string>
+    <string name="settings_audio_title">AUDIO</string>
+    <string name="settings_theme_title">THEME</string>
+    <string name="settings_theme_subtitle">How the app looks</string>
+    <string name="theme_option_system">SYSTEM</string>
+    <string name="theme_option_light">LIGHT</string>
+    <string name="theme_option_dark">DARK</string>
+    <string name="settings_gameplay_title">GAMEPLAY</string>
+    <string name="settings_account_title">ACCOUNT</string>
+    <string name="setting_sound_title">SOUND EFFECTS</string>
+    <string name="setting_sound_subtitle">Retro blips and hits</string>
+    <string name="setting_haptics_title">HAPTICS</string>
+    <string name="setting_haptics_subtitle">Vibration on every tap</string>
+    <string name="setting_music_title">MUSIC</string>
+    <string name="setting_music_subtitle">Arcade soundtrack</string>
+    <string name="setting_enemy_hp_title">SHOW ENEMY HP</string>
+    <string name="setting_enemy_hp_subtitle">Display rival health bars</string>
+    <string name="setting_quick_title">QUICK BATTLE</string>
+    <string name="setting_quick_subtitle">Skip the intro sequence</string>
+    <string name="setting_language_title">LANGUAGE</string>
+    <string name="setting_language_value">ENGLISH</string>
+    <string name="setting_version_title">VERSION</string>
+    <string name="setting_version_value">1.0.0</string>
+    <string name="btn_log_out">LOG OUT</string>
+    <string name="dialog_cancel">CANCEL</string>
+    <string name="log_out_confirm_title">LOG OUT?</string>
+    <string name="log_out_confirm_body">Your local session will be cleared. You can log back in anytime.</string>
+    <string name="btn_confirm_logout">LOG OUT</string>
+    <string name="retreat_confirm_title">RETREAT?</string>
+    <string name="retreat_confirm_body">Return to the main menu? Progress in this battle will be lost.</string>
+    <string name="btn_confirm_retreat">RETREAT</string>
+
+    <!-- Leaderboard -->
+    <string name="screen_leaderboard_title">ARENA RANKS</string>
+    <string name="screen_leaderboard_subtitle">Top fighters this season</string>
+    <string name="lb_you">YOU</string>
+    <string name="lb_name_01">BLADE MASTER</string>
+    <string name="lb_name_02">NOVA QUEEN</string>
+    <string name="lb_name_03">IRON RONIN</string>
+    <string name="lb_name_04">GHOST PILOT</string>
+    <string name="lb_name_05">VOID SORCERER</string>
+    <string name="lb_name_06">TURBO VIXEN</string>
+    <string name="lb_name_07">CRIMSON ACE</string>
+    <string name="lb_name_08">HEX KNIGHT</string>
+    <string name="lb_name_09">LUCKY CLOWN</string>
+    <string name="lb_name_10">BOLT PRINCE</string>
+    <string name="lb_name_11">SHADOW MINT</string>
+    <string name="lb_name_12">STAR LANCER</string>
+
+    <!-- Toasts -->
+    <string name="toast_deck_saved">DECK SAVED!</string>
+    <string name="toast_search_cancelled">SEARCH CANCELLED</string>
+    <string name="toast_reward_claimed">REWARD CLAIMED!</string>
+
+    <!-- Matchmaking -->
+    <string name="matchmaking_title">SEARCHING FOR OPPONENT</string>
+    <string name="matchmaking_subtitle">Scanning the arena</string>
+    <string name="btn_cancel_search">CANCEL SEARCH</string>
+
+    <!-- Collection -->
+    <string name="collection_search_hint">SEARCH CARDS…</string>
     <!-- Design-system showcase -->
     <string name="showcase_title">Design System</string>
-    <string name="showcase_subtitle">Retro / Doodle Duel kit</string>
+    <string name="showcase_subtitle">Retro UI kit</string>
 </resources>

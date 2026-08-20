@@ -104,7 +104,7 @@ This is NOT a "gamified" Material UI. It is a retro game design kit / physical s
 - Dividers: 1-2dp dark printed lines, never subtle gray.
 - Dense but not cramped: 4/8/12/16dp rhythm.
 - Playful VISUALS + strict LAYOUT — consistent alignment, predictable margins, uniform heights.
-- Controlled imperfection: allowed in doodles/illustrations, never in alignment/grid/spacing.
+- Controlled imperfection: allowed in decorations/illustrations, never in alignment/grid/spacing.
 
 ## 26. Material adaptation
 

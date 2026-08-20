@@ -1,9 +1,0 @@
-package com.funapp.retroui
-
-class Greeting {
-    private val platform = getPlatform()
-
-    fun greet(): String {
-        return sayHello(platform.name)
-    }
-}
