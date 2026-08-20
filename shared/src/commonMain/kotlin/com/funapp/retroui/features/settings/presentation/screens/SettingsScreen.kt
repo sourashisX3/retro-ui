@@ -79,14 +79,14 @@ fun SettingsScreen(
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    var sound by remember { mutableStateOf(true) }
-    var haptics by remember { mutableStateOf(true) }
-    var music by remember { mutableStateOf(true) }
-    var showEnemyHp by remember { mutableStateOf(true) }
-    var quickBattle by remember { mutableStateOf(false) }
-    var showLogoutDialog by remember { mutableStateOf(false) }
     val settingsRepository = LocalAppContainer.current.settingsRepository
     val themeMode by settingsRepository.themeMode.collectAsState()
+    val soundEnabled by settingsRepository.soundEnabled.collectAsState()
+    val hapticsEnabled by settingsRepository.hapticsEnabled.collectAsState()
+    val musicEnabled by settingsRepository.musicEnabled.collectAsState()
+    val showEnemyHp by settingsRepository.showEnemyHp.collectAsState()
+    val quickBattle by settingsRepository.quickBattle.collectAsState()
+    var showLogoutDialog by remember { mutableStateOf(false) }
 
     RetroScreen(modifier = modifier) {
         item {
@@ -159,7 +159,10 @@ fun SettingsScreen(
                     title = stringResource(Res.string.setting_sound_title),
                     subtitle = stringResource(Res.string.setting_sound_subtitle),
                     trailing = {
-                        RetroSwitch(checked = sound, onCheckedChange = { sound = it })
+                        RetroSwitch(
+                            checked = soundEnabled,
+                            onCheckedChange = { settingsRepository.setSoundEnabled(it) },
+                        )
                     },
                 )
                 Spacer(modifier = Modifier.height(RetroTheme.spacing.md))
@@ -167,7 +170,10 @@ fun SettingsScreen(
                     title = stringResource(Res.string.setting_haptics_title),
                     subtitle = stringResource(Res.string.setting_haptics_subtitle),
                     trailing = {
-                        RetroSwitch(checked = haptics, onCheckedChange = { haptics = it })
+                        RetroSwitch(
+                            checked = hapticsEnabled,
+                            onCheckedChange = { settingsRepository.setHapticsEnabled(it) },
+                        )
                     },
                 )
                 Spacer(modifier = Modifier.height(RetroTheme.spacing.md))
@@ -175,7 +181,10 @@ fun SettingsScreen(
                     title = stringResource(Res.string.setting_music_title),
                     subtitle = stringResource(Res.string.setting_music_subtitle),
                     trailing = {
-                        RetroSwitch(checked = music, onCheckedChange = { music = it })
+                        RetroSwitch(
+                            checked = musicEnabled,
+                            onCheckedChange = { settingsRepository.setMusicEnabled(it) },
+                        )
                     },
                 )
             }
@@ -192,7 +201,10 @@ fun SettingsScreen(
                     title = stringResource(Res.string.setting_enemy_hp_title),
                     subtitle = stringResource(Res.string.setting_enemy_hp_subtitle),
                     trailing = {
-                        RetroSwitch(checked = showEnemyHp, onCheckedChange = { showEnemyHp = it })
+                        RetroSwitch(
+                            checked = showEnemyHp,
+                            onCheckedChange = { settingsRepository.setShowEnemyHp(it) },
+                        )
                     },
                 )
                 Spacer(modifier = Modifier.height(RetroTheme.spacing.md))
@@ -200,7 +212,10 @@ fun SettingsScreen(
                     title = stringResource(Res.string.setting_quick_title),
                     subtitle = stringResource(Res.string.setting_quick_subtitle),
                     trailing = {
-                        RetroSwitch(checked = quickBattle, onCheckedChange = { quickBattle = it })
+                        RetroSwitch(
+                            checked = quickBattle,
+                            onCheckedChange = { settingsRepository.setQuickBattle(it) },
+                        )
                     },
                 )
                 Spacer(modifier = Modifier.height(RetroTheme.spacing.md))

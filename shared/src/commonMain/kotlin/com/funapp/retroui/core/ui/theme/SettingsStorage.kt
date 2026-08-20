@@ -2,8 +2,13 @@ package com.funapp.retroui.core.ui.theme
 
 import androidx.compose.runtime.Composable
 
-/** Key under which the theme preference is persisted. */
+/** Keys under which app settings are persisted. */
 const val KEY_THEME_MODE = "theme_mode"
+const val KEY_SOUND_ENABLED = "sound_enabled"
+const val KEY_HAPTICS_ENABLED = "haptics_enabled"
+const val KEY_MUSIC_ENABLED = "music_enabled"
+const val KEY_SHOW_ENEMY_HP = "show_enemy_hp"
+const val KEY_QUICK_BATTLE = "quick_battle"
 
 /**
  * Minimal platform key-value persistence for app settings.

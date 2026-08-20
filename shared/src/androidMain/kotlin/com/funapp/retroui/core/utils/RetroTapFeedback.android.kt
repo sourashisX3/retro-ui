@@ -6,9 +6,12 @@ import android.media.SoundPool
 import android.view.HapticFeedbackConstants
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
+import com.funapp.retroui.core.di.LocalAppContainer
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -19,14 +22,21 @@ import java.io.File
 actual fun rememberRetroTapFeedback(): RetroTapFeedback {
     val context = LocalContext.current
     val view = LocalView.current
+    val settingsRepository = LocalAppContainer.current.settingsRepository
+    val hapticsEnabled by settingsRepository.hapticsEnabled.collectAsState()
+    val soundEnabled by settingsRepository.soundEnabled.collectAsState()
     val sound = remember { AndroidRetroTapSound(context) }
     DisposableEffect(Unit) {
         onDispose { sound.release() }
     }
-    return remember {
+    return remember(hapticsEnabled, soundEnabled) {
         RetroTapFeedback {
-            view.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP)
-            sound.play()
+            if (hapticsEnabled) {
+                view.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP)
+            }
+            if (soundEnabled) {
+                sound.play()
+            }
         }
     }
 }
