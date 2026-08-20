@@ -47,6 +47,7 @@ import retroui.shared.generated.resources.nav_leaderboard
 import retroui.shared.generated.resources.nav_profile
 import retroui.shared.generated.resources.nav_quests
 import com.funapp.retroui.core.ui.components.foundation.RetroText
+import com.funapp.retroui.core.ui.components.foundation.retroFocusRing
 import com.funapp.retroui.core.ui.components.foundation.retroHardShadow
 import com.funapp.retroui.core.ui.theme.RetroTheme
 import com.funapp.retroui.core.ui.token.RetroAnimation
@@ -145,7 +146,8 @@ private fun RetroDockTab(
                 tap.play()
                 onClick()
             }
-            .padding(vertical = 2.dp),
+            .padding(vertical = 2.dp)
+            .retroFocusRing(offset = 3.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Box(

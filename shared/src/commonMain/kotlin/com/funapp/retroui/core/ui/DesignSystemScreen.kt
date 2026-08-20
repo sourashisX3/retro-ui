@@ -3,6 +3,8 @@ import com.funapp.retroui.core.ui.icons.RetroIcons
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,6 +18,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import com.funapp.retroui.core.ui.icons.AccountCircle
 import com.funapp.retroui.core.ui.icons.Add
@@ -54,10 +57,12 @@ import com.funapp.retroui.core.ui.icons.Warning
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -66,6 +71,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.funapp.retroui.core.ui.animation.RetroEntranceStyle
+import com.funapp.retroui.core.ui.animation.retroEntrance
+import com.funapp.retroui.core.ui.animation.retroPopPress
+import com.funapp.retroui.core.ui.components.foundation.retroTactilePress
 import com.funapp.retroui.core.ui.components.controls.RetroButton
 import com.funapp.retroui.core.ui.components.controls.RetroButtonVariant
 import com.funapp.retroui.core.ui.components.controls.RetroCheckbox
@@ -86,6 +95,9 @@ import com.funapp.retroui.core.ui.components.feedback.RetroLoadingIndicator
 import com.funapp.retroui.core.ui.components.feedback.RetroProgressBar
 import com.funapp.retroui.core.ui.components.feedback.RetroProgressColor
 import com.funapp.retroui.core.ui.components.feedback.RetroStatusLabel
+import com.funapp.retroui.core.ui.components.feedback.RetroToastController
+import com.funapp.retroui.core.ui.components.feedback.RetroToastHost
+import com.funapp.retroui.core.ui.components.feedback.RetroToastType
 import com.funapp.retroui.core.ui.components.feedback.SpeechBubble
 import com.funapp.retroui.core.ui.components.foundation.RetroDivider
 import com.funapp.retroui.core.ui.components.foundation.RetroText
@@ -99,15 +111,43 @@ import com.funapp.retroui.core.ui.components.game.RetroCardSlot
 import com.funapp.retroui.core.ui.components.game.RetroGameCard
 import com.funapp.retroui.core.ui.components.hud.HudStat
 import com.funapp.retroui.core.ui.components.hud.StatHud
+import com.funapp.retroui.core.ui.components.navigation.RetroBottomBar
+import com.funapp.retroui.core.ui.components.navigation.RetroBottomBarItem
 import com.funapp.retroui.core.ui.components.surfaces.RetroCard
 import com.funapp.retroui.core.ui.components.surfaces.RetroCardHeader
 import com.funapp.retroui.core.ui.components.surfaces.RetroCharacterCard
 import com.funapp.retroui.core.ui.components.surfaces.RetroDashedGroup
+import com.funapp.retroui.core.ui.components.surfaces.RetroDialog
+import com.funapp.retroui.core.ui.components.surfaces.RetroDialogVariant
 import com.funapp.retroui.core.ui.components.surfaces.RetroPanel
 import com.funapp.retroui.core.ui.components.surfaces.RetroScreen
 import com.funapp.retroui.core.ui.components.surfaces.RetroSection
 import com.funapp.retroui.core.ui.components.surfaces.RetroStatCard
 import com.funapp.retroui.core.ui.theme.RetroTheme
+import com.funapp.retroui.core.ui.token.RetroMotion
+import kotlinx.coroutines.launch
+
+/**
+ * Atomic-design levels the showcase is organized by.
+ */
+enum class AtomicLevel(val label: String, val tagline: String) {
+    Tokens("TOKENS", "colors, type, spacing, radius, motion — the raw material"),
+    Atoms("ATOMS", "smallest interactive pieces: icons, buttons, fields, switches"),
+    Molecules("MOLECULES", "small combos: cards, avatars, chips, progress, labels"),
+    Organisms("ORGANISMS", "big structures: panels, HUDs, game cards, dock, dialogs"),
+    Templates("TEMPLATES & PAGES", "full screens composed from the kit"),
+}
+
+/**
+ * Maturity of a component inside the kit.
+ */
+enum class ComponentStatus(val label: String) {
+    Stable("STABLE"),
+    Beta("BETA"),
+}
+
+/** Semantic version of the design system. */
+const val DESIGN_SYSTEM_VERSION = "1.0.0"
 
 /**
  * Design-system showcase. Renders every token and component so the whole
@@ -129,6 +169,8 @@ fun DesignSystemScreen() {
         contentPadding = PaddingValues(bottom = RetroTheme.spacing.xxl),
     ) {
         item { Header() }
+
+        item { AtomicIntro() }
 
         item { SectionHeader("Branding") }
         item {
@@ -167,10 +209,10 @@ fun DesignSystemScreen() {
             }
         }
 
-        item { SectionHeader("Colors") }
+        item { SectionHeader("Colors", level = AtomicLevel.Tokens) }
         item { ColorSwatches() }
 
-        item { SectionHeader("Typography") }
+        item { SectionHeader("Typography", level = AtomicLevel.Tokens) }
         item {
             Column(modifier = Modifier.padding(horizontal = RetroTheme.spacing.lg)) {
                 TypeRow("Display", RetroTheme.typography.display, colors.textPrimary, "RETRO UI")
@@ -186,13 +228,16 @@ fun DesignSystemScreen() {
             }
         }
 
-        item { SectionHeader("Spacing") }
+        item { SectionHeader("Spacing", level = AtomicLevel.Tokens) }
         item { SpacingTokens() }
 
-        item { SectionHeader("Radius & Elevation") }
+        item { SectionHeader("Radius & Elevation", level = AtomicLevel.Tokens) }
         item { RadiusElevationTokens() }
 
-        item { SectionHeader("Buttons") }
+        item { SectionHeader("Motion", level = AtomicLevel.Tokens) }
+        item { MotionSection() }
+
+        item { SectionHeader("Buttons", level = AtomicLevel.Atoms, status = ComponentStatus.Stable) }
         item {
             Column(
                 modifier = Modifier.padding(horizontal = RetroTheme.spacing.lg),
@@ -212,7 +257,7 @@ fun DesignSystemScreen() {
             }
         }
 
-        item { SectionHeader("Icon buttons") }
+        item { SectionHeader("Icon buttons", level = AtomicLevel.Atoms, status = ComponentStatus.Stable) }
         item {
             Row(
                 modifier = Modifier.padding(horizontal = RetroTheme.spacing.lg),
@@ -238,7 +283,7 @@ fun DesignSystemScreen() {
             }
         }
 
-        item { SectionHeader("Icons") }
+        item { SectionHeader("Icons", level = AtomicLevel.Atoms) }
         item {
             val icons = listOf(
                 "Star" to RetroIcons.Star,
@@ -311,7 +356,7 @@ fun DesignSystemScreen() {
             }
         }
 
-        item { SectionHeader("Chips") }
+        item { SectionHeader("Chips", level = AtomicLevel.Atoms, status = ComponentStatus.Stable) }
         item {
             Column(
                 modifier = Modifier.padding(horizontal = RetroTheme.spacing.lg),
@@ -334,7 +379,7 @@ fun DesignSystemScreen() {
             }
         }
 
-        item { SectionHeader("Text fields") }
+        item { SectionHeader("Text fields", level = AtomicLevel.Atoms, status = ComponentStatus.Stable) }
         item {
             Column(
                 modifier = Modifier.padding(horizontal = RetroTheme.spacing.lg),
@@ -362,7 +407,7 @@ fun DesignSystemScreen() {
             }
         }
 
-        item { SectionHeader("Selection") }
+        item { SectionHeader("Selection", level = AtomicLevel.Atoms, status = ComponentStatus.Stable) }
         item {
             Column(
                 modifier = Modifier.padding(horizontal = RetroTheme.spacing.lg),
@@ -389,7 +434,7 @@ fun DesignSystemScreen() {
             }
         }
 
-        item { SectionHeader("Cards") }
+        item { SectionHeader("Cards", level = AtomicLevel.Molecules, status = ComponentStatus.Stable) }
         item {
             Column(
                 modifier = Modifier.padding(horizontal = RetroTheme.spacing.lg),
@@ -444,7 +489,7 @@ fun DesignSystemScreen() {
             }
         }
 
-        item { SectionHeader("Dashed group") }
+        item { SectionHeader("Dashed group", level = AtomicLevel.Molecules) }
         item {
             RetroDashedGroup(
                 modifier = Modifier.padding(horizontal = RetroTheme.spacing.lg),
@@ -461,7 +506,7 @@ fun DesignSystemScreen() {
             }
         }
 
-        item { SectionHeader("Progress bars") }
+        item { SectionHeader("Progress bars", level = AtomicLevel.Atoms, status = ComponentStatus.Stable) }
         item {
             Column(
                 modifier = Modifier.padding(horizontal = RetroTheme.spacing.lg),
@@ -480,7 +525,7 @@ fun DesignSystemScreen() {
             }
         }
 
-        item { SectionHeader("Stat HUD") }
+        item { SectionHeader("Stat HUD", level = AtomicLevel.Organisms, status = ComponentStatus.Stable) }
         item {
             StatHud(
                 stats = listOf(
@@ -492,7 +537,7 @@ fun DesignSystemScreen() {
             )
         }
 
-        item { SectionHeader("Status labels") }
+        item { SectionHeader("Status labels", level = AtomicLevel.Atoms, status = ComponentStatus.Stable) }
         item {
             Row(
                 modifier = Modifier.padding(horizontal = RetroTheme.spacing.lg),
@@ -506,7 +551,7 @@ fun DesignSystemScreen() {
             }
         }
 
-        item { SectionHeader("Speech bubble") }
+        item { SectionHeader("Speech bubble", level = AtomicLevel.Molecules) }
         item {
             SpeechBubble(
                 modifier = Modifier
@@ -521,7 +566,7 @@ fun DesignSystemScreen() {
             }
         }
 
-        item { SectionHeader("Avatars") }
+        item { SectionHeader("Avatars", level = AtomicLevel.Molecules, status = ComponentStatus.Stable) }
         item {
             Row(
                 modifier = Modifier.padding(horizontal = RetroTheme.spacing.lg),
@@ -535,7 +580,7 @@ fun DesignSystemScreen() {
             }
         }
 
-        item { SectionHeader("Game cards") }
+        item { SectionHeader("Game cards", level = AtomicLevel.Organisms, status = ComponentStatus.Stable) }
         item {
             LazyRow(
                 modifier = Modifier.padding(horizontal = RetroTheme.spacing.lg),
@@ -566,7 +611,7 @@ fun DesignSystemScreen() {
             }
         }
 
-        item { SectionHeader("Card slots") }
+        item { SectionHeader("Card slots", level = AtomicLevel.Organisms) }
         item {
             Row(
                 modifier = Modifier.padding(horizontal = RetroTheme.spacing.lg),
@@ -581,7 +626,7 @@ fun DesignSystemScreen() {
             }
         }
 
-        item { SectionHeader("Stat cards") }
+        item { SectionHeader("Stat cards", level = AtomicLevel.Molecules, status = ComponentStatus.Stable) }
         item {
             Row(
                 modifier = Modifier.padding(horizontal = RetroTheme.spacing.lg),
@@ -608,7 +653,7 @@ fun DesignSystemScreen() {
             }
         }
 
-        item { SectionHeader("Character card") }
+        item { SectionHeader("Character card", level = AtomicLevel.Molecules, status = ComponentStatus.Stable) }
         item {
             RetroCharacterCard(
                 name = "Sir Pixel",
@@ -621,7 +666,7 @@ fun DesignSystemScreen() {
             )
         }
 
-        item { SectionHeader("Dashed group") }
+        item { SectionHeader("Dashed group", level = AtomicLevel.Molecules) }
         item {
             RetroDashedGroup(
                 modifier = Modifier.padding(horizontal = RetroTheme.spacing.lg),
@@ -638,7 +683,7 @@ fun DesignSystemScreen() {
             }
         }
 
-        item { SectionHeader("Panels & sections") }
+        item { SectionHeader("Panels & sections", level = AtomicLevel.Organisms, status = ComponentStatus.Stable) }
         item {
             Column(
                 modifier = Modifier.padding(horizontal = RetroTheme.spacing.lg),
@@ -663,7 +708,7 @@ fun DesignSystemScreen() {
             }
         }
 
-        item { SectionHeader("Battle log") }
+        item { SectionHeader("Battle log", level = AtomicLevel.Molecules, status = ComponentStatus.Stable) }
         item {
             RetroBattleLog(
                 modifier = Modifier.padding(horizontal = RetroTheme.spacing.lg),
@@ -693,7 +738,7 @@ fun DesignSystemScreen() {
             )
         }
 
-        item { SectionHeader("Loading & empty states") }
+        item { SectionHeader("Loading & empty states", level = AtomicLevel.Molecules, status = ComponentStatus.Stable) }
         item {
             Column(
                 modifier = Modifier.padding(horizontal = RetroTheme.spacing.lg),
@@ -708,7 +753,7 @@ fun DesignSystemScreen() {
             }
         }
 
-        item { SectionHeader("Dividers") }
+        item { SectionHeader("Dividers", level = AtomicLevel.Atoms) }
         item {
             Column(modifier = Modifier.padding(horizontal = RetroTheme.spacing.lg)) {
                 RetroDivider()
@@ -716,6 +761,18 @@ fun DesignSystemScreen() {
                 RetroDivider(thickness = 3.dp)
             }
         }
+
+        item { SectionHeader("Bottom bar", level = AtomicLevel.Organisms, status = ComponentStatus.Stable) }
+        item { BottomBarDemo() }
+
+        item { SectionHeader("Dialog", level = AtomicLevel.Organisms, status = ComponentStatus.Stable) }
+        item { DialogDemo() }
+
+        item { SectionHeader("Toast", level = AtomicLevel.Organisms, status = ComponentStatus.Stable) }
+        item { ToastDemo() }
+
+        item { SectionHeader("Templates & pages", level = AtomicLevel.Templates) }
+        item { TemplatesOverview() }
     }
 }
 
@@ -738,28 +795,98 @@ private fun Header() {
             modifier = Modifier.padding(top = RetroTheme.spacing.sm),
         )
         RetroText(
-            "Tokens · Components · HUD · Arcade",
+            "The full arcade kit behind DECKRON — shared across Android, iOS, Web & Desktop.",
             style = RetroTheme.typography.caption,
             color = colors.textMuted,
             modifier = Modifier.padding(top = RetroTheme.spacing.sm),
         )
+        Row(
+            modifier = Modifier.padding(top = RetroTheme.spacing.md),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            RetroStatusLabel(
+                text = "v$DESIGN_SYSTEM_VERSION",
+                container = colors.surfaceVariant,
+                modifier = Modifier.weight(1f),
+            )
+            Spacer(modifier = Modifier.width(RetroTheme.spacing.sm))
+            RetroStatusLabel(
+                text = "4 platforms",
+                container = colors.surfaceVariant,
+                modifier = Modifier.weight(1f),
+            )
+        }
     }
     RetroDivider(thickness = 3.dp)
 }
 
 @Composable
-private fun SectionHeader(title: String) {
-    RetroText(
-        text = title,
-        style = RetroTheme.typography.title,
-        color = RetroTheme.colors.primary,
+private fun AtomicIntro() {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(RetroTheme.colors.surfaceMuted)
+            .padding(
+                start = RetroTheme.spacing.lg,
+                end = RetroTheme.spacing.lg,
+                top = RetroTheme.spacing.md,
+                bottom = RetroTheme.spacing.md,
+            ),
+        verticalArrangement = Arrangement.spacedBy(RetroTheme.spacing.sm),
+    ) {
+        RetroText("ORGANIZED BY ATOMIC DESIGN", style = RetroTheme.typography.caption, color = RetroTheme.colors.textMuted)
+        AtomicLevel.entries.forEach { level ->
+            Row {
+                RetroText(level.label, style = RetroTheme.typography.caption, color = RetroTheme.colors.primary)
+                RetroText(
+                    "  ·  ${level.tagline}",
+                    style = RetroTheme.typography.caption,
+                    color = RetroTheme.colors.textSecondary,
+                )
+            }
+        }
+        RetroText(
+            "STABLE = in production · BETA = evolving",
+            style = RetroTheme.typography.caption,
+            color = RetroTheme.colors.textMuted,
+        )
+    }
+}
+
+@Composable
+private fun SectionHeader(title: String, level: AtomicLevel? = null, status: ComponentStatus? = null) {
+    val colors = RetroTheme.colors
+    Row(
         modifier = Modifier.padding(
             start = RetroTheme.spacing.lg,
             end = RetroTheme.spacing.lg,
             top = RetroTheme.spacing.xxl,
             bottom = RetroTheme.spacing.md,
         ),
-    )
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Column(modifier = Modifier.weight(1f)) {
+            if (level != null) {
+                RetroText(
+                    text = level.label,
+                    style = RetroTheme.typography.caption,
+                    color = colors.textMuted,
+                )
+            }
+            RetroText(
+                text = title,
+                style = RetroTheme.typography.title,
+                color = colors.primary,
+            )
+        }
+        if (status != null) {
+            RetroStatusLabel(
+                text = status.label,
+                container = colors.surfaceVariant,
+                dotColor = if (status == ComponentStatus.Stable) colors.success else colors.warning,
+            )
+        }
+    }
     RetroDivider(horizontalPadding = RetroTheme.spacing.lg)
     Spacer(modifier = Modifier.height(RetroTheme.spacing.md))
 }
@@ -992,6 +1119,187 @@ private fun RetroHardShadowBox(offsetX: Dp, offsetY: Dp, label: String) {
             style = RetroTheme.typography.caption,
             color = RetroTheme.colors.textMuted,
             modifier = Modifier.padding(top = RetroTheme.spacing.xs),
+        )
+    }
+}
+
+@Composable
+private fun MotionSection() {
+    val colors = RetroTheme.colors
+    val shape = RetroTheme.shapeTokens.button
+
+    Column(
+        modifier = Modifier.padding(horizontal = RetroTheme.spacing.lg),
+        verticalArrangement = Arrangement.spacedBy(RetroTheme.spacing.md),
+    ) {
+        Row(horizontalArrangement = Arrangement.spacedBy(RetroTheme.spacing.sm)) {
+            RetroStatusLabel(text = "FAST ${RetroMotion.FastMs}ms", container = colors.surfaceVariant)
+            RetroStatusLabel(text = "NORMAL ${RetroMotion.NormalMs}ms", container = colors.surfaceVariant)
+            RetroStatusLabel(text = "SLOW ${RetroMotion.SlowMs}ms", container = colors.surfaceVariant)
+            RetroStatusLabel(text = "EXPRESSIVE ${RetroMotion.ExpressiveMs}ms", container = colors.surfaceVariant)
+        }
+
+        RetroText(
+            text = "ENTRANCE STYLES",
+            style = RetroTheme.typography.caption,
+            color = colors.textSecondary,
+        )
+        var entranceStyle by remember { mutableStateOf(RetroEntranceStyle.Pop) }
+        var replay by remember { mutableIntStateOf(0) }
+        Row(
+            modifier = Modifier.horizontalScroll(rememberScrollState()),
+            horizontalArrangement = Arrangement.spacedBy(RetroTheme.spacing.xs),
+        ) {
+            RetroEntranceStyle.entries.forEach { style ->
+                RetroChip(
+                    text = style.name.uppercase(),
+                    onClick = { entranceStyle = style },
+                    selected = entranceStyle == style,
+                )
+            }
+        }
+        RetroButton(text = "REPLAY", small = true, onClick = { replay++ })
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(120.dp)
+                .background(colors.surfaceMuted, shape)
+                .border(2.dp, colors.outlineStrong, shape),
+            contentAlignment = Alignment.Center,
+        ) {
+            key(replay) {
+                Box(
+                    modifier = Modifier
+                        .size(width = 96.dp, height = 64.dp)
+                        .retroEntrance(style = entranceStyle)
+                        .background(colors.primary, shape)
+                        .border(2.dp, colors.outlineStrong, shape),
+                )
+            }
+        }
+
+        RetroText(
+            text = "PRESS FEEDBACK",
+            style = RetroTheme.typography.caption,
+            color = colors.textSecondary,
+        )
+        Row(horizontalArrangement = Arrangement.spacedBy(RetroTheme.spacing.lg)) {
+            val tactileSource = remember { MutableInteractionSource() }
+            Box(
+                modifier = Modifier
+                    .size(width = 112.dp, height = 56.dp)
+                    .retroTactilePress(tactileSource, shape, colors.shadow)
+                    .background(colors.primary, shape)
+                    .border(2.dp, colors.outlineStrong, shape),
+                contentAlignment = Alignment.Center,
+            ) {
+                RetroText("TACTILE", style = RetroTheme.typography.caption, color = colors.onPrimary)
+            }
+            val popSource = remember { MutableInteractionSource() }
+            Box(
+                modifier = Modifier
+                    .size(width = 112.dp, height = 56.dp)
+                    .retroPopPress(popSource)
+                    .background(colors.secondary, shape)
+                    .border(2.dp, colors.outlineStrong, shape),
+                contentAlignment = Alignment.Center,
+            ) {
+                RetroText("POP", style = RetroTheme.typography.caption, color = colors.onSecondary)
+            }
+        }
+
+        RetroText(
+            text = "press · pop · bounce · shake · slide · fade · flip · cardReveal · liquid · arcade",
+            style = RetroTheme.typography.caption,
+            color = colors.textMuted,
+        )
+    }
+}
+
+@Composable
+private fun BottomBarDemo() {
+    var selected by remember { mutableIntStateOf(0) }
+    Column(modifier = Modifier.padding(horizontal = RetroTheme.spacing.lg)) {
+        RetroBottomBar(
+            items = listOf(
+                RetroBottomBarItem("HOME", RetroIcons.Home),
+                RetroBottomBarItem("CARDS", RetroIcons.Star),
+                RetroBottomBarItem("QUESTS", RetroIcons.PlayArrow),
+            ),
+            selectedIndex = selected,
+            onSelect = { selected = it },
+        )
+    }
+}
+
+@Composable
+private fun DialogDemo() {
+    var showDialog by remember { mutableStateOf(false) }
+    Column(
+        modifier = Modifier.padding(horizontal = RetroTheme.spacing.lg),
+        verticalArrangement = Arrangement.spacedBy(RetroTheme.spacing.sm),
+    ) {
+        RetroButton(text = "OPEN DIALOG", onClick = { showDialog = true })
+        RetroDialog(
+            visible = showDialog,
+            onDismiss = { showDialog = false },
+            title = "RESTART MATCH?",
+            message = "Your progress will be lost. Are you sure?",
+            icon = RetroIcons.Warning,
+            variant = RetroDialogVariant.Danger,
+            confirmText = "YES",
+            onConfirm = { showDialog = false },
+            dismissText = "NO",
+        )
+    }
+}
+
+@Composable
+private fun ToastDemo() {
+    val scope = rememberCoroutineScope()
+    val toastController = remember(scope) { RetroToastController(scope) }
+    Column(
+        modifier = Modifier.padding(horizontal = RetroTheme.spacing.lg),
+        verticalArrangement = Arrangement.spacedBy(RetroTheme.spacing.sm),
+    ) {
+        RetroButton(text = "SUCCESS TOAST", onClick = { toastController.show("Deck saved!", type = RetroToastType.Success) })
+        RetroButton(
+            text = "ERROR TOAST",
+            variant = RetroButtonVariant.Danger,
+            onClick = { toastController.show("Out of energy!", type = RetroToastType.Error) },
+        )
+        RetroButton(
+            text = "INFO TOAST",
+            variant = RetroButtonVariant.Secondary,
+            onClick = { toastController.show("Matchmaking…", type = RetroToastType.Info) },
+        )
+        RetroToastHost(controller = toastController)
+    }
+}
+
+@Composable
+private fun TemplatesOverview() {
+    val colors = RetroTheme.colors
+    Column(
+        modifier = Modifier.padding(horizontal = RetroTheme.spacing.lg),
+        verticalArrangement = Arrangement.spacedBy(RetroTheme.spacing.sm),
+    ) {
+        RetroCard {
+            Column(
+                modifier = Modifier.padding(RetroTheme.spacing.md),
+                verticalArrangement = Arrangement.spacedBy(RetroTheme.spacing.sm),
+            ) {
+                RetroText("HOME — Hero, status rail, quick battle, card shelf", style = RetroTheme.typography.caption, color = colors.textPrimary)
+                RetroText("COLLECTION — Greedy card grid, search, sort, gyro tilt", style = RetroTheme.typography.caption, color = colors.textPrimary)
+                RetroText("QUEST LOG — Progress bars, reward chips, empty states", style = RetroTheme.typography.caption, color = colors.textPrimary)
+                RetroText("BATTLE — Stat HUDs, battle log, speech bubbles, dialogs", style = RetroTheme.typography.caption, color = colors.textPrimary)
+                RetroText("SETTINGS — Selection rows, switches, sound/haptics toggles", style = RetroTheme.typography.caption, color = colors.textPrimary)
+            }
+        }
+        RetroText(
+            "Every screen in DECKRON is assembled from the tokens, atoms and molecules above.",
+            style = RetroTheme.typography.caption,
+            color = colors.textMuted,
         )
     }
 }

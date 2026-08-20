@@ -20,6 +20,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import com.funapp.retroui.core.ui.components.foundation.RetroText
+import com.funapp.retroui.core.ui.components.foundation.retroFocusRing
 import com.funapp.retroui.core.ui.components.foundation.retroTactilePress
 import com.funapp.retroui.core.ui.theme.RetroTheme
 import com.funapp.retroui.core.utils.rememberRetroTapFeedback
@@ -77,6 +78,7 @@ fun RetroChip(
                 onClick()
             }
             .alpha(if (enabled) 1f else 0.5f)
+            .retroFocusRing(offset = 3.dp)
             .padding(horizontal = RetroTheme.spacing.md, vertical = RetroTheme.spacing.xs),
         contentAlignment = Alignment.Center,
     ) {

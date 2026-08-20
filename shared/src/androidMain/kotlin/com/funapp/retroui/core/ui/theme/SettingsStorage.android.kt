@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import com.funapp.retroui.core.ui.theme.SettingsStorage
+import androidx.core.content.edit
 
 @Composable
 actual fun rememberPlatformSettingsStorage(): SettingsStorage {
@@ -15,11 +16,11 @@ actual fun rememberPlatformSettingsStorage(): SettingsStorage {
             override fun read(key: String): String? = prefs.getString(key, null)
 
             override fun write(key: String, value: String) {
-                prefs.edit().putString(key, value).apply()
+                prefs.edit { putString(key, value) }
             }
 
             override fun remove(key: String) {
-                prefs.edit().remove(key).apply()
+                prefs.edit { remove(key) }
             }
         }
     }
