@@ -10,7 +10,6 @@ jobs:
     name: Android AAB + Play Console
     runs-on: ubuntu-latest
     env:
-      KEYSTORE_PATH: ${{ runner.temp }}/deckron-release.jks
       KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
       KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
       KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
@@ -22,22 +21,30 @@ jobs:
           java-version: 21
       - uses: gradle/actions/setup-gradle@v4
       - name: Decode release keystore
-        if: ${{ secrets.KEYSTORE_BASE64 != '' }}
+        if: ${{ env.KEYSTORE_BASE64 != '' }}
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+          KEYSTORE_PATH: ${{ runner.temp }}/deckron-release.jks
         shell: bash
-        run: echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > "$KEYSTORE_PATH"
+        run: echo "$KEYSTORE_BASE64" | base64 -d > "$KEYSTORE_PATH"
       - name: Build signed prod AAB
+        env:
+          KEYSTORE_PATH: ${{ runner.temp }}/deckron-release.jks
         run: ./gradlew :androidApp:bundleProdRelease
       - uses: actions/upload-artifact@v4
         with:
           name: android-aab
           path: androidApp/build/outputs/bundle/prodRelease/androidApp-prod-release.aab
       - name: Upload to Play Console internal track (fastlane)
-        if: ${{ secrets.PLAY_STORE_SERVICE_ACCOUNT_JSON != '' }}
+        if: ${{ env.PLAY_STORE_SERVICE_ACCOUNT_JSON != '' }}
+        env:
+          PLAY_STORE_SERVICE_ACCOUNT_JSON: ${{ secrets.PLAY_STORE_SERVICE_ACCOUNT_JSON }}
+          KEYSTORE_PATH: ${{ runner.temp }}/deckron-release.jks
         shell: bash
         run: |
           gem install bundler -v 2.5.23 --no-document
           BUNDLE_GEMFILE=fastlane/Gemfile bundle install
-          echo "${{ secrets.PLAY_STORE_SERVICE_ACCOUNT_JSON }}" > service-account.json
+          echo "$PLAY_STORE_SERVICE_ACCOUNT_JSON" > service-account.json
           BUNDLE_GEMFILE=fastlane/Gemfile bundle exec fastlane android internal
 
   desktop:
