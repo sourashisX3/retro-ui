@@ -24,6 +24,7 @@ import androidx.compose.foundation.rememberScrollState
 import com.funapp.retroui.core.ui.icons.Edit
 import com.funapp.retroui.core.ui.icons.Search
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -46,7 +47,10 @@ import com.funapp.retroui.core.ui.components.game.RetroCardRarity
 import com.funapp.retroui.core.ui.components.game.RetroGameCard
 import com.funapp.retroui.core.ui.components.game.rarityColor
 import com.funapp.retroui.core.ui.components.surfaces.RetroDialog
+import com.funapp.retroui.core.ui.sensors.gyroTilt
+import com.funapp.retroui.core.ui.sensors.rememberGyroTilt
 import com.funapp.retroui.core.ui.theme.RetroTheme
+import com.funapp.retroui.core.di.LocalAppContainer
 import com.funapp.retroui.core.data.mock.MockChampion
 import com.funapp.retroui.core.data.mock.mockChampionRoster
 import org.jetbrains.compose.resources.stringResource
@@ -105,6 +109,8 @@ fun CollectionScreen(
     var query by remember { mutableStateOf("") }
     var detailsCard by remember { mutableStateOf<MockChampion?>(null) }
     var previewCard by remember { mutableStateOf<MockChampion?>(null) }
+    val gyroTiltEnabled by LocalAppContainer.current.settingsRepository.gyroTiltEnabled.collectAsState()
+    val gyroTilt = rememberGyroTilt(enabled = gyroTiltEnabled)
     val filtered = cards.filter { card ->
         (filter == null || card.rarity == filter) &&
             (query.isBlank() || card.name.contains(query.trim(), ignoreCase = true))
@@ -126,8 +132,8 @@ fun CollectionScreen(
                 top = RetroTheme.spacing.lg,
                 bottom = RetroTheme.dimensions.bottomBarClearance,
             ),
-            horizontalArrangement = Arrangement.spacedBy(RetroTheme.spacing.sm),
-            verticalArrangement = Arrangement.spacedBy(RetroTheme.spacing.sm),
+            horizontalArrangement = Arrangement.spacedBy(RetroTheme.spacing.md),
+            verticalArrangement = Arrangement.spacedBy(RetroTheme.spacing.md),
         ) {
             item(span = { GridItemSpan(maxLineSpan) }) {
                 CollectionHeader(
@@ -175,7 +181,8 @@ fun CollectionScreen(
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .retroEntrance(style = RetroEntranceStyle.Pop, delayMillis = 140 + retroCascade(index, stepMs = 40)),
+                        .retroEntrance(style = RetroEntranceStyle.Pop, delayMillis = 140 + retroCascade(index, stepMs = 40))
+                        .gyroTilt(gyroTilt),
                     contentAlignment = Alignment.Center,
                 ) {
                     RetroGameCard(

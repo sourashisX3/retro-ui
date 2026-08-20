@@ -150,9 +150,6 @@ private fun RetroDockTab(
     ) {
         Box(
             modifier = Modifier
-                .graphicsLayer {
-                    translationY = active * 3.dp.toPx()
-                }
                 .retroPopPress(interactionSource)
                 .size(width = 36.dp + 14.dp * active, height = 34.dp)
                 .clip(pillShape)
