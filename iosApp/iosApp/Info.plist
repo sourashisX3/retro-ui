@@ -4,5 +4,9 @@
 <dict>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
+	<key>CFBundleName</key>
+	<string>Deckron</string>
+	<key>CFBundleDisplayName</key>
+	<string>Deckron</string>
 </dict>
 </plist>
