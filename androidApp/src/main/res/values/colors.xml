@@ -1,3 +1,4 @@
 <resources>
     <color name="retro_window_background">#F3E9D2</color>
+    <color name="ic_launcher_background">#ffeecc</color>
 </resources>
