@@ -1,20 +1,61 @@
-This is a Kotlin Multiplatform project targeting Android, iOS, Web, Desktop (JVM).
+# DECKRON — Retro UI
 
-* [/iosApp](./iosApp/iosApp) contains an iOS application. Even if you’re sharing your UI with Compose Multiplatform,
-  you need this entry point for your iOS app. This is also where you should add SwiftUI code for your project.
+A multiplayer arcade card-duel game built with **Kotlin Multiplatform** and
+**Compose Multiplatform** — one codebase, four platforms: **Android, iOS,
+Web (JS + Wasm) and Desktop (JVM)**.
 
-* [/shared](./shared/src) is for code that will be shared across your Compose Multiplatform applications.
-  It contains several subfolders:
-  - [commonMain](./shared/src/commonMain/kotlin) is for code that’s common for all targets.
-  - Other folders are for Kotlin code that will be compiled for only the platform indicated in the folder name.
-    For example, if you want to use Apple’s CoreCrypto for the iOS part of your Kotlin app,
-    the [iosMain](./shared/src/iosMain/kotlin) folder would be the right place for such calls.
-    Similarly, if you want to edit the Desktop (JVM) specific part, the [jvmMain](./shared/src/jvmMain/kotlin)
-    folder is the appropriate location.
+The entire UI is powered by **Retro UI**, the project's own design system:
+a retro-arcade kit with flat colors, hard offset shadows, pixel typography,
+tactile press feedback and a strict token layer — organized by Atomic Design
+(Tokens → Atoms → Molecules → Organisms → Templates).
 
-### Running the apps
+## Features
 
-Use the run configurations provided by the run widget in your IDE's toolbar. You can also use these commands and options:
+- **Card collection** with rarity tiers, search, sort and **gyro tilt** on
+  Android (device-orientation tilt, toggleable in Settings)
+- **Battle flow**: matchmaking → battle log → Stat HUDs → dialogs
+- **Quests, profile, leaderboard** with badge grid and daily quests
+- **Settings**: light/dark/system theme, sound, haptics, music and tilt
+  toggles — persisted per platform
+- **Type-colored toasts**, speech bubbles, loading/empty states
+- Typed Navigation (`Route` + `AppNavHost`) with a retro bottom bar
+
+## Design system
+
+The kit lives in `shared/src/commonMain/kotlin/com/funapp/retroui/core/ui/`:
+
+| What | Where |
+| --- | --- |
+| Design tokens (colors, type, spacing, shapes, motion) | [`core/ui/token`](./shared/src/commonMain/kotlin/com/funapp/retroui/core/ui/token) |
+| Components (buttons, cards, HUD, dialog, toast, …) | [`core/ui/components`](./shared/src/commonMain/kotlin/com/funapp/retroui/core/ui/components) |
+| Showcase (full kit on one scrollable screen, unrouted) | [`core/ui/DesignSystemScreen.kt`](./shared/src/commonMain/kotlin/com/funapp/retroui/core/ui/DesignSystemScreen.kt) |
+| Studio previews (12 components) | [`core/ui/components/RetroComponentPreviews.kt`](./shared/src/commonMain/kotlin/com/funapp/retroui/core/ui/components/RetroComponentPreviews.kt) |
+| Token sanity tests (palette pins, spacing grid, WCAG contrast) | [`shared/src/commonTest/.../TokenSanityTest.kt`](./shared/src/commonTest/kotlin/com/funapp/retroui/core/ui/token/TokenSanityTest.kt) |
+
+- **[Design system docs](./docs/DESIGN_SYSTEM.md)** — tokens, component
+  contract, guidelines
+- **[Changelog](./docs/CHANGELOG.md)** — versioned history (currently v1.0.0)
+
+Rules the system enforces: semantic colors only (no raw hex in features),
+`RetroIcons` only (no Material/third-party icon sets), every screen on
+`RetroScreen` (safe-area insets), every pressable tactile (120ms shadow
+collapse + sink), keyboard focus rings and WCAG AA/AAA contrast enforced by
+tests.
+
+## Project structure
+
+- [`/iosApp`](./iosApp/iosApp) — iOS entry point (SwiftUI shell + Compose UI)
+- [`/shared`](./shared/src) — all shared code:
+  - [`commonMain`](./shared/src/commonMain/kotlin) — cross-platform code
+    (UI kit, features, navigation, DI, mock data)
+  - `androidMain` / `iosMain` / `jvmMain` / `jsMain` / `wasmJsMain` —
+    platform-specific code (settings storage, gyro sensor, tap feedback, …)
+- [`/webApp`](./webApp/src) — web entry point (HTML shell + `main.kt`)
+- [`/desktopApp`](./desktopApp/src) — desktop entry point
+- [`/androidApp`](./androidApp) — Android application module
+- [`/docs`](./docs) — design-system docs and changelog
+
+## Running the apps
 
 - Android app: `./gradlew :androidApp:assembleProdDebug`
 - Desktop app:
@@ -27,12 +68,21 @@ Use the run configurations provided by the run widget in your IDE's toolbar. You
 
 Android flavors: `dev` (`com.funapp.retroui.dev`), `staging` (`com.funapp.retroui.staging`), `prod` (`com.funapp.retroui`).
 
-### CI/CD
+## Running tests
+
+- Android tests: `./gradlew :shared:testAndroidHostTest`
+- Desktop tests: `./gradlew :shared:jvmTest`
+- Web tests:
+  - Wasm target: `./gradlew :shared:wasmJsTest`
+  - JS target: `./gradlew :shared:jsTest`
+- iOS tests: `./gradlew :shared:iosSimulatorArm64Test`
+
+## CI/CD
 
 GitHub Actions workflows:
 
-- [CI](.github/workflows/ci.yml) - builds Android (prod), JVM/Desktop, Web (JS + WASM) and links iOS frameworks on every PR/push.
-- [Release](.github/workflows/release.yml) - on a `v*` tag (or manual dispatch): builds the signed prod AAB, desktop packages (Deb/Msi/Dmg), web production build, uploads the AAB to the Play Console internal track and the iOS app to TestFlight (both via fastlane), then creates a GitHub release with the artifacts.
+- [CI](.github/workflows/ci.yml) — builds Android (prod), JVM/Desktop, Web (JS + WASM) and links iOS frameworks on every push to `main`/`develop`/`feature/**` and on PRs.
+- [Release](.github/workflows/release.yml) — on a `v*` tag (or manual dispatch): builds the signed prod AAB, desktop packages (Deb/Msi/Dmg), web production build, uploads the AAB to the Play Console internal track and the iOS app to TestFlight (both via fastlane), then creates a GitHub release with the artifacts.
 
 Fastlane lanes (run from the repo root): `fastlane android build`, `fastlane android internal`, `fastlane android staging`, `fastlane ios beta`.
 
@@ -49,22 +99,8 @@ Required repository secrets for releases:
 
 Releases without these secrets still build and upload artifacts to GitHub; store deploys are skipped.
 
-### Running tests
+## Branch workflow
 
-Use the run button in your IDE's editor gutter, or run tests using Gradle tasks:
-
-- Android tests: `./gradlew :shared:testAndroidHostTest`
-- Desktop tests: `./gradlew :shared:jvmTest`
-- Web tests:
-  - Wasm target: `./gradlew :shared:wasmJsTest`
-  - JS target: `./gradlew :shared:jsTest`
-- iOS tests: `./gradlew :shared:iosSimulatorArm64Test`
-
----
-
-Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html),
-[Compose Multiplatform](https://github.com/JetBrains/compose-multiplatform/#compose-multiplatform),
-[Kotlin/Wasm](https://kotl.in/wasm/)…
-
-We would appreciate your feedback on Compose/Web and Kotlin/Wasm in the public Slack channel [#compose-web](https://slack-chats.kotlinlang.org/c/compose-web).
-If you face any issues, please report them on [YouTrack](https://youtrack.jetbrains.com/newIssue?project=CMP).
+- `main` — production releases
+- `develop` — integration branch; feature branches (`feature/*`) merge here
+  with `--no-ff` merge commits
